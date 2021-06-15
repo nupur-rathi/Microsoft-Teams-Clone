@@ -4,7 +4,18 @@
     height: 48px;
     background-color: var(--brandBackgroundColor3);
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--fontType);
+    color: var(--foregroundColor3);  
+}
+
+.headerHeading{
+    margin: 0px 0px 0px 88px;
+    font-weight: 600;
+    line-height: 1.33333;
+    font-size: 18px;
 }
 
 .headerAvatar{
@@ -18,9 +29,11 @@
     box-sizing: border-box;
 }
 
-/* .avatarIconHeader{
-    max-height: 100% !important;
-    max-width: 100% !important;
-    background-color: var(--redForegroundColor2) !important;
-    object-fit: cover;
-} */
+.MuiAvatar-root{
+    height: 32px !important;
+    width: 32px !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    background-color: var(--brandForegroundColor2) !important;
+    color: var(--brandForegroundColor1) !important;
+}

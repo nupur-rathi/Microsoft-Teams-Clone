@@ -7,10 +7,10 @@ import Avatar from '@material-ui/core/Avatar';
 const Header = () => {
     return (
         <div class="header">
+            <div class="headerHeading">Microsoft Teams</div>
             {/* search-bar */}
-            {/* click-able avatar icon */}
             <button class="headerAvatar">
-                {/* <Avatar class="avatarIconHeader" src="/broken-image.jpg" /> */}
+                <Avatar alt="Nupur Rathi" src="#" />
             </button>
         </div>
     );
