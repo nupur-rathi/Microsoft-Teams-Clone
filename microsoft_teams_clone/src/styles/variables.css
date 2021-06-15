@@ -1,0 +1,39 @@
+:root {
+
+    /* Colors scheme */
+
+    --defaultForegroundColor: #242424;
+    --foregroundColor1: #424242;
+    --foregroundColor2: #616161;
+    --defaultForegroundDisabled: #BDBDBD;
+    --defaultBorderColor: rgb(224,224,224);
+    --backgroundColor2: #F5F5F5;
+    --defaultBackgroundColor: #FFFFFF;
+
+    --brandBackgroundColor2: #3D3E66;
+    --brandBackgroundColor3: #464775;
+    --brandForegroundColor1: #494B83;
+    --brandForegroundColor: #6264A7;
+    --brandBorderColor1: #B2B5FF;
+    --brandBackgroundColor1: #E9EAF6;
+
+    --redForegroundColor: rgb(196,49,75);
+    --redForegroundColor2: #FFBFBF;
+    --yellowForegroundColor4: #A16114;
+    --greenForegroundColor: #237B4B;
+    --greenBackgroundColor2: #E7F8D1;
+    --yellowBackgroundColor1: rgb(251,246,217);
+    --redBackgroundColor1: #FCF4F6;
+
+    /* Fonts scheme */
+
+    --fontType : 'Segoe UI';
+
+    /* shape and elevations */
+
+    --roundedCornerRadius: 4px;
+    --circularCornerRadius: 50%; 
+    --buttonLeftPadding: 12px;
+    --buttonIconTextMargin: 8px;
+
+}
