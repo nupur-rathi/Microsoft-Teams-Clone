@@ -1,0 +1,33 @@
+@import './variables.css';
+
+.leftRail{
+    background-color: var(--backgroundColor4);
+    width: 23.5%;
+    box-shadow: -5px 0px 15px -10px var(--boxShadowColor1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.leftRailHeader{
+    height: 8.5%;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    margin: 0px 20px 0px 20px;
+    border-bottom: 3px solid var(--backgroundColor5);
+}
+
+.leftRailHeading{
+    box-sizing: border-box;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--defaultForegroundColor);
+    padding: 20px 0px 20px 0px;
+}
+
+.leftRailBody{
+    box-sizing: border-box;
+    border-top: 1px solid var(--backgroundColor5);
+    height: calc(100vh - 48px - 8.5%);
+}

@@ -9,6 +9,8 @@
     --defaultBorderColor: rgb(224,224,224);
     --backgroundColor2: #F5F5F5;
     --backgroundColor3: #EBEBEB;
+    --backgroundColor4: #F0F0F0;
+    --backgroundColor5: #E0E0E0;
     --defaultBackgroundColor: #FFFFFF;
     --foregroundColor3: #fff;
 
@@ -27,6 +29,8 @@
     --greenBackgroundColor2: #E7F8D1;
     --yellowBackgroundColor1: rgb(251,246,217);
     --redBackgroundColor1: #FCF4F6;
+
+    --boxShadowColor1: #AAA;
 
     /* Fonts scheme */
 
