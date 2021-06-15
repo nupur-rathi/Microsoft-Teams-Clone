@@ -7,7 +7,6 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    font-family: var(--fontType);
     color: var(--foregroundColor3);  
 }
 
@@ -22,7 +21,7 @@
     border: none;
     outline: none;
     background-color: transparent;
-    height: 48px;
+    height: 100%;
     width: 48px;
     padding: 8px;
     margin: 0px 6px 0px 0px;
