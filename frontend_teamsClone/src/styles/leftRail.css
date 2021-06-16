@@ -15,12 +15,12 @@
     align-items: center;
     box-sizing: border-box;
     margin: 0px 20px 0px 20px;
-    border-bottom: 3px solid var(--backgroundColor5);
+    /* border-bottom: 3px solid var(--backgroundColor5); */
 }
 
 .leftRailHeading{
     box-sizing: border-box;
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     font-weight: 700;
     color: var(--defaultForegroundColor);
     padding: 20px 0px 20px 0px;
@@ -30,4 +30,29 @@
     box-sizing: border-box;
     border-top: 1px solid var(--backgroundColor5);
     height: calc(100vh - 48px - 8.5%);
+    display: flex;
+    flex-direction: column;
+    padding: 8px 0px 8px 0px;
+    overflow: auto;
+}
+
+.leftRailListItems{
+    display: flex;
+    box-sizing: border-box;
+    padding: 0px 18px 0px 20px;
+    align-items: center;
+    width: 100%;
+    height: 8%;
+    color: var(--defaultForegroundColor);
+}
+
+.leftRailListItems_selected
+{
+    background-color: var(--defaultBackgroundColor);
+}
+
+.leftRail_ListItem_Name{
+    box-sizing: border-box;
+    margin: 0px 0px 0px 9px;
+    font-size: 0.92rem;
 }

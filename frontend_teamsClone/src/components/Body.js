@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/body.css';
-import LeftNav from './LeftNav';
-import LeftRail from './LeftRail';
+import LeftNav from './leftnav/LeftNav';
+import LeftRail from './leftrail/LeftRail';
 
 // Body component for Teams page
 

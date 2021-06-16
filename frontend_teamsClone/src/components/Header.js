@@ -1,6 +1,6 @@
 import React from 'react';
 import '../styles/header.css'
-import Avatar from '@material-ui/core/Avatar';
+import BadgeAvatars from './common/Avatar';
 
 // Header component for Teams page
 
@@ -10,7 +10,7 @@ const Header = () => {
             <div className="headerHeading">Microsoft Teams</div>
             {/* search-bar */}
             <button className="headerAvatar">
-                <Avatar alt="Nupur Rathi" src="#" />
+                <BadgeAvatars name="Nupur Rathi" imgURL='#' />
             </button>
         </div>
     );
