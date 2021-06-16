@@ -14,7 +14,7 @@
     font-size: 12px;
     padding: 1px 5px;
     height: 60px;
-    width: 100%;
+    width: 96%;
     color: var(--foregroundColor2);
     border: none;
     outline: none;
@@ -29,6 +29,10 @@
 .leftNavButton:hover{
     color: var(--brandForegroundColor);
     background-color: var(--backgroundColor2);
+}
+
+.leftNavButton-selected{
+    border-left: 2px solid var(--brandForegroundColor);
 }
 
 .leftNavButtonText{

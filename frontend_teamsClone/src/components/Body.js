@@ -2,6 +2,7 @@ import React from 'react';
 import '../styles/body.css';
 import LeftNav from './leftnav/LeftNav';
 import LeftRail from './leftrail/LeftRail';
+import MainBody from './page-content/MainBody';
 
 // Body component for Teams page
 
@@ -10,7 +11,7 @@ const Body = () => {
         <div className="bodyContainer">
             <LeftNav />
             <LeftRail />
-            {/* chat, call, video-nav */}
+            <MainBody />
         </div>
     );
 }

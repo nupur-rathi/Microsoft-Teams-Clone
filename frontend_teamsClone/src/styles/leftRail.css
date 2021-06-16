@@ -44,6 +44,12 @@
     width: 100%;
     height: 8%;
     color: var(--defaultForegroundColor);
+    cursor: pointer;
+    margin: 0px 0px 4px 0px;
+}
+
+.leftRailListItems:hover{
+    background-color: var(--defaultBackgroundColor);
 }
 
 .leftRailListItems_selected

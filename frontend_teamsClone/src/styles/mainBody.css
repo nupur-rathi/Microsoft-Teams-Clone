@@ -1,0 +1,8 @@
+@import "./variables.css";
+
+.mainBody{
+    width: calc(100vw - 68px - 23.5%);
+    background-color: var(--backgroundColor2);
+    box-sizing: border-box;
+    box-shadow: -5px 0px 15px -10px var(--boxShadowColor1);
+}
