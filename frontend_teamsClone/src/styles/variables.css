@@ -5,12 +5,14 @@
     --defaultForegroundColor: #242424;
     --foregroundColor1: #424242;
     --foregroundColor2: #616161;
+    --foregroundColor4: #393838;
     --defaultForegroundDisabled: #BDBDBD;
     --defaultBorderColor: rgb(224,224,224);
     --backgroundColor2: #F5F5F5;
     --backgroundColor3: #EBEBEB;
     --backgroundColor4: #F0F0F0;
     --backgroundColor5: #E0E0E0;
+    --backgroundColor6: #1B1A1A;
     --defaultBackgroundColor: #FFFFFF;
     --foregroundColor3: #fff;
 
@@ -31,6 +33,7 @@
     --redBackgroundColor1: #FCF4F6;
 
     --boxShadowColor1: #AAA;
+    --boxShadowColor2: #151515;
 
     /* Fonts scheme */
 
