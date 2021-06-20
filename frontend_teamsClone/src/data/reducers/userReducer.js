@@ -2,6 +2,9 @@ import {SETUSER} from "../../constants";
 
 const userInitialState = {};
 
+// const user = {name: payload.name, id: payload.id, email: payload.email, profileUrl: payload.profileUrl, stream: payload.stream, isLoggedIn: payload.isLoggedIn, userVideo: payload.userVideo};
+
+
 const userReducer = (state = userInitialState, action) => {
 
     const {type, payload} = action;
@@ -9,9 +12,12 @@ const userReducer = (state = userInitialState, action) => {
     switch(type) {
         case SETUSER:
             {
-                const user = {name: payload.name, id: payload.id, email: payload.email, profileUrl: payload.profileUrl};
+                const user = {...payload};
                 return user;    
             }
         default:
             return state;
+    }
 }
+
+export default userReducer;
