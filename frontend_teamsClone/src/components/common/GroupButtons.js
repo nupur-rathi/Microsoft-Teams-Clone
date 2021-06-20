@@ -5,6 +5,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import VideocamOutlinedIcon from '@material-ui/icons/VideocamOutlined';
 import PhoneEnabledOutlinedIcon from '@material-ui/icons/PhoneEnabledOutlined';
 import ChatOutlinedIcon from '@material-ui/icons/ChatOutlined';
+import { CHAT, VIDEOCALL, AUDIOCALL } from '../../constants';
+
 
 const useStyles = makeStyles((theme) => ({
   root: { 
@@ -19,15 +21,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BasicButtonGroup() {
+export default function BasicButtonGroup({currentWindow, setWindowState}) {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <ButtonGroup size="small" aria-label="outlined primary button group">
-        <Button><ChatOutlinedIcon fontSize="small" /></Button>
-        <Button><VideocamOutlinedIcon fontSize="small"/></Button>
-        <Button><PhoneEnabledOutlinedIcon fontSize="small"/></Button>
+        <Button onClick={() => {setWindowState(CHAT)}}><ChatOutlinedIcon fontSize="small" /></Button>
+        <Button onClick={() => {setWindowState(VIDEOCALL)}}><VideocamOutlinedIcon fontSize="small"/></Button>
+        <Button onClick={() => {setWindowState(AUDIOCALL)}}><PhoneEnabledOutlinedIcon fontSize="small"/></Button>
       </ButtonGroup>
     </div>
   );

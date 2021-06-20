@@ -3,7 +3,7 @@ import '../../styles/mainBody.css';
 import BadgeAvatars from '../common/Avatar';
 import BasicButtonGroup from '../common/GroupButtons';
 
-const MainBodyHeader = () => {
+const MainBodyHeader = ({currentWindow, setWindowState}) => {
     return (
         <div className="mainBodyHeader">
             <div className="mainBodyHeaderLeft">
@@ -11,7 +11,7 @@ const MainBodyHeader = () => {
                 <span>Nupur Rathi</span>
             </div>
             <div className="mainBodyHeaderRight">
-                <BasicButtonGroup />
+                <BasicButtonGroup currentWindow={currentWindow} setWindowState={setWindowState}/>
             </div>
         </div>
     );
