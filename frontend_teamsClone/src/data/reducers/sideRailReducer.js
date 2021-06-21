@@ -1,6 +1,6 @@
-import {SETSIDERAIL, CHAT, ROOMS} from "../../constants";
+import {SETSIDERAIL, Chat, Rooms} from "../../constants";
 
-const sideRailReducer = (state = CHAT, action) => {
+const sideRailReducer = (state = Chat, action) => {
 
     const {type, payload} = action;
 

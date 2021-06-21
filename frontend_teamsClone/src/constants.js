@@ -7,4 +7,5 @@ export const CHAT = "CHAT";
 export const VIDEOCALL = "VIDEOCALL";
 export const AUDIOCALL = "AUDIOCALL";
 
-export const ROOMS = "ROOMS";
+export const Rooms = "Rooms";
+export const Chat = "Chat";
