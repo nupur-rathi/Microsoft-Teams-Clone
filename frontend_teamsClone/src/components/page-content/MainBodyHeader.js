@@ -11,11 +11,11 @@ const MainBodyHeader = ({currentWindow, setWindowState}) => {
     return (
         <div className="mainBodyHeader">
             <div className="mainBodyHeaderLeft">
-                {currSelected ? <BadgeAvatars name="Nupur Rathi" imgURL={currSelected.imgUrl}/> : <></>}
+                {currSelected ? <BadgeAvatars name={currSelected.name} imgURL={currSelected.imgUrl}/> : <></>}
                 <span>{currSelected ? currSelected.name: ""}</span>
             </div>
             <div className="mainBodyHeaderRight">
-                <BasicButtonGroup currentWindow={currentWindow} setWindowState={setWindowState}/>
+                {currSelected ? <BasicButtonGroup currentWindow={currentWindow} setWindowState={setWindowState}/> : <></>}
             </div>
         </div>
     );
