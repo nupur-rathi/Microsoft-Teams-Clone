@@ -4,11 +4,12 @@ import LeftRailListItems from './LeftRailListItems';
 import { useSelector } from 'react-redux';
 import { Chat, Rooms } from "../../constants";
 
-const userlist = [{imgUrl: '#', name: 'Nupur Rathi', id: 'abc', selected: true}, {imgUrl: '#', name: 'Arpit Rathi', id: 'def', selected: false}];
-
 const LeftRail = () => {
 
     const heading = useSelector(state => state.sideRailReducer);
+    const usersListObj = useSelector(state => state.usersListReducer);
+    const usersList = (Object.keys(usersListObj).map((key) => usersListObj[key]));
+    // const roomsList = [];
 
     return (
         <div className="leftRail">
@@ -16,7 +17,7 @@ const LeftRail = () => {
                 <span className="leftRailHeading">{heading}</span>
             </div>
             <div className="leftRailBody">
-                {userlist.map(item => <LeftRailListItems key={item.id} users={item}/>)}
+                {(heading === Chat) ? usersList.map(item => <LeftRailListItems key={item.id} users={item}/>) : <></>}
             </div>
         </div>
     );

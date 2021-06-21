@@ -4,7 +4,7 @@ import ChatOutlinedIcon from '@material-ui/icons/ChatOutlined';
 import GroupOutlinedIcon from '@material-ui/icons/GroupOutlined';
 import { useDispatch } from 'react-redux';
 import { setSideRail } from '../../data/actions/sideRailActions';
-import {SETSIDERAIL, Chat, Rooms} from "../../constants";
+import { Chat, Rooms } from "../../constants";
 
 const LeftNav = () => {
 

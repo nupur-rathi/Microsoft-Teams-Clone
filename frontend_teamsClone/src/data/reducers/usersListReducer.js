@@ -1,6 +1,8 @@
-import {ADDUSER, DELETEUSER} from "../../constants";
+import {ADDUSER, DELETEUSER, SETSELECTED} from "../../constants";
 
-const usersListReducer = (state = {}, action) => {
+const usersListInitialState = {'abc': {imgUrl: '#', name: 'Nupur Rathi', id: 'abc', selected: false}, 'def': {imgUrl: '#', name: 'Arpit Rathi', id: 'def', selected: false}};
+
+const usersListReducer = (state = usersListInitialState , action) => {
 
     const {type, payload} = action;
 
@@ -21,6 +23,14 @@ const usersListReducer = (state = {}, action) => {
                 
                 return usersList;    
             }
+        case SETSELECTED:
+            {
+                const usersList = {...state};
+                usersList[payload.id] = {...state[payload.id], selected: payload.state};
+
+                return usersList;
+            }    
+        
         default:
             return state;
     }
