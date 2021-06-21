@@ -39,6 +39,7 @@
     color: var(--defaultBackgroundColor);
     outline: none;
     border: none;
+    cursor: pointer;
 }
 
 .callOptionsEndcall{

@@ -16,7 +16,7 @@ const MainBody = () => {
     return (
         <div className="mainBody">
             <MainBodyHeader currentWindow={currentWindow} setWindowState={setWindowState}/>
-            <MainBodyContainer currentWindow={currentWindow}/>
+            <MainBodyContainer currentWindow={currentWindow} setWindowState={setWindowState}/>
         </div>
     );
 }

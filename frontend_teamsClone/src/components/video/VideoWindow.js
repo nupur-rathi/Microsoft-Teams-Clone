@@ -1,8 +1,9 @@
 import React from 'react';
 import '../../styles/videoWindow.css';
 import CallEndRoundedIcon from '@material-ui/icons/CallEndRounded';
+import { CHAT } from "../../constants";
 
-const VideoWindow = () => {
+const VideoWindow = ({setWindowState}) => {
     return (
         <div className="videoWindow">
             <div className="videoLeft">
@@ -13,7 +14,7 @@ const VideoWindow = () => {
                     <div className="userVideos"></div> */}
                 </div>
                 <div className="videoOptions">
-                    <button className="videoOptionsButtons videoOptionsEndcall">
+                    <button className="videoOptionsButtons videoOptionsEndcall" onClick={() => setWindowState(CHAT)}>
                         <CallEndRoundedIcon fontSize="medium" />
                     </button>
                 </div>

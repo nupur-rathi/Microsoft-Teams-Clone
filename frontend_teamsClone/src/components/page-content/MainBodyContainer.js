@@ -7,18 +7,18 @@ import ChatWindow from "../chatwindow/ChatWindow";
 import { CHAT, VIDEOCALL, AUDIOCALL } from '../../constants';
 
 
-const MainBodyContainer = ({currentWindow}) => {
+const MainBodyContainer = ({currentWindow, setWindowState}) => {
 
     function renderWindow()
     {
         if(currentWindow === CHAT) {
-            return (<ChatWindow />);
+            return (<ChatWindow setWindowState={setWindowState} />);
         }
         else if(currentWindow === VIDEOCALL) {
-            return (<VideoWindow />);
+            return (<VideoWindow setWindowState={setWindowState} />);
         }
         else if(currentWindow === AUDIOCALL) {
-            return (<CallWindow />);
+            return (<CallWindow setWindowState={setWindowState} />);
         }
     }
     return (
