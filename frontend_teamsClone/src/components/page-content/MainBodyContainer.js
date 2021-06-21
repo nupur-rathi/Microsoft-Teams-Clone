@@ -3,11 +3,14 @@ import '../../styles/mainBody.css';
 import VideoWindow from "../video/VideoWindow";
 import CallWindow from "../callwindow/CallWindow";
 import ChatWindow from "../chatwindow/ChatWindow";
+import { useSelector } from 'react-redux';
 
 import { CHAT, VIDEOCALL, AUDIOCALL } from '../../constants';
 
 
 const MainBodyContainer = ({currentWindow, setWindowState}) => {
+
+    const classState = useSelector(state => state.classReducer);
 
     function renderWindow()
     {
@@ -22,7 +25,7 @@ const MainBodyContainer = ({currentWindow, setWindowState}) => {
         }
     }
     return (
-        <div className="mainBodyContainer">
+        <div className={classState ? "mainBodyContainer mainBodyContainer_expand": "mainBodyContainer"}>
             {renderWindow()}
         </div>
     );

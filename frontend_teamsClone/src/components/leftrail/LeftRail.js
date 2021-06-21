@@ -6,13 +6,15 @@ import { Chat, Rooms } from "../../constants";
 
 const LeftRail = () => {
 
+    const classState = useSelector(state => state.classReducer);
+
     const heading = useSelector(state => state.sideRailReducer);
     const usersListObj = useSelector(state => state.usersListReducer);
     const usersList = (Object.keys(usersListObj).map((key) => usersListObj[key]));
     // const roomsList = [];
 
     return (
-        <div className="leftRail">
+        <div className={classState ? "leftRail leftRail_hide": "leftRail"}>
             <div className="leftRailHeader">
                 <span className="leftRailHeading">{heading}</span>
             </div>

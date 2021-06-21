@@ -4,6 +4,7 @@ export const ADDUSER = "ADDUSER";
 export const DELETEUSER = "DELETEUSER";
 export const SETSELECTED = "SETSELECTED";
 export const SET_CURR_SELECTED = "SET_CURR_SELECTED";
+export const SET_CLASS = "SET_CLASS";
 
 export const CHAT = "CHAT";
 export const VIDEOCALL = "VIDEOCALL";

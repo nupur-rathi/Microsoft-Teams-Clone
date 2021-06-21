@@ -7,12 +7,20 @@
     box-shadow: -5px 0px 15px -10px var(--boxShadowColor1);
 }
 
+.mainBody_expand{
+    width: calc(100vw - 68px);
+}
+
 .mainBodyHeader{
     height: 8.5%;
     display: flex;
     align-items: center;
     box-sizing: border-box;
     margin: 0px 20px 0px 15px;
+}
+
+.mainBodyHeader_hide{
+    display: none;
 }
 
 .mainBodyContainer{
@@ -23,6 +31,10 @@
     justify-content: center;
     align-items: center;
     font-size: 4rem;
+}
+
+.mainBodyContainer_expand{
+    height: calc(100vh - 48px);
 }
 
 .mainBodyHeaderLeft{

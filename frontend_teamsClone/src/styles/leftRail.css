@@ -9,6 +9,10 @@
     overflow: hidden;
 }
 
+.leftRail_hide{
+    display: none;
+}
+
 .leftRailHeader{
     height: 8.5%;
     display: flex;
