@@ -7,11 +7,13 @@ import { setClass } from '../../data/actions/classReducerActions';
 import Peer from 'simple-peer';
 import { setCaller, setCallAccept } from '../../data/actions/callActions';
 import { setWindowState } from '../../data/actions/windowStateActions';
+import { setCurrSelected } from '../../data/actions/currSelectedActions';
 
 const VideoWindow = () => {
 
     const currSelectedUser = useSelector(state => state.currSelectedReducer);
     const caller = useSelector(state => state.callReducer);
+    const usersList = useSelector(state => state.usersListReducer);
 
     const [stream, setStream] = useState(null);
     const [pstream, setPStream] = useState(null);
@@ -45,12 +47,14 @@ const VideoWindow = () => {
         });
     
         peer.once("signal", data => {
-            socket.current.emit("answercall", {signal: , to: caller.id})
+            console.log(data);
+            socket.current.emit("answercall", {signal: data, to: caller.id})
         });
     
-        peer.once("stream", currStream => {
-          setPStream(currStream);
+        peer.once('stream', currStream => {
+            setPStream(currStream);
           othervid.current.srcObject = currStream;
+          
         });
     
         peer.signal(caller.signal);
@@ -73,17 +77,18 @@ const VideoWindow = () => {
         });
     
         peer.once("signal", data => {
-          socket.current.emit("calluser", {usertocall: pid, from: id, signalData: data})
+            console.log(data);
+            socket.current.emit("calluser", {usertocall: pid, from: id, signalData: data})
         });
     
-        peer.once("stream", (currStream) => {
-          setPStream(currStream);
+        peer.once('stream', (currStream) => {
+            setPStream(currStream);
           othervid.current.srcObject = currStream;
         });
     
         socket.current.once("callaccepted", signal => {
-          dispatch(setCallAccept(true));
-          peer.signal(signal);
+            dispatch(setCallAccept(true));
+            peer.signal(signal);    
         });
     
         connref.current = peer;
@@ -99,7 +104,11 @@ const VideoWindow = () => {
     }, [caller.is])
 
     useEffect(() => {
-        !caller.is && answerCall();
+        if(!caller.is && caller.callAccept)
+        {
+            dispatch(setCurrSelected(usersList[caller.id]));
+            answerCall();
+        }
     }, [caller.callAccept])
     
 
