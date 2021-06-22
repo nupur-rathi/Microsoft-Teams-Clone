@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { setUser, setUserEmail, setUserID, setUserName, setUserProfileurl, setUserSocket } from '../data/actions/userActions';
 import { io } from 'socket.io-client';
 import { addUser, initUsers, deleteUser} from '../data/actions/usersListActions';
+import { setCaller } from '../data/actions/callActions';
 
 const socket = io(`http://localhost:5000`);
 
@@ -13,7 +14,6 @@ const Teams = () => {
     const socketRef = useRef(socket);
 
     const dispatch = useDispatch();
-    let user;
 
     dispatch(setUser("Nupur Rathi", "", "", "#", socketRef));
 
@@ -34,6 +34,10 @@ const Teams = () => {
 
         socket.on('deleteUser', (id) => {
             dispatch(deleteUser(id));
+        });
+
+        socket.on("calluser", ({from, signal}) => {
+            dispatch(setCaller({is: false, name: from, id: from, signal: signal}));
         });
  
     }, []);

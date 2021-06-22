@@ -5,12 +5,16 @@ import { CHAT } from "../../constants";
 import { useDispatch, useSelector } from 'react-redux';
 import { setClass } from '../../data/actions/classReducerActions';
 import Peer from 'simple-peer';
+import { setCaller } from '../../data/actions/callActions';
 
 const VideoWindow = ({setWindowState}) => {
 
+    const currSelectedUser = useSelector(state => state.currSelectedReducer);
+    const caller = useSelector(state => state.callReducer);
+
     const [stream, setStream] = useState(null);
     const [pstream, setPStream] = useState(null);
-    const [call, setCall] = useState({});
+    // const [call, setCall] = useState({});
     const [callaccepted , setCallaccepted] = useState(false);
     const [callended , setCallended] = useState(false);
     const [userMedia, setUserMedia] = useState({ video: true, audio: true });
@@ -29,10 +33,6 @@ const VideoWindow = ({setWindowState}) => {
         .then((currentStream) => {
             setStream(currentStream);
             myvideo.current.srcObject = currentStream;
-        });
-
-        socket.current.on("calluser", ({from, signal}) => {
-            setCall({isreceivedcall: true, from, signal});
         });
     
     }, []);
@@ -67,34 +67,40 @@ const VideoWindow = ({setWindowState}) => {
     
     // };
     
-    // const callUser = (id) => {
-    //     const peer = new Peer({
-    //       initiator: true,
-    //       trickle: false,
-    //       stream: stream,
-    //     });
+    const callUser = (pid) => {
+
+        const peer = new Peer({
+          initiator: true,
+          trickle: false,
+          stream: stream,
+        });
     
-    //     peer.once("signal", data => {
-    //       socket.current.emit("calluser", {usertocall: id, from: me, signalData: data})
-    //     });
+        peer.once("signal", data => {
+          socket.current.emit("calluser", {usertocall: pid, from: id, signalData: data})
+        });
     
-    //     peer.once("stream", (currStream) => {
-    //       setPStream(currStream);
-    //       othervid.current.srcObject = currStream;
-    //     });
+        peer.once("stream", (currStream) => {
+          setPStream(currStream);
+          othervid.current.srcObject = currStream;
+        });
     
-    //     socket.once("callaccepted", signal => {
-    //       setCallaccepted(true);
-    //       peer.signal(signal);
-    //     });
+        socket.current.once("callaccepted", signal => {
+          setCallaccepted(true);
+          peer.signal(signal);
+        });
     
-    //     connref.current = peer;
+        connref.current = peer;
     
-    //     socket.current.once("callended", () => {
-    //       setPStream(null);
-    //     });
+        socket.current.once("callended", () => {
+          setPStream(null);
+        });
       
-    // };
+    };
+
+    useEffect(() => {
+        caller.is && callUser(currSelectedUser.id);
+    }, [caller])
+    
 
     const leaveCall = () => {
 

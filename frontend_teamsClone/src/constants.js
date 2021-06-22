@@ -4,6 +4,7 @@ export const SET_USER_NAME = "SET_USER_NAME";
 export const SET_USER_PROFILEURL = "SET_USER_PROFILEURL";
 export const SET_USER_SOCKET = "SET_USER_SOCKET";
 export const SET_USER_EMAIL = "SET_USER_EMAIL";
+export const SET_CALLER = "SET_CALLER";
 
 export const SETSIDERAIL = "SETSIDERAIL";
 export const ADD_USER = "ADD_USER";

@@ -38,6 +38,7 @@ io.on('connection', (socket) => {
     socket.broadcast.emit('addUser', users[sid]);
 
     socket.on("calluser", ({usertocall, from, signalData}) => {
+        console.log(usertocall);
         io.to(usertocall).emit("calluser", {signal: signalData, from});
     });
 

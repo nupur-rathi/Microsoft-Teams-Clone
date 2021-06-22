@@ -8,6 +8,7 @@ import ChatOutlinedIcon from '@material-ui/icons/ChatOutlined';
 import { CHAT, VIDEOCALL, AUDIOCALL } from '../../constants';
 import { setClass } from '../../data/actions/classReducerActions';
 import { useDispatch, useSelector } from 'react-redux';
+import { setCaller } from '../../data/actions/callActions';
 
 const useStyles = makeStyles((theme) => ({
   root: { 
@@ -30,6 +31,7 @@ export default function BasicButtonGroup({currentWindow, setWindowState}) {
 
   const currSelectedUser = useSelector(state => state.currSelectedReducer);
   const usersList = useSelector(state => state.usersListReducer);
+  const user = useSelector(state => state.userReducer);
 
   return (
     <div className={classes.root}>
@@ -40,6 +42,7 @@ export default function BasicButtonGroup({currentWindow, setWindowState}) {
           {
             setWindowState(VIDEOCALL); 
             dispatch(setClass(true));
+            dispatch(setCaller({is: true, name: user.name, id: user.id, signal: null}));
           }
           else
           {
