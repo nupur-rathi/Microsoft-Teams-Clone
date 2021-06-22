@@ -11,18 +11,26 @@ const LeftRailListItems = ({ users }) => {
     const curr = useSelector(state => state.currSelectedReducer);
 
     const dispatch = useDispatch();
+    const me = useSelector(state => state.userReducer);
 
-    return (
-        <div className={selected ? "leftRailListItems leftRailListItems_selected" : "leftRailListItems"} onClick={()=>{
-            dispatch(setSelected(id, true));
-            if(curr != null)
-            {    dispatch(setSelected(curr.id, false));}
-            dispatch(setCurrSelected(users));
-            }}>
-            <BadgeAvatars name={name} imgURL={imgUrl}/>
-            <span className="leftRail_ListItem_Name">{name ? name : id}</span>
-        </div>        
-    );
+    if(users.id !== me.id)
+    {
+        return (
+            <div className={selected ? "leftRailListItems leftRailListItems_selected" : "leftRailListItems"} onClick={()=>{
+                dispatch(setSelected(id, true));
+                if(curr != null)
+                {    dispatch(setSelected(curr.id, false));}
+                dispatch(setCurrSelected(users));
+                }}>
+                <BadgeAvatars name={name} imgURL={imgUrl}/>
+                <span className="leftRail_ListItem_Name">{name ? name : id}</span>
+            </div>        
+        );
+    }
+    else
+    {
+        return <></>;
+    }
 }
 
 export default LeftRailListItems;

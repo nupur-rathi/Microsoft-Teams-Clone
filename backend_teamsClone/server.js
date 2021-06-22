@@ -25,16 +25,17 @@ io.on('connection', (socket) => {
     socket.emit('myid', socket.id);
 
     socket.on('disconnect', () => {
+        io.emit('deleteUser', socket.id);
         delete users[socket.id];
         console.log(`${socket.id} got disconnected`);
-        socket.broadcast.emit("callended");
-        io.emit('adduser', users);
-    })
+        socket.broadcast.emit("callended");  
+    });
 
     const sid = socket.id;
 
-    users[sid] = {id: sid};
-    io.emit('adduser', users);
+    users[sid] = {name: sid, id: sid, imgUrl: "#", selected: false};
+    socket.emit('initUsers', users);
+    socket.broadcast.emit('addUser', users[sid]);
 
     socket.on("calluser", ({usertocall, from, signalData}) => {
         io.to(usertocall).emit("calluser", {signal: signalData, from});

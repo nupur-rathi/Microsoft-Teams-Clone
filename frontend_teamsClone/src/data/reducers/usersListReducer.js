@@ -1,13 +1,19 @@
-import {ADDUSER, DELETEUSER, SETSELECTED} from "../../constants";
+import {ADD_USER, DELETE_USER, INIT_USERS, SETSELECTED} from "../../constants";
 
-const usersListInitialState = {'abc': {imgUrl: '#', name: 'Nupur Rathi', id: 'abc', selected: false}, 'def': {imgUrl: '#', name: 'Arpit Rathi', id: 'def', selected: false}};
+const usersListInitialState = {};
 
 const usersListReducer = (state = usersListInitialState , action) => {
 
     const {type, payload} = action;
 
     switch(type) {
-        case ADDUSER:
+        case INIT_USERS:
+            {
+                const usersList = {...payload};
+
+                return usersList;   
+            }
+        case ADD_USER:
             {
                 const newUser = {...payload};
                 const key = payload.id;
@@ -16,7 +22,7 @@ const usersListReducer = (state = usersListInitialState , action) => {
                 
                 return usersList;   
             }
-        case DELETEUSER:
+        case DELETE_USER:
             {
                 const usersList = {...state};
                 delete usersList[payload];

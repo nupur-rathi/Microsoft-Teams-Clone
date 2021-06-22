@@ -1,18 +1,40 @@
-import {SETUSER} from "../../constants";
+import {SET_USER, SET_USER_ID, SET_USER_NAME, SET_USER_EMAIL, SET_USER_SOCKET, SET_USER_PROFILEURL} from "../../constants";
 
 const userInitialState = {};
-
-// const user = {name: payload.name, id: payload.id, email: payload.email, profileUrl: payload.profileUrl, isLoggedIn: payload.isLoggedIn};
-
 
 const userReducer = (state = userInitialState, action) => {
 
     const {type, payload} = action;
 
     switch(type) {
-        case SETUSER:
+        case SET_USER:
             {
                 const user = {...payload};
+                return user;    
+            }
+        case SET_USER_NAME:
+            {
+                const user = {...state, name: payload};
+                return user;    
+            }
+        case SET_USER_ID:
+            {
+                const user = {...state, id: payload};
+                return user;    
+            }
+        case SET_USER_EMAIL:
+            {
+                const user = {...state, email: payload};
+                return user;    
+            }
+        case SET_USER_PROFILEURL:
+            {
+                const user = {...state, profileUrl: payload};
+                return user;    
+            }
+        case SET_USER_SOCKET:
+            {
+                const user = {...state, socket: payload};
                 return user;    
             }
         default:

@@ -11,8 +11,8 @@ const CallPopup = () => {
                 <span className="PopupIncomingName">Nupur Rathi</span>
             </div>
             <div className="popupButtonsDiv">
-                <button className="popupButtons popupAcceptButton"><PhoneInTalkRoundedIcon fontSize="medium" /></button>
-                <button className="popupButtons popupDeclineButton"><CallEndRoundedIcon fontSize="medium" /></button>
+                <button className="popupButtons popupAcceptButton"><PhoneInTalkRoundedIcon fontSize="default" /></button>
+                <button className="popupButtons popupDeclineButton"><CallEndRoundedIcon fontSize="default" /></button>
             </div>
         </div>
     );

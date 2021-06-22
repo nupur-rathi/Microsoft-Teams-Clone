@@ -1,7 +1,14 @@
-export const SETUSER = "SETUSER";
+export const SET_USER = "SET_USER";
+export const SET_USER_ID = "SET_USER_ID";
+export const SET_USER_NAME = "SET_USER_NAME";
+export const SET_USER_PROFILEURL = "SET_USER_PROFILEURL";
+export const SET_USER_SOCKET = "SET_USER_SOCKET";
+export const SET_USER_EMAIL = "SET_USER_EMAIL";
+
 export const SETSIDERAIL = "SETSIDERAIL";
-export const ADDUSER = "ADDUSER";
-export const DELETEUSER = "DELETEUSER";
+export const ADD_USER = "ADD_USER";
+export const INIT_USERS = "INIT_USERS";
+export const DELETE_USER = "DELETE_USER";
 export const SETSELECTED = "SETSELECTED";
 export const SET_CURR_SELECTED = "SET_CURR_SELECTED";
 export const SET_CLASS = "SET_CLASS";

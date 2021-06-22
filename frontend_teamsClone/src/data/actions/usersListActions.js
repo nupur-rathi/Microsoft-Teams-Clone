@@ -1,4 +1,4 @@
-import {SETSELECTED} from "../../constants";
+import {SETSELECTED, ADD_USER, INIT_USERS, DELETE_USER} from "../../constants";
 
 export const setSelected = (id, state) => {
     return {
@@ -7,5 +7,31 @@ export const setSelected = (id, state) => {
             id: id,
             state: state,
         },
+    }
+};
+
+export const addUser = ({name, id, imgUrl}, selected) => {
+    return {
+        type: ADD_USER,
+        payload: {
+            name: name,
+            id: id,
+            imgUrl: imgUrl,
+            selected: selected,
+        },
+    }
+};
+
+export const deleteUser = (id) => {
+    return {
+        type: DELETE_USER,
+        payload: id,
+    }
+};
+
+export const initUsers = (users) => {
+    return {
+        type: INIT_USERS,
+        payload: users,
     }
 };
