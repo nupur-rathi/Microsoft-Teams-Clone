@@ -4,8 +4,9 @@ import CallEndRoundedIcon from '@material-ui/icons/CallEndRounded';
 import { CHAT } from "../../constants";
 import { useDispatch } from 'react-redux';
 import { setClass } from '../../data/actions/classReducerActions';
+import { setWindowState } from '../../data/actions/windowStateActions';
 
-const CallWindow = ({setWindowState}) => {
+const CallWindow = () => {
 
     const dispatch = useDispatch();
 
@@ -15,7 +16,7 @@ const CallWindow = ({setWindowState}) => {
                 <div className="callMain">
                 </div>
                 <div className="callOptions">
-                    <button className="callOptionsButtons callOptionsEndcall" onClick={() => {setWindowState(CHAT); dispatch(setClass(false))}}> 
+                    <button className="callOptionsButtons callOptionsEndcall" onClick={() => {dispatch(setWindowState(CHAT)); dispatch(setClass(false))}}> 
                         <CallEndRoundedIcon fontSize="medium" />
                     </button>
                 </div>

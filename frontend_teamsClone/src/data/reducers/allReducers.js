@@ -5,6 +5,7 @@ import usersListReducer from './usersListReducer';
 import currSelectedReducer from './currSelectedReducer';
 import classReducer from './setClassReducer';
 import callReducer from './callReducer';
+import windowStateReducer from './windowStateReducer';
 
 const allReducers = combineReducers({
     userReducer: userReducer,
@@ -13,6 +14,7 @@ const allReducers = combineReducers({
     currSelectedReducer: currSelectedReducer,
     classReducer: classReducer,
     callReducer: callReducer,
+    windowStateReducer: windowStateReducer,
 });
 
 export default allReducers;

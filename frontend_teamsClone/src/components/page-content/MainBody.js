@@ -9,17 +9,10 @@ const MainBody = () => {
 
     const classState = useSelector(state => state.classReducer);
 
-    const [currentWindow, setCurrentWindow] = useState(CHAT);
-
-
-    const setWindowState = (type) => {
-        setCurrentWindow(type);
-    };
-
     return (
         <div className={classState ? "mainBody mainBody_expand": "mainBody"}>
-            <MainBodyHeader currentWindow={currentWindow} setWindowState={setWindowState}/>
-            <MainBodyContainer currentWindow={currentWindow} setWindowState={setWindowState}/>
+            <MainBodyHeader />
+            <MainBodyContainer />
         </div>
     );
 }

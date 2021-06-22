@@ -3,27 +3,29 @@ import '../../styles/mainBody.css';
 import VideoWindow from "../video/VideoWindow";
 import CallWindow from "../callwindow/CallWindow";
 import ChatWindow from "../chatwindow/ChatWindow";
-import { useSelector } from 'react-redux';
+import { useSelector, useReducer } from 'react-redux';
 
 import { CHAT, VIDEOCALL, AUDIOCALL } from '../../constants';
 
 
-const MainBodyContainer = ({currentWindow, setWindowState}) => {
+const MainBodyContainer = () => {
 
     const classState = useSelector(state => state.classReducer);
+    const windowState = useSelector(state => state.windowStateReducer);
 
     function renderWindow()
     {
-        if(currentWindow === CHAT) {
-            return (<ChatWindow setWindowState={setWindowState} />);
+        if(windowState === CHAT) {
+            return (<ChatWindow />);
         }
-        else if(currentWindow === VIDEOCALL) {
-            return (<VideoWindow setWindowState={setWindowState} />);
+        else if(windowState === VIDEOCALL) {
+            return (<VideoWindow />);
         }
-        else if(currentWindow === AUDIOCALL) {
-            return (<CallWindow setWindowState={setWindowState} />);
+        else if(windowState === AUDIOCALL) {
+            return (<CallWindow />);
         }
     }
+
     return (
         <div className={classState ? "mainBodyContainer mainBodyContainer_expand": "mainBodyContainer"}>
             {renderWindow()}

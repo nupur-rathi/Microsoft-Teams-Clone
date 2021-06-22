@@ -4,7 +4,7 @@ import BadgeAvatars from '../common/Avatar';
 import BasicButtonGroup from '../common/GroupButtons';
 import { useSelector, useDispatch } from 'react-redux';
 
-const MainBodyHeader = ({currentWindow, setWindowState}) => {
+const MainBodyHeader = () => {
 
     const classState = useSelector(state => state.classReducer);
 
@@ -17,7 +17,7 @@ const MainBodyHeader = ({currentWindow, setWindowState}) => {
                 <span>{currSelected ? currSelected.name: ""}</span>
             </div>
             <div className="mainBodyHeaderRight">
-                {currSelected ? <BasicButtonGroup currentWindow={currentWindow} setWindowState={setWindowState} /> : <></>}
+                {currSelected ? <BasicButtonGroup /> : <></>}
             </div>
         </div>
     );

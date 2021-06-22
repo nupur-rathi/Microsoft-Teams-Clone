@@ -5,24 +5,23 @@ import { CHAT } from "../../constants";
 import { useDispatch, useSelector } from 'react-redux';
 import { setClass } from '../../data/actions/classReducerActions';
 import Peer from 'simple-peer';
-import { setCaller } from '../../data/actions/callActions';
+import { setCaller, setCallAccept } from '../../data/actions/callActions';
+import { setWindowState } from '../../data/actions/windowStateActions';
 
-const VideoWindow = ({setWindowState}) => {
+const VideoWindow = () => {
 
     const currSelectedUser = useSelector(state => state.currSelectedReducer);
     const caller = useSelector(state => state.callReducer);
 
     const [stream, setStream] = useState(null);
     const [pstream, setPStream] = useState(null);
-    // const [call, setCall] = useState({});
-    const [callaccepted , setCallaccepted] = useState(false);
     const [callended , setCallended] = useState(false);
     const [userMedia, setUserMedia] = useState({ video: true, audio: true });
 
     const myvideo = useRef();
     const othervid = useRef();
     const connref = useRef();
-
+    const signalRef = useRef();
 
     const dispatch = useDispatch();
     const {name, id, email, socket, imgUrl} = useSelector(state => state.userReducer);
@@ -37,35 +36,33 @@ const VideoWindow = ({setWindowState}) => {
     
     }, []);
 
-    // const answercall = () => {
-
-    //     setCallaccepted(true);
+    const answerCall = () => {
     
-    //     const peer = new Peer({
-    //       initiator: false,
-    //       trickle: false,
-    //       stream: stream,
-    //     });
+        const peer = new Peer({
+          initiator: false,
+          trickle: false,
+          stream: stream,
+        });
     
-    //     peer.once("signal", data => {
-    //       socket.current.emit("answercall", {signal: data, to: call.from})
-    //     });
+        peer.once("signal", data => {
+            socket.current.emit("answercall", {signal: , to: caller.id})
+        });
     
-    //     peer.once("stream", currStream => {
-    //       setPStream(currStream);
-    //       othervid.current.srcObject = currStream;
-    //     });
+        peer.once("stream", currStream => {
+          setPStream(currStream);
+          othervid.current.srcObject = currStream;
+        });
     
-    //     peer.signal(call.signal);
+        peer.signal(caller.signal);
     
-    //     connref.current = peer;
+        connref.current = peer;
     
-    //     socket.current.once("callended", () => {
-    //       setPStream(null);
-    //       console.log(connref.current);
-    //     });
+        socket.current.once("callended", () => {
+          setPStream(null);
+          console.log(connref.current);
+        });
     
-    // };
+    };
     
     const callUser = (pid) => {
 
@@ -85,7 +82,7 @@ const VideoWindow = ({setWindowState}) => {
         });
     
         socket.current.once("callaccepted", signal => {
-          setCallaccepted(true);
+          dispatch(setCallAccept(true));
           peer.signal(signal);
         });
     
@@ -99,7 +96,11 @@ const VideoWindow = ({setWindowState}) => {
 
     useEffect(() => {
         caller.is && callUser(currSelectedUser.id);
-    }, [caller])
+    }, [caller.is])
+
+    useEffect(() => {
+        !caller.is && answerCall();
+    }, [caller.callAccept])
     
 
     const leaveCall = () => {
@@ -119,12 +120,13 @@ const VideoWindow = ({setWindowState}) => {
                     <div className="userVideos">
                         {stream && (<video playsInline muted ref={myvideo} autoPlay className="video" />)}
                     </div>
-                    {/* <div className="userVideos">
-                    </div> */}
+                    <div className="userVideos">
+                        {pstream && <video playsInline muted={false} ref={othervid} autoPlay className="video" />}
+                    </div>
                 </div>
                 <div className="videoOptions">
                     <button className="videoOptionsButtons videoOptionsEndcall" onClick={() => 
-                        { setWindowState(CHAT); leaveCall(); dispatch(setClass(false))}}>
+                        { dispatch(setWindowState(CHAT)); leaveCall(); dispatch(setClass(false))}}>
                         <CallEndRoundedIcon fontSize="default" />
                     </button>
                 </div>

@@ -1,4 +1,4 @@
-import { SET_CALLER } from "../../constants";
+import { SET_CALLER, SET_CALL_ACCEPT } from "../../constants";
 
 export const setCaller = (obj) => {
     return {
@@ -8,6 +8,14 @@ export const setCaller = (obj) => {
             name: obj.name,
             id: obj.id,
             signal: obj.signal,
+            callAccept: obj.callAccept,
         }
+    }
+};
+
+export const setCallAccept = (state) => {
+    return {
+        type: SET_CALL_ACCEPT,
+        payload: state,
     }
 };

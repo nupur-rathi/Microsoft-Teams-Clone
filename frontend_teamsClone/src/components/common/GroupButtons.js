@@ -9,6 +9,7 @@ import { CHAT, VIDEOCALL, AUDIOCALL } from '../../constants';
 import { setClass } from '../../data/actions/classReducerActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCaller } from '../../data/actions/callActions';
+import { setWindowState } from '../../data/actions/windowStateActions'
 
 const useStyles = makeStyles((theme) => ({
   root: { 
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BasicButtonGroup({currentWindow, setWindowState}) {
+export default function BasicButtonGroup({currentWindow}) {
 
   const classes = useStyles();
 
@@ -36,11 +37,16 @@ export default function BasicButtonGroup({currentWindow, setWindowState}) {
   return (
     <div className={classes.root}>
       <ButtonGroup size="small" aria-label="outlined primary button group">
-        <Button onClick={() => {setWindowState(CHAT); dispatch(setClass(false))}}><ChatOutlinedIcon fontSize="small" /></Button>
+        <Button onClick={() => {
+          dispatch(setWindowState(CHAT)); 
+          dispatch(setClass(false));
+          }}>
+          <ChatOutlinedIcon fontSize="small" />
+        </Button>
         <Button onClick={() => {
           if(currSelectedUser.id in usersList === true)
           {
-            setWindowState(VIDEOCALL); 
+            dispatch(setWindowState(VIDEOCALL)); 
             dispatch(setClass(true));
             dispatch(setCaller({is: true, name: user.name, id: user.id, signal: null}));
           }
@@ -53,7 +59,7 @@ export default function BasicButtonGroup({currentWindow, setWindowState}) {
         <Button onClick={() => {
           if(currSelectedUser.id in usersList === true)
           {
-            setWindowState(AUDIOCALL); 
+            dispatch(setWindowState(AUDIOCALL)); 
             dispatch(setClass(true));
           }
           else
