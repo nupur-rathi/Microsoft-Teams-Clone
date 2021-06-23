@@ -9,6 +9,9 @@ import Message from './Message';
 const ChatWindow = () => {
 
     const currSelected = useSelector(state => state.currSelectedReducer);
+    const user = useSelector(state => state.userReducer);
+
+    let isMessage = true;
 
     return (
         <div className="chatWindow">
@@ -23,6 +26,8 @@ const ChatWindow = () => {
                     <Message />
                 </div>
                 <div className="chatWindowBelow">
+                    <div className={isMessage ? "hide": "alertOnNoInput"}>
+                        Please write a message to send.</div>
                     <input className="chatInput" placeholder="Type a new message"></input>
                     <div className="chatInputOptions">
                         <div className="chatInputTypes">

@@ -1,5 +1,9 @@
 @import './variables.css';
 
+.hide{
+    display: none;
+}
+
 .chatWindow{
     height: 100%;
     width: 100%;
@@ -95,6 +99,15 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.alertOnNoInput{
+    background-color: var(--backgroundColor6);
+    width: 100%;
+    box-sizing: border-box;
+    padding: 2px;
+    font-size: 0.8rem;
+    color: var(--defaultBackgroundColor);
 }
 
 .chatInput{
