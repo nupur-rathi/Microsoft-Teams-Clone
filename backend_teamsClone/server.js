@@ -37,18 +37,29 @@ io.on('connection', (socket) => {
     socket.emit('initUsers', users);
     socket.broadcast.emit('addUser', users[sid]);
 
+    // ----------------------------------
+    // video calling oto code
+
     socket.on("calluser", ({usertocall, from, signalData}) => {
         console.log(usertocall);
         io.to(usertocall).emit("calluser", {signal: signalData, from});
     });
 
     socket.on("answercall", (data) => {
+        console.log(data);
         io.to(data.to).emit("callaccepted", data.signal);
     });
 
     socket.on("callend", (from) => 
         socket.broadcast.emit("callended")
     );
+
+    // -------------------------------------------
+
+    // chat oto code
+
+
+    // -----------------------------------------
 
 });
 

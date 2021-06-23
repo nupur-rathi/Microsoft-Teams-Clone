@@ -7,6 +7,7 @@ export const SET_USER_EMAIL = "SET_USER_EMAIL";
 export const SET_CALLER = "SET_CALLER";
 export const SET_CALL_ACCEPT = "SET_CALL_ACCEPT";
 export const SET_WINDOW_STATE = "SET_WINDOW_STATE";
+export const ADD_CHAT = "ADD_CHAT";
 
 export const SETSIDERAIL = "SETSIDERAIL";
 export const ADD_USER = "ADD_USER";

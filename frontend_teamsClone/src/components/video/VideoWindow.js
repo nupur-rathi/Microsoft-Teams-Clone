@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import '../../styles/videoWindow.css';
 import CallEndRoundedIcon from '@material-ui/icons/CallEndRounded';
 import { CHAT } from "../../constants";
@@ -98,29 +98,47 @@ const VideoWindow = () => {
         });
       
     };
-
-    // useEffect(() => {
-    //     caller.is && callUser(currSelectedUser.id);
-    // }, [caller.is])
-
-    // useEffect(() => {
-    //     if(!caller.is && caller.callAccept)
-    //     {
-    //         dispatch(setCurrSelected(usersList[caller.id]));
-    //         answerCall();
-    //     }
-    // }, [caller.callAccept])
     
-
     const leaveCall = () => {
 
-        // setCallended(true);
-        // setPStream(null);
-        // connref.current.removeAllListeners('close');
-        // connref.current.destroy();
-        // console.log(connref.current);
-        // socket.current.emit("callend");
+        setCallended(true);
+        setPStream(null);
+        connref.current.removeAllListeners('close');
+        connref.current.destroy();
+        console.log(connref.current);
+        socket.current.emit("callend");
     }
+
+    // useLayoutEffect(() => {
+    //    if(!caller.is)
+    //    {
+    //     const peer = new Peer({
+    //         initiator: false,
+    //         trickle: false,
+    //         stream: stream,
+    //       });
+      
+    //       peer.once("signal", data => {
+    //           console.log(data);
+    //           socket.current.emit("answercall", {signal: data, to: caller.id})
+    //       });
+      
+    //       peer.once('stream', currStream => {
+    //           setPStream(currStream);
+    //         othervid.current.srcObject = currStream;
+            
+    //       });
+      
+    //       peer.signal(caller.signal);
+      
+    //       connref.current = peer;
+      
+    //       socket.current.once("callended", () => {
+    //         setPStream(null);
+    //         console.log(connref.current);
+    //       });
+    //    }
+    // }, []);
 
     return (
         <div className="videoWindow">
