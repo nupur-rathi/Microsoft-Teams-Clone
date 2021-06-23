@@ -40,6 +40,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .chatWindowMain{
@@ -153,4 +154,12 @@
 
 .chatSendButton{
     width: 5%;
+}
+
+.emojiPicker{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    bottom: 10%;
 }

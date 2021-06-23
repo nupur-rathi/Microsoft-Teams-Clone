@@ -6,6 +6,7 @@ import SentimentSatisfiedOutlinedIcon from '@material-ui/icons/SentimentSatisfie
 import AttachmentOutlinedIcon from '@material-ui/icons/AttachmentOutlined';
 import Message from './Message';
 import { addChat } from '../../data/actions/chatActions';
+import Picker from 'emoji-picker-react';
 
 const ChatWindow = () => {
 
@@ -43,6 +44,10 @@ const ChatWindow = () => {
 
     };
 
+    const onEmojiClick = (event, emojiObject) => {
+        inputFieldRef.current.value = `${inputFieldRef.current.value} ${emojiObject.emoji}`;
+    };
+
     return (
         <div className="chatWindow">
             { !currSelected ? 
@@ -73,6 +78,9 @@ const ChatWindow = () => {
                             <SendOutlinedIcon fontSize="small"/>
                         </button>
                     </div>
+                </div>
+                <div className="emojiPicker">
+                    <Picker onEmojiClick={onEmojiClick} />
                 </div>
             </div>
             }
