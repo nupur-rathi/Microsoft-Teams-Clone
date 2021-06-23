@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import SendOutlinedIcon from '@material-ui/icons/SendOutlined';
 import SentimentSatisfiedOutlinedIcon from '@material-ui/icons/SentimentSatisfiedOutlined';
 import AttachmentOutlinedIcon from '@material-ui/icons/AttachmentOutlined';
+import Message from './Message';
 
 const ChatWindow = () => {
 
@@ -18,18 +19,8 @@ const ChatWindow = () => {
             </div> :
             <div className="yesChatWindow">
                 <div className="chatWindowMain">
-                    <div className="messageDiv myMessageDiv">
-                        <div className="messages myMessage">
-                            <span className="messageFrom">You:</span>
-                            <span className="message">biuhokhlijpopojppppppppppppppppp</span>
-                        </div>
-                    </div>
-                    <div className="messageDiv otherMessageDiv">
-                        <div className="messages otherMessage">
-                            <span className="messageFrom">hjiyg</span>
-                            <span className="message">uhuhjjjjjjjjjjjjjjjjjjjjjjjjjj</span>
-                        </div>
-                    </div>
+                    {/* map messages here*/}
+                    <Message />
                 </div>
                 <div className="chatWindowBelow">
                     <input className="chatInput" placeholder="Type a new message"></input>
