@@ -9,6 +9,7 @@ const LeftRailListItems = ({ users }) => {
 
     const {name, imgUrl, id, selected, type} = users;
     const curr = useSelector(state => state.currSelectedReducer);
+    const usersList = useSelector(state => state.usersListReducer);
 
     const dispatch = useDispatch();
     const me = useSelector(state => state.userReducer);
@@ -19,8 +20,10 @@ const LeftRailListItems = ({ users }) => {
             <div className={selected ? "leftRailListItems leftRailListItems_selected" : "leftRailListItems"} onClick={()=>{
                 dispatch(setSelected(id, true));
                 if(curr != null)
-                {    dispatch(setSelected(curr.id, false));}
-                dispatch(setCurrSelected(users));
+                {   
+                    if(curr.id in usersList) 
+                        dispatch(setSelected(curr.id, false));}
+                    dispatch(setCurrSelected(users));
                 }}>
                 <BadgeAvatars name={name} imgURL={imgUrl}/>
                 <span className="leftRail_ListItem_Name">{name ? name : id}</span>

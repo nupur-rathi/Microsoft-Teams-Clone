@@ -1,12 +1,13 @@
 import React, { useRef, useEffect } from 'react';
 import Header from '../components/Header';
 import Body from '../components/Body';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setUser, setUserEmail, setUserID, setUserName, setUserProfileurl, setUserSocket } from '../data/actions/userActions';
 import { io } from 'socket.io-client';
 import { addUser, initUsers, deleteUser} from '../data/actions/usersListActions';
 import { setCaller } from '../data/actions/callActions';
 import { addChat } from '../data/actions/chatActions';
+import { setCurrSelected } from '../data/actions/currSelectedActions';
 
 const socket = io(`http://localhost:5000`);
 
