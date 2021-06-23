@@ -99,17 +99,17 @@ const VideoWindow = () => {
       
     };
 
-    useEffect(() => {
-        caller.is && callUser(currSelectedUser.id);
-    }, [caller.is])
+    // useEffect(() => {
+    //     caller.is && callUser(currSelectedUser.id);
+    // }, [caller.is])
 
-    useEffect(() => {
-        if(!caller.is && caller.callAccept)
-        {
-            dispatch(setCurrSelected(usersList[caller.id]));
-            answerCall();
-        }
-    }, [caller.callAccept])
+    // useEffect(() => {
+    //     if(!caller.is && caller.callAccept)
+    //     {
+    //         dispatch(setCurrSelected(usersList[caller.id]));
+    //         answerCall();
+    //     }
+    // }, [caller.callAccept])
     
 
     const leaveCall = () => {
@@ -132,6 +132,24 @@ const VideoWindow = () => {
                     <div className="userVideos">
                         {pstream && <video playsInline muted={false} ref={othervid} autoPlay className="video" />}
                     </div>
+                </div>
+                <div>
+                    {
+                        caller.is ?
+                        <button className= {caller.callAccept ? "CandAButton_hide": "CandAButton"}
+                        onClick={()=>
+                        {
+                            callUser(currSelectedUser.id);
+                        }}>
+                        Call</button> :
+                        <button className= {caller.callAccept ? "CandAButton_hide": "CandAButton"}
+                        onClick={()=>
+                        {
+                            answerCall();
+                            dispatch(setCallAccept(true));
+                        }}>
+                        Answer</button>
+                    }
                 </div>
                 <div className="videoOptions">
                     <button className="videoOptionsButtons videoOptionsEndcall" onClick={() => 

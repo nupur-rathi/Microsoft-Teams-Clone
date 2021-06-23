@@ -26,7 +26,6 @@ const CallPopup = () => {
             <div className="popupButtonsDiv">
                 <button className="popupButtons popupAcceptButton"
                 onClick={()=>{
-                    dispatch(setCallAccept(true));
                     dispatch(setWindowState(VIDEOCALL));
                     dispatch(setClass(true));
                     }}>

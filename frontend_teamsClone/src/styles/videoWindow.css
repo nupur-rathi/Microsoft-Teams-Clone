@@ -66,3 +66,12 @@
     width: 100%;
     transform: rotateY(180deg);
 }
+
+.CandAButton{
+    outline: none;
+    border: none;
+}
+
+.CandAButton_hide{
+    display: none;
+}
