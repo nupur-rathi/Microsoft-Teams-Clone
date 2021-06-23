@@ -157,9 +157,22 @@
 }
 
 .emojiPicker{
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    box-shadow: rgba(100, 100, 111, 0.2) -15px 7px 15px -10px;
     position: absolute;
     z-index: 1;
     left: 0;
     bottom: 10%;
+    display: flex;
+}
+
+.emojiPickerClose{
+    height: 10%;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.emojiPickerClose:active{
+    transform: scale(1.1);
 }

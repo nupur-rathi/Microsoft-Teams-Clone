@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import '../../styles/chatWindow.css';
 import { useDispatch, useSelector } from 'react-redux';
 import SendOutlinedIcon from '@material-ui/icons/SendOutlined';
@@ -7,6 +7,7 @@ import AttachmentOutlinedIcon from '@material-ui/icons/AttachmentOutlined';
 import Message from './Message';
 import { addChat } from '../../data/actions/chatActions';
 import Picker from 'emoji-picker-react';
+import CloseIcon from '@material-ui/icons/Close';
 
 const ChatWindow = () => {
 
@@ -25,16 +26,19 @@ const ChatWindow = () => {
 
     const inputFieldRef = useRef();
 
+    const [isMessage, setIsMessage] = useState(true);
+
     const sendMessage = () => {
 
         const message = inputFieldRef.current.value;
         inputFieldRef.current.value = "";
-        if(message == "")
+        if(message === "")
         {
-
+            setIsMessage(false);
         }
         else
         {
+            setIsMessage(true);
             if(currSelected.type === "user")
             {
                 dispatch(addChat("oto", currSelected.id, user.id, message)); 
@@ -47,6 +51,8 @@ const ChatWindow = () => {
     const onEmojiClick = (event, emojiObject) => {
         inputFieldRef.current.value = `${inputFieldRef.current.value} ${emojiObject.emoji}`;
     };
+
+    const [closeEP, setCloseEP] = useState(true);
 
     return (
         <div className="chatWindow">
@@ -62,12 +68,12 @@ const ChatWindow = () => {
                     }   
                 </div>
                 <div className="chatWindowBelow">
-                    {/* <div className={isMessage ? "hide": "alertOnNoInput"}>
-                    Please write a message to send.</div> */}
+                    <div className={isMessage ? "hide": "alertOnNoInput"}>
+                    Please write a message to send.</div>
                     <input ref={inputFieldRef} className="chatInput" placeholder="Type a new message"></input>
                     <div className="chatInputOptions">
                         <div className="chatInputTypes">
-                            <button className="chatEmojiButton chatOptionButtons">
+                            <button className="chatEmojiButton chatOptionButtons" onClick={()=>{setCloseEP(false);}}>
                                 <SentimentSatisfiedOutlinedIcon fontSize="small"/>
                             </button>
                             <button className="chatEmojiButton chatOptionButtons">
@@ -79,8 +85,9 @@ const ChatWindow = () => {
                         </button>
                     </div>
                 </div>
-                <div className="emojiPicker">
+                <div className={closeEP ? "hide" : "emojiPicker"}>
                     <Picker onEmojiClick={onEmojiClick} />
+                    <button className="emojiPickerClose" onClick={()=>{setCloseEP(true);}}><CloseIcon fontSize="small"/></button>
                 </div>
             </div>
             }
