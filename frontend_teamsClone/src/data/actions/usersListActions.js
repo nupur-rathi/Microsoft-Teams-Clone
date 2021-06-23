@@ -18,6 +18,7 @@ export const addUser = ({name, id, imgUrl}, selected) => {
             id: id,
             imgUrl: imgUrl,
             selected: selected,
+            type: 'user',
         },
     }
 };
@@ -30,6 +31,7 @@ export const deleteUser = (id) => {
 };
 
 export const initUsers = (users) => {
+
     return {
         type: INIT_USERS,
         payload: users,

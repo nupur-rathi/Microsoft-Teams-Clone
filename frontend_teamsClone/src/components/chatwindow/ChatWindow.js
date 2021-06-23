@@ -1,17 +1,47 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import '../../styles/chatWindow.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import SendOutlinedIcon from '@material-ui/icons/SendOutlined';
 import SentimentSatisfiedOutlinedIcon from '@material-ui/icons/SentimentSatisfiedOutlined';
 import AttachmentOutlinedIcon from '@material-ui/icons/AttachmentOutlined';
 import Message from './Message';
+import { addChat } from '../../data/actions/chatActions';
 
 const ChatWindow = () => {
 
+    const dispatch = useDispatch();
+
+    let currMessagesToShow = [];
+
     const currSelected = useSelector(state => state.currSelectedReducer);
     const user = useSelector(state => state.userReducer);
+    const messages = useSelector(state => state.chatReducer);
 
-    let isMessage = true;
+    if(currSelected !== null && currSelected.type === "user")
+    {
+        currMessagesToShow = messages["oto"][currSelected.id];
+    }
+
+    const inputFieldRef = useRef();
+
+    const sendMessage = () => {
+
+        const message = inputFieldRef.current.value;
+        inputFieldRef.current.value = "";
+        if(message == "")
+        {
+
+        }
+        else
+        {
+            if(currSelected.type === "user")
+            {
+                dispatch(addChat("oto", currSelected.id, user.id, message)); 
+                user.socket.current.emit("sendMessage", {to: currSelected.id, message: message});
+            }   
+        }
+
+    };
 
     return (
         <div className="chatWindow">
@@ -22,13 +52,14 @@ const ChatWindow = () => {
             </div> :
             <div className="yesChatWindow">
                 <div className="chatWindowMain">
-                    {/* map messages here*/}
-                    <Message />
+                    {
+                        currMessagesToShow && currMessagesToShow.map((item,index) => <Message key={index} item={item} me={user.id}/>)
+                    }   
                 </div>
                 <div className="chatWindowBelow">
-                    <div className={isMessage ? "hide": "alertOnNoInput"}>
-                        Please write a message to send.</div>
-                    <input className="chatInput" placeholder="Type a new message"></input>
+                    {/* <div className={isMessage ? "hide": "alertOnNoInput"}>
+                    Please write a message to send.</div> */}
+                    <input ref={inputFieldRef} className="chatInput" placeholder="Type a new message"></input>
                     <div className="chatInputOptions">
                         <div className="chatInputTypes">
                             <button className="chatEmojiButton chatOptionButtons">
@@ -38,7 +69,7 @@ const ChatWindow = () => {
                                 <AttachmentOutlinedIcon fontSize="small"/>
                             </button>
                         </div>
-                        <button className="chatSendButton chatOptionButtons">
+                        <button className="chatSendButton chatOptionButtons" onClick={()=>{sendMessage();}}>
                             <SendOutlinedIcon fontSize="small"/>
                         </button>
                     </div>

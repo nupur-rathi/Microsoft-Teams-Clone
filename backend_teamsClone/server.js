@@ -33,7 +33,7 @@ io.on('connection', (socket) => {
 
     const sid = socket.id;
 
-    users[sid] = {name: sid, id: sid, imgUrl: "#", selected: false};
+    users[sid] = {name: sid, id: sid, imgUrl: "#", selected: false, type: "user"};
     socket.emit('initUsers', users);
     socket.broadcast.emit('addUser', users[sid]);
 
@@ -58,6 +58,9 @@ io.on('connection', (socket) => {
 
     // chat oto code
 
+    socket.on("sendMessage", ({to, message}) => {
+        io.to(to).emit("receiveMessage", {from: sid, message: message});
+    });
 
     // -----------------------------------------
 

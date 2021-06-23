@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const LeftRailListItems = ({ users }) => {
 
-    const {name, imgUrl, id, selected} = users;
+    const {name, imgUrl, id, selected, type} = users;
     const curr = useSelector(state => state.currSelectedReducer);
 
     const dispatch = useDispatch();

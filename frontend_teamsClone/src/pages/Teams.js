@@ -6,6 +6,7 @@ import { setUser, setUserEmail, setUserID, setUserName, setUserProfileurl, setUs
 import { io } from 'socket.io-client';
 import { addUser, initUsers, deleteUser} from '../data/actions/usersListActions';
 import { setCaller } from '../data/actions/callActions';
+import { addChat } from '../data/actions/chatActions';
 
 const socket = io(`http://localhost:5000`);
 
@@ -38,6 +39,10 @@ const Teams = () => {
 
         socket.on("calluser", ({from, signal}) => {
             dispatch(setCaller({is: false, name: from, id: from, signal: signal}));
+        });
+
+        socket.on("receiveMessage", ({from, message}) => {
+            dispatch(addChat("oto", from, from, message));
         });
  
     }, []);
