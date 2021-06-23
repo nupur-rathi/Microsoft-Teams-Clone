@@ -7,3 +7,137 @@
     justify-content: center;
     align-items: center;
 }
+
+.noChatWindow{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.noChatImg{
+    width: 250px;
+    height: 250px;
+    box-sizing: border-box;
+    margin: 0px 0px 20px 0px;
+}
+
+.noChatText{
+    font-size: 1.3rem;
+    color: var(--foregroundColor2);
+}
+
+.yesChatWindow{
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.chatWindowMain{
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+.messageDiv{
+    width: 100%;
+    min-height: 60px;
+    display: flex;
+    box-sizing: border-box;
+    margin: 15px 0px 15px 0px;
+}
+
+.myMessageDiv{
+    flex-direction: row-reverse;
+}
+
+.messages{
+    max-width: 48%;
+    height: 100%;
+    word-wrap: break-word;
+    padding: 8px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+}
+
+.messageFrom{
+    box-sizing: border-box;
+    margin-bottom: 4px;
+    font-size: 0.85rem;
+    color: var(--foregroundColor4);
+}
+
+.message{
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+.myMessage{
+    background-color: var(--brandBackgroundColor1);
+}
+
+.otherMessage{
+    background-color: var(--defaultBackgroundColor);
+}
+
+.chatWindowBelow{
+    width: 100%;
+    height: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.chatInput{
+    outline: none;
+    border: none;
+    border-radius: 4px;
+    height: 38px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+    margin: 0px 0px 8px 0px;
+}
+
+.chatInput:focus{
+    border-bottom: 2px solid var(--brandForegroundColor);
+}
+
+.chatInputOptions{
+    height: 30px;
+    width: 100%;
+    display: flex;
+}
+
+.chatOptionButtons{
+    color: var(--foregroundColor2);
+    outline: none;
+    border: none;
+    background-color: transparent;
+    box-sizing: border-box;
+    padding: 2px 2px 2px 2px;   
+    cursor: pointer;
+    margin: 0px 2px 0px 0px;
+}
+
+.chatInputTypes{
+    width: 95%;
+    display: flex;
+}
+
+.chatOptionButtons:hover{
+    color: var(--brandForegroundColor);
+}
+
+.chatSendButton{
+    width: 5%;
+}
