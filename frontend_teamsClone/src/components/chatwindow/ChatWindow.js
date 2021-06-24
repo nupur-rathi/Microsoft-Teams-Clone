@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import '../../styles/chatWindow.css';
 import { useDispatch, useSelector } from 'react-redux';
 import SendOutlinedIcon from '@material-ui/icons/SendOutlined';
@@ -18,6 +18,12 @@ const ChatWindow = () => {
     const currSelected = useSelector(state => state.currSelectedReducer);
     const user = useSelector(state => state.userReducer);
     const messages = useSelector(state => state.chatReducer);
+
+    const chatWindowMainRef = useRef(null);
+
+    useEffect(() => {
+        chatWindowMainRef.current?.scroll({ top: chatWindowMainRef.current.scrollHeight, behavior: "smooth"});
+    }, [currMessagesToShow]);
 
     if(currSelected !== null && currSelected.type === "user")
     {
@@ -62,7 +68,7 @@ const ChatWindow = () => {
                 <span className="noChatText">Start Chatting</span>
             </div> :
             <div className="yesChatWindow">
-                <div className="chatWindowMain">
+                <div className="chatWindowMain" ref={chatWindowMainRef}>
                     {
                         currMessagesToShow && currMessagesToShow.map((item,index) => <Message key={index} item={item} me={user.id}/>)
                     }   
