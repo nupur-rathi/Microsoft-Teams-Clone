@@ -5,6 +5,17 @@ const RoomPopup = ({state, setState}) => {
 
     const nameRef = useRef();
 
+    function createRoom()
+    {
+        if(nameRef.current.value === "")
+            alert("room name field empty");
+        else
+        {
+            console.log(nameRef.current.value);
+            setState(false);
+        }
+    }
+
     if(state === true)
     {
         return (
@@ -24,10 +35,11 @@ const RoomPopup = ({state, setState}) => {
                 <div className="roomPopupButtonDiv">
                     <button className="roomPopupButtons"
                     onClick={()=>{
-                        setState(false);
+                        createRoom();
                     }}>Done</button>
                     <button className="roomPopupButtons"
                     onClick={()=>{
+                        nameRef.current.value = "";
                         setState(false);
                     }}>Cancel</button>
                 </div>

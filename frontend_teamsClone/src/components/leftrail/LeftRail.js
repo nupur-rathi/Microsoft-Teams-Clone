@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../styles/leftRail.css';
 import LeftRailListItems from './LeftRailListItems';
 import { useSelector } from 'react-redux';
@@ -15,6 +15,11 @@ const LeftRail = () => {
     const usersListObj = useSelector(state => state.usersListReducer);
     const usersList = (Object.keys(usersListObj).map((key) => usersListObj[key]));
     // const roomsList = [];
+
+    useEffect(() => {
+        if(heading === Chat)
+            setCpopupState(false);
+    }, [heading])
 
     return (
         <div className={classState ? "leftRail leftRail_hide": "leftRail"}>
