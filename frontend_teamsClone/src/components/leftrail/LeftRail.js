@@ -3,13 +3,15 @@ import '../../styles/leftRail.css';
 import LeftRailListItems from './LeftRailListItems';
 import { useSelector } from 'react-redux';
 import { Chat, Rooms } from "../../constants";
-import RoomPopup from './RoomPopup';
+import CreateRoomPopup from './CreateRoomPopup';
+import JoinRoomPopup from './JoinRoomPopup';
 
 const LeftRail = () => {
 
     const classState = useSelector(state => state.classReducer);
 
     const [cpopupState, setCpopupState] = useState(false);
+    const [jpopupState, setJpopupState] = useState(false);
 
     const heading = useSelector(state => state.sideRailReducer);
     const usersListObj = useSelector(state => state.usersListReducer);
@@ -19,6 +21,7 @@ const LeftRail = () => {
     useEffect(() => {
         if(heading === Chat)
             setCpopupState(false);
+            setJpopupState(false);
     }, [heading])
 
     return (
@@ -28,10 +31,19 @@ const LeftRail = () => {
             </div>
             <div className="leftRailBody">
                 <div className={(heading === Rooms) ? "leftRailRoomOptions" : "hide"}>
-                    <button className="leftRailButtons" onClick={()=>setCpopupState(true)}>Create Room</button>
-                    <button className="leftRailButtons">Join Room</button>
+                    <button className="leftRailButtons" onClick={()=>
+                        {
+                            setCpopupState(true);
+                            setJpopupState(false);
+                        }}>Create Room</button>
+                    <button className="leftRailButtons" onClick={()=>
+                        {
+                            setJpopupState(true);
+                            setCpopupState(false);
+                        }}>Join Room</button>
                 </div>
-                <RoomPopup state={cpopupState} setState={setCpopupState}/>
+                <CreateRoomPopup state={cpopupState} setState={setCpopupState}/>
+                <JoinRoomPopup state={jpopupState} setState={setJpopupState}/>
                 {(heading === Chat) ? usersList.map(item => <LeftRailListItems key={item.id} users={item}/>) : <></>}
             </div>
         </div>

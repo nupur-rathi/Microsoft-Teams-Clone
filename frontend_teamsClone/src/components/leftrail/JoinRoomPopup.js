@@ -1,17 +1,21 @@
 import React, { useRef } from 'react';
+import { useSelector } from 'react-redux';
 import '../../styles/leftRail.css';
 
-const RoomPopup = ({state, setState}) => {
+const JoinRoomPopup = ({state, setState}) => {
 
     const nameRef = useRef();
+    const user = useSelector(state => state.userReducer);
 
-    function createRoom()
+    function joinRoom()
     {
         if(nameRef.current.value === "")
             alert("room name field empty");
         else
         {
-            console.log(nameRef.current.value);
+            const roomName = nameRef.current.value;
+            console.log(roomName);
+            user.socket.current.emit("joinRoom", roomName);
             setState(false);
         }
     }
@@ -24,19 +28,11 @@ const RoomPopup = ({state, setState}) => {
                     <label>Room Name:</label>
                     <input className="roomNameInputField" type="text" ref={nameRef}></input>
                 </div>
-                <div className="radioButtonDiv">
-                    <input type="radio" id="public" name="room_type" value="public"/>
-                    <label for="public">Public</label>
-                </div>
-                <div className="radioButtonDiv">
-                    <input type="radio" id="private" name="room_type" value="private"/>
-                    <label for="private">Private</label>
-                </div>
                 <div className="roomPopupButtonDiv">
                     <button className="roomPopupButtons"
                     onClick={()=>{
-                        createRoom();
-                    }}>Done</button>
+                        joinRoom();
+                    }}>Join</button>
                     <button className="roomPopupButtons"
                     onClick={()=>{
                         nameRef.current.value = "";
@@ -54,4 +50,4 @@ const RoomPopup = ({state, setState}) => {
 
 }
 
-export default RoomPopup;
+export default JoinRoomPopup;

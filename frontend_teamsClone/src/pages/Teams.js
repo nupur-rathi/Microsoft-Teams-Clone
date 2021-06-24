@@ -45,7 +45,11 @@ const Teams = () => {
         socket.on("receiveMessage", ({from, message}) => {
             dispatch(addChat("oto", from, from, message));
         });
- 
+
+        socket.on("roomJoined", (roomName)=>{
+            socket.emit("printRooms", roomName);
+        });
+
     }, []);
 
     return (

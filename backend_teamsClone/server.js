@@ -64,6 +64,20 @@ io.on('connection', (socket) => {
 
     // -----------------------------------------
 
+    // join and create room code
+
+    socket.on("joinRoom", roomName => {
+        socket.join(roomName);
+        socket.emit("roomJoined", roomName);
+    });
+
+    socket.on("printRooms", roomName => {
+        console.log(io.sockets.adapter.rooms);
+    });
+    
+
+    // -----------------------------------------
+
 });
 
 server.listen(port, () => { console.log(`listening on port ${port}`) });
