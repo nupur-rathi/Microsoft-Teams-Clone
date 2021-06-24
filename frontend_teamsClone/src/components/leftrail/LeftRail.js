@@ -5,6 +5,8 @@ import { useSelector } from 'react-redux';
 import { Chat, Rooms } from "../../constants";
 import CreateRoomPopup from './CreateRoomPopup';
 import JoinRoomPopup from './JoinRoomPopup';
+import PublicRooms from './PublicRooms';
+import PrivateRooms from './PrivateRooms';
 
 const LeftRail = () => {
 
@@ -44,7 +46,16 @@ const LeftRail = () => {
                 </div>
                 <CreateRoomPopup state={cpopupState} setState={setCpopupState}/>
                 <JoinRoomPopup state={jpopupState} setState={setJpopupState}/>
-                {(heading === Chat) ? usersList.map(item => <LeftRailListItems key={item.id} users={item}/>) : <></>}
+                {
+                    (heading === Chat) ? 
+                    usersList.map(item => <LeftRailListItems key={item.id} users={item}/>) : 
+                    (
+                        <>
+                            <PublicRooms />
+                            <PrivateRooms />
+                        </>
+                    )
+                }
             </div>
         </div>
     );
