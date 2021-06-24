@@ -47,7 +47,7 @@ const Teams = () => {
         });
 
         socket.on("roomJoined", (roomName)=>{
-            socket.emit("printRooms", roomName);
+            // alert(`you joined the room ${roomName}`);
         });
 
         socket.on("roomExists", ()=>{
@@ -60,6 +60,14 @@ const Teams = () => {
 
         socket.on("alreadyJoined", ()=>{
             alert("room already joined.");
+        });
+
+        socket.on("wrongPassword", ()=>{
+            alert("wrong password for this private room");
+        });
+
+        socket.on("notExists", ()=>{
+            alert("room with this name does not exists.");
         });
 
     }, []);

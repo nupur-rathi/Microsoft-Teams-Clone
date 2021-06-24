@@ -158,3 +158,10 @@
 .roomPopupButtons:active{
     transform: scale(1.01);
 }
+
+.keyInputDiv{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}

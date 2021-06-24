@@ -13,6 +13,7 @@ const io = require("socket.io")(server, {
 });
 
 users = {};
+const roomsObj = {};
 
 const port = process.env.PORT || 5000;
 
@@ -68,7 +69,7 @@ io.on('connection', (socket) => {
 
     const rooms = io.sockets.adapter.rooms;
 
-    socket.on("joinRoom", ({roomName, eventType}) => {
+    socket.on("joinRoom", ({roomName, eventType, isPrivate, password}) => {
 
         if(eventType === 'create')
         {
@@ -77,9 +78,16 @@ io.on('connection', (socket) => {
                 socket.emit("roomExists");
                 return;
             }
+            roomsObj[roomName] = {password: password, users: [sid], isPrivate: isPrivate};
+            console.log(roomsObj);
         }
         else if(eventType === 'join')
         {
+            if(!rooms.get(roomName))
+            {
+                socket.emit("notExists");
+                return;    
+            }
             if(roomName in users)
             {
                 socket.emit("cannotJoin");
@@ -90,16 +98,18 @@ io.on('connection', (socket) => {
                 socket.emit("alreadyJoined");
                 return;
             }
+            else if(roomsObj[roomName].isPrivate && roomsObj[roomName].password !== password)
+            {
+                socket.emit("wrongPassword");
+                return;
+            }
+            roomsObj[roomName].users.push(sid);
         }
-        socket.join(roomName);
+        socket.join(roomName);  
+        console.log(roomsObj);
         socket.emit("roomJoined", roomName);
     });
-
-    socket.on("printRooms", roomName => {
-        console.log(rooms);
-    });
     
-
     // -----------------------------------------
 
 });
