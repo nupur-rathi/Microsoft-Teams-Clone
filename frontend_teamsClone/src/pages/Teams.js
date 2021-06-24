@@ -8,6 +8,7 @@ import { addUser, initUsers, deleteUser} from '../data/actions/usersListActions'
 import { setCaller } from '../data/actions/callActions';
 import { addChat } from '../data/actions/chatActions';
 import { setCurrSelected } from '../data/actions/currSelectedActions';
+import { initRooms, addRoom, addUserToRoom, addRoomToJoined } from '../data/actions/roomsActions';
 
 const socket = io(`http://localhost:5000`);
 
@@ -47,7 +48,7 @@ const Teams = () => {
         });
 
         socket.on("roomJoined", (roomName)=>{
-            // alert(`you joined the room ${roomName}`);
+            dispatch(addRoomToJoined(roomName));
         });
 
         socket.on("roomExists", ()=>{
@@ -68,6 +69,18 @@ const Teams = () => {
 
         socket.on("notExists", ()=>{
             alert("room with this name does not exists.");
+        });
+
+        socket.on('initRooms', (roomsObj) => {
+            dispatch(initRooms(roomsObj));
+        });
+
+        socket.on("addRoom", room => {
+            dispatch(addRoom(room));
+        });
+
+        socket.on("addUserToRoom", ({userID, roomName}) => {
+            dispatch(addUserToRoom(userID, roomName));
         });
 
     }, []);

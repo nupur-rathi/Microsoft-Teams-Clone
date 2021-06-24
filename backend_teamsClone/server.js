@@ -36,6 +36,7 @@ io.on('connection', (socket) => {
 
     users[sid] = {name: sid, id: sid, imgUrl: "#", selected: false, type: "user"};
     socket.emit('initUsers', users);
+    socket.emit('initRooms', roomsObj);
     socket.broadcast.emit('addUser', users[sid]);
 
     // ----------------------------------
@@ -78,8 +79,8 @@ io.on('connection', (socket) => {
                 socket.emit("roomExists");
                 return;
             }
-            roomsObj[roomName] = {password: password, users: [sid], isPrivate: isPrivate};
-            console.log(roomsObj);
+            roomsObj[roomName] = {roomName: roomName, password: password, users: [sid], isPrivate: isPrivate};
+            io.emit("addRoom", roomsObj[roomName]);
         }
         else if(eventType === 'join')
         {
@@ -104,6 +105,7 @@ io.on('connection', (socket) => {
                 return;
             }
             roomsObj[roomName].users.push(sid);
+            io.emit("addUserToRoom", {userID: sid, roomName: roomName});
         }
         socket.join(roomName);  
         console.log(roomsObj);

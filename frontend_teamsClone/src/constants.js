@@ -16,6 +16,10 @@ export const DELETE_USER = "DELETE_USER";
 export const SETSELECTED = "SETSELECTED";
 export const SET_CURR_SELECTED = "SET_CURR_SELECTED";
 export const SET_CLASS = "SET_CLASS";
+export const INIT_ROOMS = "INIT_ROOMS";
+export const ADD_ROOM = "ADD_ROOM";
+export const ADD_USER_TO_ROOM = "ADD_USER_TO_ROOM";
+export const ADD_ROOM_TO_JOINED = "ADD_ROOM_TO_JOINED";
 
 export const CHAT = "CHAT";
 export const VIDEOCALL = "VIDEOCALL";

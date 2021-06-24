@@ -7,6 +7,7 @@ import classReducer from './setClassReducer';
 import callReducer from './callReducer';
 import windowStateReducer from './windowStateReducer';
 import chatReducer from './chatReducer';
+import roomsReducer from './roomsReducer';
 
 const allReducers = combineReducers({
     userReducer: userReducer,
@@ -17,6 +18,7 @@ const allReducers = combineReducers({
     callReducer: callReducer,
     windowStateReducer: windowStateReducer,
     chatReducer: chatReducer,
+    roomsReducer: roomsReducer,
 });
 
 export default allReducers;
