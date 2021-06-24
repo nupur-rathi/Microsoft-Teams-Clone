@@ -50,6 +50,18 @@ const Teams = () => {
             socket.emit("printRooms", roomName);
         });
 
+        socket.on("roomExists", ()=>{
+            alert("room name already exists");
+        });
+
+        socket.on("cannotJoin", ()=>{
+            alert("cannot join this room.");
+        });
+
+        socket.on("alreadyJoined", ()=>{
+            alert("room already joined.");
+        });
+
     }, []);
 
     return (

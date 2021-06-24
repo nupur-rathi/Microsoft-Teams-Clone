@@ -15,7 +15,7 @@ const CreateRoomPopup = ({state, setState}) => {
         {
             const roomName = nameRef.current.value;
             console.log(roomName);
-            user.socket.current.emit("joinRoom", roomName);
+            user.socket.current.emit("joinRoom", {roomName:roomName, eventType: "create"});
             setState(false);
         }
     }

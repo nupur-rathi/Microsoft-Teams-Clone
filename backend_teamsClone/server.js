@@ -66,13 +66,37 @@ io.on('connection', (socket) => {
 
     // join and create room code
 
-    socket.on("joinRoom", roomName => {
+    const rooms = io.sockets.adapter.rooms;
+
+    socket.on("joinRoom", ({roomName, eventType}) => {
+
+        if(eventType === 'create')
+        {
+            if(rooms.has(roomName))
+            {
+                socket.emit("roomExists");
+                return;
+            }
+        }
+        else if(eventType === 'join')
+        {
+            if(roomName in users)
+            {
+                socket.emit("cannotJoin");
+                return;
+            }
+            else if((rooms.get(roomName)).has(sid))
+            {
+                socket.emit("alreadyJoined");
+                return;
+            }
+        }
         socket.join(roomName);
         socket.emit("roomJoined", roomName);
     });
 
     socket.on("printRooms", roomName => {
-        console.log(io.sockets.adapter.rooms);
+        console.log(rooms);
     });
     
 
