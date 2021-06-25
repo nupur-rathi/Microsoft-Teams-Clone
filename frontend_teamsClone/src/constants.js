@@ -14,6 +14,7 @@ export const ADD_USER = "ADD_USER";
 export const INIT_USERS = "INIT_USERS";
 export const DELETE_USER = "DELETE_USER";
 export const SETSELECTED = "SETSELECTED";
+export const SETRSELECTED = "SETRSELECTED";
 export const SET_CURR_SELECTED = "SET_CURR_SELECTED";
 export const SET_CLASS = "SET_CLASS";
 export const INIT_ROOMS = "INIT_ROOMS";

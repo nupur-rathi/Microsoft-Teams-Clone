@@ -1,6 +1,8 @@
-import { INIT_ROOMS, ADD_ROOM, ADD_USER_TO_ROOM, ADD_ROOM_TO_JOINED } from "../../constants";
+import { INIT_ROOMS, ADD_ROOM, ADD_USER_TO_ROOM, ADD_ROOM_TO_JOINED, SETRSELECTED } from "../../constants";
 
-const roomsReducer = (state = {}, action) => {
+const initState = {'rooms': {}, 'joined': []}
+
+const roomsReducer = (state = initState, action) => {
 
     const {type, payload} = action;
 
@@ -37,6 +39,13 @@ const roomsReducer = (state = {}, action) => {
 
                 console.log(rooms);
                 return rooms;
+            }
+        case SETRSELECTED:
+            {
+                const roomsList = {...state};
+                (roomsList['rooms'][payload.roomName]).selected = payload.state;
+
+                return roomsList;
             }
         default:
             return state;

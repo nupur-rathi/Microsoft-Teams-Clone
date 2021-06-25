@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../../styles/leftRail.css';
 import LeftRailListItems from './LeftRailListItems';
 import { useSelector } from 'react-redux';
 import { Chat, Rooms, Public, Private } from "../../constants";
 import CreateRoomPopup from './CreateRoomPopup';
 import JoinRoomPopup from './JoinRoomPopup';
-import PublicRooms from './PublicRooms';
-import PrivateRooms from './PrivateRooms';
+import RoomItem from './RoomItem';
 
 const LeftRail = () => {
 
@@ -18,7 +17,12 @@ const LeftRail = () => {
     const heading = useSelector(state => state.sideRailReducer);
     const usersListObj = useSelector(state => state.usersListReducer);
     const usersList = (Object.keys(usersListObj).map((key) => usersListObj[key]));
-    // const roomsList = [];
+    const roomsListObj = useSelector(state => state.roomsReducer);
+    const roomsList = (Object.keys(roomsListObj['rooms']).map((key) => roomsListObj['rooms'][key]));
+    
+    const selectRoomTypeRef = useRef();
+
+    const [roomType, setRoomType] = useState(Public);
 
     useEffect(() => {
         if(heading === Chat)
@@ -52,13 +56,18 @@ const LeftRail = () => {
                     (
                         <>
                             <div className="selectDiv">
-                                <select className="selectBox">
+                                <select className="selectBox" ref={selectRoomTypeRef} onChange={()=>{
+                                    setRoomType(selectRoomTypeRef.current.value)
+                                    console.log(selectRoomTypeRef.current.value)
+                                }
+                                }>
                                     <option className="roomTypeOption" value={Public}>{Public}</option>
                                     <option className="roomTypeOption" value={Private}>{Private}</option>
                                 </select>
                             </div>
-                            <PublicRooms />
-                            {/* <PrivateRooms /> */}
+
+                            {roomsList.map(item => <RoomItem key={item.roomName} item={item} type={roomType}/>)}
+                            
                         </>
                     )
                 }

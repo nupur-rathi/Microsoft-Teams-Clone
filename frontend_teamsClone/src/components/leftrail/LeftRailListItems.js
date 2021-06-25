@@ -3,6 +3,7 @@ import '../../styles/leftRail.css';
 import BadgeAvatars from '../common/Avatar';
 import { setCurrSelected } from '../../data/actions/currSelectedActions';
 import { setSelected } from '../../data/actions/usersListActions';
+import { setRSelected } from '../../data/actions/roomsActions';
 import { useDispatch, useSelector } from 'react-redux';
 
 const LeftRailListItems = ({ users }) => {
@@ -13,6 +14,7 @@ const LeftRailListItems = ({ users }) => {
 
     const dispatch = useDispatch();
     const me = useSelector(state => state.userReducer);
+    const roomsList = useSelector(state => state.usersListReducer);
 
     if(users.id !== me.id)
     {
@@ -21,8 +23,12 @@ const LeftRailListItems = ({ users }) => {
                 dispatch(setSelected(id, true));
                 if(curr != null)
                 {   
-                    if(curr.id in usersList) 
+                    if(curr.type === 'user' && curr.id in usersList){ 
                         dispatch(setSelected(curr.id, false));}
+                    else if(curr.type === 'room' && curr.roomName in roomsList['rooms']){ 
+                        dispatch(setRSelected(curr.roomName, false));}
+
+                }
                     dispatch(setCurrSelected(users));
                 }}>
                 <BadgeAvatars name={name} imgURL={imgUrl}/>

@@ -79,7 +79,7 @@ io.on('connection', (socket) => {
                 socket.emit("roomExists");
                 return;
             }
-            roomsObj[roomName] = {roomName: roomName, password: password, users: [sid], isPrivate: isPrivate};
+            roomsObj[roomName] = {roomName: roomName, password: password, users: [sid], isPrivate: isPrivate, type: "room", selected: false};
             io.emit("addRoom", roomsObj[roomName]);
         }
         else if(eventType === 'join')

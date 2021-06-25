@@ -166,16 +166,6 @@
     align-items: center;
 }
 
-.roomsDiv{
-    height: auto;
-    width: 100%;
-    box-sizing: border-box;
-    overflow: auto;
-    padding: 8px;
-    display: flex;
-    flex-direction: column;
-}
-
 .selectDiv{
     width: 100%;
     box-sizing: border-box;

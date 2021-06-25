@@ -1,4 +1,4 @@
-import { INIT_ROOMS, ADD_ROOM, ADD_USER_TO_ROOM, ADD_ROOM_TO_JOINED } from "../../constants";
+import { INIT_ROOMS, ADD_ROOM, ADD_USER_TO_ROOM, ADD_ROOM_TO_JOINED, SETRSELECTED } from "../../constants";
 
 export const initRooms = (roomsObj) => {
     return {
@@ -28,5 +28,15 @@ export const addRoomToJoined = (roomName) => {
     return {
         type: ADD_ROOM_TO_JOINED,
         payload: roomName,
+    }
+};
+
+export const setRSelected = (roomName, state) => {
+    return {
+        type: SETRSELECTED,
+        payload: {
+            roomName: roomName,
+            state: state,
+        },
     }
 };
