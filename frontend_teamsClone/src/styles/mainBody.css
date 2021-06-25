@@ -50,3 +50,8 @@
     display: flex;
     justify-content: flex-end;
 }
+
+.mainBodyHeaderLeft > .MuiSvgIcon-root{
+    box-sizing: border-box;
+    margin-right: 15px;
+}

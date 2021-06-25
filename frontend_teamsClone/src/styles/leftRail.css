@@ -88,8 +88,10 @@
     background-color: var(--greenForegroundColor);
     color: var(--foregroundColor3);
     width: 40%;
+    height: 30px;
     border-radius: 3px;
     font-size: 0.75rem;
+    font-weight: 600;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 8px -2px;
 } 
 
@@ -179,7 +181,7 @@
     background-color: var(--brandForegroundColor);
     border: none;
     outline: none;
-    height: 25px;
+    height: 30px;
     width: 87%;
     box-sizing: border-box;
     padding: 2px;

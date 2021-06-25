@@ -3,6 +3,7 @@ import '../../styles/mainBody.css';
 import BadgeAvatars from '../common/Avatar';
 import BasicButtonGroup from '../common/GroupButtons';
 import { useSelector, useDispatch } from 'react-redux';
+import GroupIcon from '@material-ui/icons/Group';
 
 const MainBodyHeader = () => {
 
@@ -13,8 +14,8 @@ const MainBodyHeader = () => {
     return (
         <div className={classState ? "mainBodyHeader mainBodyHeader_hide": "mainBodyHeader"}>
             <div className="mainBodyHeaderLeft">
-                {currSelected ? <BadgeAvatars name={currSelected.name} imgURL={currSelected.imgUrl}/> : <></>}
-                <span>{currSelected ? currSelected.name: ""}</span>
+                {currSelected ? (currSelected.type === 'user' ? <BadgeAvatars name={currSelected.name} imgURL={currSelected.imgUrl}/> : <GroupIcon />) : <></>}
+                <span>{currSelected ? (currSelected.type === 'user' ? currSelected.name : currSelected.roomName): ""}</span>
             </div>
             <div className="mainBodyHeaderRight">
                 {currSelected ? <BasicButtonGroup /> : <></>}
