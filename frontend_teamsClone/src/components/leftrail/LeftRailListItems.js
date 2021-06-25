@@ -14,7 +14,7 @@ const LeftRailListItems = ({ users }) => {
 
     const dispatch = useDispatch();
     const me = useSelector(state => state.userReducer);
-    const roomsList = useSelector(state => state.usersListReducer);
+    const roomsList = useSelector(state => state.roomsReducer);
 
     if(users.id !== me.id)
     {

@@ -51,7 +51,7 @@
     justify-content: flex-end;
 }
 
-.mainBodyHeaderLeft > .MuiSvgIcon-root{
+.mainBodyHeaderLeft > .MuiAvatar-root{
     box-sizing: border-box;
-    margin-right: 15px;
+    margin-right: 20px;
 }

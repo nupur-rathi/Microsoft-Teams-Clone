@@ -4,8 +4,8 @@ import { setCurrSelected } from '../../data/actions/currSelectedActions';
 import { setRSelected } from '../../data/actions/roomsActions';
 import { setSelected } from '../../data/actions/usersListActions';
 import { useDispatch, useSelector } from 'react-redux';
-import GroupIcon from '@material-ui/icons/Group';
 import { Public, Private } from "../../constants";
+import { Avatar } from '@material-ui/core';
 
 const RoomItem = ({ item, type }) => {
 
@@ -20,8 +20,8 @@ const RoomItem = ({ item, type }) => {
     if((item.isPrivate && type === Private && roomsList['joined'].includes(item.roomName)) || (!item.isPrivate && type === Public))
     {
         return (
-            <div className={item.selected ? "leftRailListItems leftRailListItems_selected" : "leftRailListItems"} onClick={()=>{
-                dispatch(setSelected(item.roomName, true));
+            <div className={item.selected ? "leftRailListItems leftRailListItems_selected roomItem" : "leftRailListItems roomItem"} onClick={()=>{
+                dispatch(setRSelected(item.roomName, true));
                 if(curr != null)
                 {   
                     if(curr.type === 'user' && curr.id in usersList){ 
@@ -32,7 +32,7 @@ const RoomItem = ({ item, type }) => {
                 }
                     dispatch(setCurrSelected(item));
                 }}>
-                <GroupIcon />
+                <Avatar variant="square" alt={item.roomName} src="#"/>
                 <span className="leftRail_ListItem_Name">{item.roomName}</span>
             </div>        
         );
