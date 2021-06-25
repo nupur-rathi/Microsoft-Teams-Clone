@@ -103,8 +103,11 @@ const VideoWindow = () => {
 
         setCallended(true);
         setPStream(null);
-        connref.current.removeAllListeners('close');
-        connref.current.destroy();
+        if(connref.current)
+        {
+            connref.current.removeAllListeners('close');
+            connref.current.destroy();
+        }
         console.log(connref.current);
         socket.current.emit("callend");
     }
