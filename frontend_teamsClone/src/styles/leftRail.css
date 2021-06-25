@@ -72,7 +72,7 @@
 }
 
 .leftRailRoomOptions{
-    height: 8%;
+    height: 12%;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -164,4 +164,37 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+}
+
+.roomsDiv{
+    height: auto;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: auto;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.selectDiv{
+    width: 100%;
+    box-sizing: border-box;
+    height: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.selectBox{
+    background-color: var(--brandForegroundColor);
+    border: none;
+    outline: none;
+    height: 25px;
+    width: 100px;
+    box-sizing: border-box;
+    padding: 2px;
+    color: var(--defaultBackgroundColor);
+    font-size: 0.8rem;
+    border-radius: 2px;
+    cursor: pointer;
 }

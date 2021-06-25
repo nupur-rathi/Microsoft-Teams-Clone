@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../../styles/leftRail.css';
 import LeftRailListItems from './LeftRailListItems';
 import { useSelector } from 'react-redux';
-import { Chat, Rooms } from "../../constants";
+import { Chat, Rooms, Public, Private } from "../../constants";
 import CreateRoomPopup from './CreateRoomPopup';
 import JoinRoomPopup from './JoinRoomPopup';
 import PublicRooms from './PublicRooms';
@@ -51,8 +51,14 @@ const LeftRail = () => {
                     usersList.map(item => <LeftRailListItems key={item.id} users={item}/>) : 
                     (
                         <>
+                            <div className="selectDiv">
+                                <select className="selectBox">
+                                    <option className="roomTypeOption" value={Public}>{Public}</option>
+                                    <option className="roomTypeOption" value={Private}>{Private}</option>
+                                </select>
+                            </div>
                             <PublicRooms />
-                            <PrivateRooms />
+                            {/* <PrivateRooms /> */}
                         </>
                     )
                 }

@@ -27,3 +27,5 @@ export const AUDIOCALL = "AUDIOCALL";
 
 export const Rooms = "Rooms";
 export const Chat = "Chat";
+export const Public = "Public";
+export const Private = "Private";

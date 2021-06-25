@@ -4,7 +4,10 @@ import { useSelector } from 'react-redux';
 
 const PublicRooms = () => {
 
-    return <></>
+    return (
+        <div className="publicRooms roomsDiv">
+        </div>
+    )
 
 }
 
