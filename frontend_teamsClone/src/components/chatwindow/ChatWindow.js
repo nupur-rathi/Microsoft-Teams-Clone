@@ -29,6 +29,10 @@ const ChatWindow = () => {
     {
         currMessagesToShow = messages["oto"][currSelected.id];
     }
+    else if(currSelected !== null && currSelected.type === "room")
+    {
+        currMessagesToShow = messages["room"][currSelected.roomName];
+    }
 
     const inputFieldRef = useRef();
 
@@ -49,6 +53,11 @@ const ChatWindow = () => {
             {
                 dispatch(addChat("oto", currSelected.id, user.id, message)); 
                 user.socket.current.emit("sendMessage", {to: currSelected.id, message: message});
+            }
+            else if(currSelected.type === "room")
+            {
+                dispatch(addChat("room", currSelected.roomName, user.id, message)); 
+                user.socket.current.emit("sendMessageToRoom", {to: currSelected.roomName, message: message, roomName: currSelected.roomName});
             }   
         }
 

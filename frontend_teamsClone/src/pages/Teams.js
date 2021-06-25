@@ -20,6 +20,8 @@ const Teams = () => {
 
     dispatch(setUser("Nupur Rathi", "", "", "#", socketRef));
 
+    // const roomsList = (useSelector(state=>state.roomsReducer))['joined'];
+
     useEffect(() => {
 
         socket.on('myid', (id) => {
@@ -45,6 +47,11 @@ const Teams = () => {
 
         socket.on("receiveMessage", ({from, message}) => {
             dispatch(addChat("oto", from, from, message));
+        });
+
+        socket.on("receiveMessageToRoom", ({from, message, roomName}) => {
+            if(from !== socket.id)
+            dispatch(addChat("room", roomName, from, message));
         });
 
         socket.on("roomJoined", (roomName)=>{

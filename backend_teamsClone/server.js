@@ -63,6 +63,12 @@ io.on('connection', (socket) => {
     socket.on("sendMessage", ({to, message}) => {
         io.to(to).emit("receiveMessage", {from: sid, message: message});
     });
+    
+    // chat room
+
+    socket.on("sendMessageToRoom", ({to, message, roomName}) => {
+        io.to(to).emit("receiveMessageToRoom", {from: sid, message: message, roomName: roomName});
+    });    
 
     // -----------------------------------------
 
