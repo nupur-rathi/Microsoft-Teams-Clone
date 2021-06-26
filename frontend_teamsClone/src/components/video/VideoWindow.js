@@ -69,8 +69,11 @@ const VideoWindow = () => {
         connref.current = peer;
     
         socket.current.once("callended", () => {
-          setPStream(null);
-          console.log(connref.current);
+            leaveCall();
+            setPStream(null);
+            dispatch(setWindowState(CHAT));
+            dispatch(setClass(false));
+            alert("call ended");
         });
     
     };
@@ -101,7 +104,11 @@ const VideoWindow = () => {
         connref.current = peer;
     
         socket.current.once("callended", () => {
+            leaveCall();
           setPStream(null);
+          dispatch(setWindowState(CHAT));
+          dispatch(setClass(false));
+          alert("call ended");
         });
       
     };
@@ -116,7 +123,7 @@ const VideoWindow = () => {
         setCamState(!camState);
     }
     
-    const leaveCall = () => {
+    function leaveCall(){
 
         setCallended(true);
         setPStream(null);
