@@ -12,6 +12,7 @@ import VideocamRoundedIcon from '@material-ui/icons/VideocamRounded';
 import MicRoundedIcon from '@material-ui/icons/MicRounded';
 import MicOffRoundedIcon from '@material-ui/icons/MicOffRounded';
 import VideocamOffRoundedIcon from '@material-ui/icons/VideocamOffRounded';
+import Switch from '@material-ui/core/Switch';
 
 const VideoWindow = () => {
 
@@ -119,6 +120,8 @@ const VideoWindow = () => {
 
         setCallended(true);
         setPStream(null);
+        setCamState(true);
+        setMicState(true);
         if(connref.current)
         {
             connref.current.removeAllListeners('close');
@@ -128,36 +131,6 @@ const VideoWindow = () => {
         socket.current.emit("callend");
     }
 
-    // useLayoutEffect(() => {
-    //    if(!caller.is)
-    //    {
-    //     const peer = new Peer({
-    //         initiator: false,
-    //         trickle: false,
-    //         stream: stream,
-    //       });
-      
-    //       peer.once("signal", data => {
-    //           console.log(data);
-    //           socket.current.emit("answercall", {signal: data, to: caller.id})
-    //       });
-      
-    //       peer.once('stream', currStream => {
-    //           setPStream(currStream);
-    //         othervid.current.srcObject = currStream;
-            
-    //       });
-      
-    //       peer.signal(caller.signal);
-      
-    //       connref.current = peer;
-      
-    //       socket.current.once("callended", () => {
-    //         setPStream(null);
-    //         console.log(connref.current);
-    //       });
-    //    }
-    // }, []);
 
     return (
         <div className="videoWindow">
@@ -166,28 +139,13 @@ const VideoWindow = () => {
                     <div className="userVideos">
                         {stream && (<video playsInline muted ref={myvideo} autoPlay className="video" />)}
                     </div>
+                    {pstream && 
                     <div className="userVideos">
                         {pstream && <video playsInline muted={false} ref={othervid} autoPlay className="video" />}
-                    </div>
+                    </div>}
                 </div>
-                <div>
-                    {
-                        caller.is ?
-                        <button className= {caller.callAccept ? "CandAButton_hide": "CandAButton"}
-                        onClick={()=>
-                        {
-                            callUser(currSelectedUser.id);
-                        }}>
-                        Call</button> :
-                        <button className= {caller.callAccept ? "CandAButton_hide": "CandAButton"}
-                        onClick={()=>
-                        {
-                            answerCall();
-                            dispatch(setCallAccept(true));
-                        }}>
-                        Answer</button>
-                    }
-                </div>
+                
+                {caller.callAccept ? 
                 <div className="videoOptions">
                     <button className="videoOptionsButtons videoOptionsEndcall" onClick={() => 
                         { dispatch(setWindowState(CHAT)); leaveCall(); dispatch(setClass(false))}}>
@@ -201,7 +159,34 @@ const VideoWindow = () => {
                         { muteCam() }}>
                         {camState ? <VideocamRoundedIcon fontSize="default" /> : <VideocamOffRoundedIcon fontSize="default" /> }
                     </button>
-                </div>
+                </div> :
+                <div className="beforeCallOptions">
+                    <span className="beforeCallOptionsButtons">
+                        <label>Video</label>
+                        <Switch color="default" defaultChecked onChange={()=>{muteCam()}} />
+                    </span>
+                    <span className="beforeCallOptionsButtons">
+                        <label>Audio</label>
+                        <Switch color="default" defaultChecked onChange={()=>{muteMic()}} />
+                    </span>
+                {
+                    caller.is ?
+                    <button className= {caller.callAccept ? "CandAButton_hide": "CandAButton"}
+                    onClick={()=>
+                    {
+                        callUser(currSelectedUser.id);
+                        dispatch(setCallAccept(true));
+                    }}>
+                    Call</button> :
+                    <button className= {caller.callAccept ? "CandAButton_hide": "CandAButton"}
+                    onClick={()=>
+                    {
+                        answerCall();
+                        dispatch(setCallAccept(true));
+                    }}>
+                    Join Call</button>
+                }
+                </div> }
             </div>
         </div>
     );
