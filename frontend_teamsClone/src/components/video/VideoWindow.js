@@ -8,6 +8,10 @@ import Peer from 'simple-peer';
 import { setCaller, setCallAccept } from '../../data/actions/callActions';
 import { setWindowState } from '../../data/actions/windowStateActions';
 import { setCurrSelected } from '../../data/actions/currSelectedActions';
+import VideocamRoundedIcon from '@material-ui/icons/VideocamRounded';
+import MicRoundedIcon from '@material-ui/icons/MicRounded';
+import MicOffRoundedIcon from '@material-ui/icons/MicOffRounded';
+import VideocamOffRoundedIcon from '@material-ui/icons/VideocamOffRounded';
 
 const VideoWindow = () => {
 
@@ -19,6 +23,8 @@ const VideoWindow = () => {
     const [pstream, setPStream] = useState(null);
     const [callended , setCallended] = useState(false);
     const [userMedia, setUserMedia] = useState({ video: true, audio: true });
+    const [micState, setMicState] = useState(true);
+    const [camState, setCamState] = useState(true);
 
     const myvideo = useRef();
     const othervid = useRef();
@@ -98,6 +104,16 @@ const VideoWindow = () => {
         });
       
     };
+
+    function muteMic() {
+        stream.getAudioTracks().forEach(track => track.enabled = !track.enabled);
+        setMicState(!micState);
+    }
+
+    function muteCam() {
+        stream.getVideoTracks().forEach(track => track.enabled = !track.enabled);
+        setCamState(!camState);
+    }
     
     const leaveCall = () => {
 
@@ -176,6 +192,14 @@ const VideoWindow = () => {
                     <button className="videoOptionsButtons videoOptionsEndcall" onClick={() => 
                         { dispatch(setWindowState(CHAT)); leaveCall(); dispatch(setClass(false))}}>
                         <CallEndRoundedIcon fontSize="default" />
+                    </button>
+                    <button className="videoOptionsButtons" onClick={() => 
+                        { muteMic() }}>
+                        {micState ? <MicRoundedIcon fontSize="default" /> : <MicOffRoundedIcon fontSize="default" /> }
+                    </button>
+                    <button className="videoOptionsButtons" onClick={() => 
+                        { muteCam() }}>
+                        {camState ? <VideocamRoundedIcon fontSize="default" /> : <VideocamOffRoundedIcon fontSize="default" /> }
                     </button>
                 </div>
             </div>
