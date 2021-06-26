@@ -122,6 +122,7 @@ const VideoWindow = () => {
         setPStream(null);
         setCamState(true);
         setMicState(true);
+        stream.getTracks().forEach(track => track.stop());
         if(connref.current)
         {
             connref.current.removeAllListeners('close');
