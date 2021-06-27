@@ -21,8 +21,6 @@ const Teams = () => {
 
     dispatch(setUser("Nupur Rathi", "", "", "#", socketRef));
 
-    // const roomsList = (useSelector(state=>state.roomsReducer))['joined'];
-
     useEffect(() => {
 
         socket.on('myid', (id) => {

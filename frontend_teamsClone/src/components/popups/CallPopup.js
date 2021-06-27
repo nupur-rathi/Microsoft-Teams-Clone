@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import '../../styles/callpopup.css';
 import PhoneInTalkRoundedIcon from '@material-ui/icons/PhoneInTalkRounded';
 import CallEndRoundedIcon from '@material-ui/icons/CallEndRounded';
@@ -7,6 +7,7 @@ import { setCallAccept, setCallDecline, setCallReceive } from "../../data/action
 import { setWindowState } from "../../data/actions/windowStateActions";
 import { VIDEOCALL } from '../../constants';
 import { setClass } from '../../data/actions/classReducerActions';
+import { setCaller } from '../../data/actions/callerActions';
 
 const CallPopup = () => {
 
@@ -16,12 +17,20 @@ const CallPopup = () => {
 
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        
+
+        return (() => {
+        });
+
+    }, []);
+
     return (
         <div className={(call.callReceive) ? "callPopup" : "callPopup_hide"}>
             <div className="popupName">
                 <span className="PopupIncomingCall">Incoming call from...</span>
                 <span className="PopupIncomingName">
-                    {(caller !== null ) ? caller.name : ""}
+                    {(caller !== null ) ? caller.from : ""}
                 </span>
             </div>
             <div className="popupButtonsDiv">

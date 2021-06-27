@@ -10,10 +10,8 @@ import VideocamOffRoundedIcon from '@material-ui/icons/VideocamOffRounded';
 import Switch from '@material-ui/core/Switch';
 import { CHAT } from "../../constants";
 import { setClass } from '../../data/actions/classReducerActions';
-import { setCaller } from '../../data/actions/callerActions';
 import { setCallJoin,setCallCancel, setCallDecline, setCallAccept, setCallReceive, setCallEnd, setCallSend } from '../../data/actions/callActions';
 import { setWindowState } from '../../data/actions/windowStateActions';
-import { setCurrSelected } from '../../data/actions/currSelectedActions';
 
 
 const VideoWindow = () => {
@@ -23,7 +21,6 @@ const VideoWindow = () => {
     const currSelectedUser = useSelector(state => state.currSelectedReducer);
     const call = useSelector(state => state.callReducer);
     const caller = useSelector(state => state.callerReducer);
-    const usersList = useSelector(state => state.usersListReducer);
     const user = useSelector(state => state.userReducer);
 
     const [stream, setStream] = useState(null);
@@ -41,6 +38,14 @@ const VideoWindow = () => {
         .then((currentStream) => {
             setStream(currentStream);
             myVideoRef.current.srcObject = currentStream;
+        });
+        
+        return (() => {
+            console.log("component unmount");
+            connectionRef.current.removeAllListeners('close');
+            connectionRef.current.destroy();
+            user.socket.current.off("callAccepted");
+            user.socket.current.off("callEnded");
         });
     
     }, []);
@@ -65,7 +70,7 @@ const VideoWindow = () => {
         peer.signal(caller.signal);
     
         connectionRef.current = peer;
-    
+
         user.socket.current.once("callEnded", () => {
             leaveCall();
         });
