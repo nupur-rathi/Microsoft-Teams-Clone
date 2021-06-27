@@ -58,6 +58,10 @@ io.on('connection', (socket) => {
         io.to(to).emit("callEndedBefore");
     });
 
+    socket.on("callDecline", (to)=>{
+        io.to(to).emit("callDeclined");
+    });
+
     // -------------------------------------------
 
     // chat oto code

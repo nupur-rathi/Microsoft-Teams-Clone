@@ -42,10 +42,14 @@ const VideoWindow = () => {
         
         return (() => {
             console.log("component unmount");
-            connectionRef.current.removeAllListeners('close');
-            connectionRef.current.destroy();
+            if(connectionRef)
+            {
+                connectionRef.current.removeAllListeners('close');
+                connectionRef.current.destroy();
+            }
             user.socket.current.off("callAccepted");
             user.socket.current.off("callEnded");
+            user.socket.current.off("callDeclined");
         });
     
     }, []);
@@ -102,6 +106,10 @@ const VideoWindow = () => {
         connectionRef.current = peer;
     
         user.socket.current.once("callEnded", () => {
+            leaveCall();
+        });
+
+        user.socket.current.once("callDeclined", () => {
             leaveCall();
         });
       

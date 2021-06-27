@@ -43,7 +43,12 @@ const CallPopup = () => {
                     }}>
                     <PhoneInTalkRoundedIcon fontSize="default" />
                 </button>
-                <button className="popupButtons popupDeclineButton"><CallEndRoundedIcon fontSize="default" /></button>
+                <button className="popupButtons popupDeclineButton"
+                onClick={()=>{
+                    dispatch(setCallReceive(false));
+                    me.socket.current.emit("callDecline", caller.from);
+                }}>
+                    <CallEndRoundedIcon fontSize="default" /></button>
             </div>
         </div>
     );
