@@ -1,46 +1,46 @@
-import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Peer from 'simple-peer';
 import '../../styles/videoWindow.css';
 import CallEndRoundedIcon from '@material-ui/icons/CallEndRounded';
-import { CHAT } from "../../constants";
-import { useDispatch, useSelector } from 'react-redux';
-import { setClass } from '../../data/actions/classReducerActions';
-import Peer from 'simple-peer';
-import { setCaller, setCallAccept } from '../../data/actions/callActions';
-import { setWindowState } from '../../data/actions/windowStateActions';
-import { setCurrSelected } from '../../data/actions/currSelectedActions';
 import VideocamRoundedIcon from '@material-ui/icons/VideocamRounded';
 import MicRoundedIcon from '@material-ui/icons/MicRounded';
 import MicOffRoundedIcon from '@material-ui/icons/MicOffRounded';
 import VideocamOffRoundedIcon from '@material-ui/icons/VideocamOffRounded';
 import Switch from '@material-ui/core/Switch';
+import { CHAT } from "../../constants";
+import { setClass } from '../../data/actions/classReducerActions';
+import { setCaller } from '../../data/actions/callerActions';
+import { setCallJoin,setCallCancel, setCallDecline, setCallAccept, setCallReceive, setCallEnd, setCallSend } from '../../data/actions/callActions';
+import { setWindowState } from '../../data/actions/windowStateActions';
+import { setCurrSelected } from '../../data/actions/currSelectedActions';
+
 
 const VideoWindow = () => {
 
+    const dispatch = useDispatch();
+
     const currSelectedUser = useSelector(state => state.currSelectedReducer);
-    const caller = useSelector(state => state.callReducer);
+    const call = useSelector(state => state.callReducer);
+    const caller = useSelector(state => state.callerReducer);
     const usersList = useSelector(state => state.usersListReducer);
+    const user = useSelector(state => state.userReducer);
 
     const [stream, setStream] = useState(null);
     const [pstream, setPStream] = useState(null);
-    const [callended , setCallended] = useState(false);
-    const [userMedia, setUserMedia] = useState({ video: true, audio: true });
     const [micState, setMicState] = useState(true);
     const [camState, setCamState] = useState(true);
 
-    const myvideo = useRef();
-    const othervid = useRef();
-    const connref = useRef();
-    const signalRef = useRef();
-
-    const dispatch = useDispatch();
-    const {name, id, email, socket, imgUrl} = useSelector(state => state.userReducer);
+    const myVideoRef = useRef();
+    const peerVideoRef = useRef();
+    const connectionRef = useRef();
 
     useEffect(() => {
 
-        navigator.mediaDevices.getUserMedia(userMedia)
+        navigator.mediaDevices.getUserMedia({ video: true, audio: true })
         .then((currentStream) => {
             setStream(currentStream);
-            myvideo.current.srcObject = currentStream;
+            myVideoRef.current.srcObject = currentStream;
         });
     
     }, []);
@@ -54,26 +54,20 @@ const VideoWindow = () => {
         });
     
         peer.once("signal", data => {
-            console.log(data);
-            socket.current.emit("answercall", {signal: data, to: caller.id})
+            user.socket.current.emit("answerCall", {signal: data, to: caller.from});
         });
     
         peer.once('stream', currStream => {
             setPStream(currStream);
-          othervid.current.srcObject = currStream;
-          
+            peerVideoRef.current.srcObject = currStream;
         });
     
         peer.signal(caller.signal);
     
-        connref.current = peer;
+        connectionRef.current = peer;
     
-        socket.current.once("callended", () => {
+        user.socket.current.once("callEnded", () => {
             leaveCall();
-            setPStream(null);
-            dispatch(setWindowState(CHAT));
-            dispatch(setClass(false));
-            alert("call ended");
         });
     
     };
@@ -87,28 +81,23 @@ const VideoWindow = () => {
         });
     
         peer.once("signal", data => {
-            console.log(data);
-            socket.current.emit("calluser", {usertocall: pid, from: id, signalData: data})
+            user.socket.current.emit("callUser", {userToCall: pid, from: user.id, signalData: data});
         });
     
         peer.once('stream', (currStream) => {
             setPStream(currStream);
-          othervid.current.srcObject = currStream;
+            peerVideoRef.current.srcObject = currStream;
         });
     
-        socket.current.once("callaccepted", signal => {
+        user.socket.current.once("callAccepted", signal => {
             dispatch(setCallAccept(true));
             peer.signal(signal);    
         });
     
-        connref.current = peer;
+        connectionRef.current = peer;
     
-        socket.current.once("callended", () => {
+        user.socket.current.once("callEnded", () => {
             leaveCall();
-          setPStream(null);
-          dispatch(setWindowState(CHAT));
-          dispatch(setClass(false));
-          alert("call ended");
         });
       
     };
@@ -125,18 +114,35 @@ const VideoWindow = () => {
     
     function leaveCall(){
 
-        setCallended(true);
+        dispatch(setWindowState(CHAT));
+        dispatch(setClass(false));
+        dispatch(setCallJoin(false));
+        dispatch(setCallAccept(false));
+        dispatch(setCallDecline(false));
+        dispatch(setCallReceive(false));
+        dispatch(setCallEnd(false));
+        dispatch(setCallSend(false));
+        dispatch(setCallCancel(false));
         setPStream(null);
         setCamState(true);
         setMicState(true);
         stream.getTracks().forEach(track => track.stop());
-        if(connref.current)
+        if(connectionRef.current)
         {
-            connref.current.removeAllListeners('close');
-            connref.current.destroy();
+            connectionRef.current.removeAllListeners('close');
+            connectionRef.current.destroy();
         }
-        console.log(connref.current);
-        socket.current.emit("callend");
+        if(caller.is)
+        {
+            if(call.callAccept === false)
+                user.socket.current.emit("callEndBefore", caller.to);
+            else
+                user.socket.current.emit("callEnd", caller.to);
+        }
+        else
+        {
+            user.socket.current.emit("callEnd", caller.from);
+        }
     }
 
 
@@ -145,18 +151,18 @@ const VideoWindow = () => {
             <div className="videoLeft">
                 <div className="videoMain">
                     <div className="userVideos">
-                        {stream && (<video playsInline muted ref={myvideo} autoPlay className="video" />)}
+                        {stream && (<video playsInline muted ref={myVideoRef} autoPlay className="video" />)}
                     </div>
                     {pstream && 
                     <div className="userVideos">
-                        {pstream && <video playsInline muted={false} ref={othervid} autoPlay className="video" />}
+                        {pstream && <video playsInline muted={false} ref={peerVideoRef} autoPlay className="video" />}
                     </div>}
                 </div>
                 
-                {caller.callAccept ? 
+                {call.callJoin ? 
                 <div className="videoOptions">
                     <button className="videoOptionsButtons videoOptionsEndcall" onClick={() => 
-                        { dispatch(setWindowState(CHAT)); leaveCall(); dispatch(setClass(false))}}>
+                        {  leaveCall(); }}>
                         <CallEndRoundedIcon fontSize="default" />
                     </button>
                     <button className="videoOptionsButtons" onClick={() => 
@@ -168,6 +174,7 @@ const VideoWindow = () => {
                         {camState ? <VideocamRoundedIcon fontSize="default" /> : <VideocamOffRoundedIcon fontSize="default" /> }
                     </button>
                 </div> :
+
                 <div className="beforeCallOptions">
                     <span className="beforeCallOptionsButtons">
                         <label>Video</label>
@@ -179,18 +186,18 @@ const VideoWindow = () => {
                     </span>
                 {
                     caller.is ?
-                    <button className= {caller.callAccept ? "CandAButton_hide": "CandAButton"}
+                    <button className= "CandAButton"
                     onClick={()=>
                     {
                         callUser(currSelectedUser.id);
-                        dispatch(setCallAccept(true));
+                        dispatch(setCallJoin(true));
                     }}>
                     Call</button> :
-                    <button className= {caller.callAccept ? "CandAButton_hide": "CandAButton"}
+                    <button className= "CandAButton"
                     onClick={()=>
                     {
                         answerCall();
-                        dispatch(setCallAccept(true));
+                        dispatch(setCallJoin(true));
                     }}>
                     Join Call</button>
                 }

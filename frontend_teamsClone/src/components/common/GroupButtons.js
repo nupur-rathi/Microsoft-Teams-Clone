@@ -8,7 +8,7 @@ import ChatOutlinedIcon from '@material-ui/icons/ChatOutlined';
 import { CHAT, VIDEOCALL, AUDIOCALL } from '../../constants';
 import { setClass } from '../../data/actions/classReducerActions';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCaller } from '../../data/actions/callActions';
+import { setCaller } from '../../data/actions/callerActions';
 import { setWindowState } from '../../data/actions/windowStateActions'
 
 const useStyles = makeStyles((theme) => ({
@@ -48,7 +48,7 @@ export default function BasicButtonGroup({currentWindow}) {
           {
             dispatch(setWindowState(VIDEOCALL)); 
             dispatch(setClass(true));
-            dispatch(setCaller({is: true, name: user.name, id: user.id, signal: null}));
+            dispatch(setCaller({is: true, from: user.id, to: currSelectedUser.id ,signal: null}));
           }
           else
           {

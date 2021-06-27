@@ -3,7 +3,7 @@ import '../../styles/callpopup.css';
 import PhoneInTalkRoundedIcon from '@material-ui/icons/PhoneInTalkRounded';
 import CallEndRoundedIcon from '@material-ui/icons/CallEndRounded';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCallAccept } from "../../data/actions/callActions";
+import { setCallAccept, setCallDecline, setCallReceive } from "../../data/actions/callActions";
 import { setWindowState } from "../../data/actions/windowStateActions";
 import { VIDEOCALL } from '../../constants';
 import { setClass } from '../../data/actions/classReducerActions';
@@ -11,12 +11,13 @@ import { setClass } from '../../data/actions/classReducerActions';
 const CallPopup = () => {
 
     const me = useSelector(state => state.userReducer);
-    const caller = useSelector(state => state.callReducer);
+    const caller = useSelector(state => state.callerReducer);
+    const call = useSelector(state => state.callReducer); 
 
     const dispatch = useDispatch();
 
     return (
-        <div className={(caller !== null && !caller.is && !caller.callAccept) ? "callPopup" : "callPopup callPopup_hide"}>
+        <div className={(call.callReceive) ? "callPopup" : "callPopup_hide"}>
             <div className="popupName">
                 <span className="PopupIncomingCall">Incoming call from...</span>
                 <span className="PopupIncomingName">
@@ -28,6 +29,8 @@ const CallPopup = () => {
                 onClick={()=>{
                     dispatch(setWindowState(VIDEOCALL));
                     dispatch(setClass(true));
+                    dispatch(setCallAccept(true));
+                    dispatch(setCallReceive(false));
                     }}>
                     <PhoneInTalkRoundedIcon fontSize="default" />
                 </button>

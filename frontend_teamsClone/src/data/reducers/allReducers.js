@@ -4,10 +4,11 @@ import sideRailReducer from './sideRailReducer';
 import usersListReducer from './usersListReducer';
 import currSelectedReducer from './currSelectedReducer';
 import classReducer from './setClassReducer';
-import callReducer from './callReducer';
+import callerReducer from './callerReducer';
 import windowStateReducer from './windowStateReducer';
 import chatReducer from './chatReducer';
 import roomsReducer from './roomsReducer';
+import callReducer from './callReducer';
 
 const allReducers = combineReducers({
     userReducer: userReducer,
@@ -15,10 +16,11 @@ const allReducers = combineReducers({
     sideRailReducer: sideRailReducer,
     currSelectedReducer: currSelectedReducer,
     classReducer: classReducer,
-    callReducer: callReducer,
+    callerReducer: callerReducer,
     windowStateReducer: windowStateReducer,
     chatReducer: chatReducer,
     roomsReducer: roomsReducer,
+    callReducer: callReducer,
 });
 
 export default allReducers;

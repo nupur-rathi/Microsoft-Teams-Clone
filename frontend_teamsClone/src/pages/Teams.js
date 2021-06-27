@@ -5,10 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUser, setUserEmail, setUserID, setUserName, setUserProfileurl, setUserSocket } from '../data/actions/userActions';
 import { io } from 'socket.io-client';
 import { addUser, initUsers, deleteUser} from '../data/actions/usersListActions';
-import { setCaller } from '../data/actions/callActions';
+import { setCaller } from '../data/actions/callerActions';
 import { addChat } from '../data/actions/chatActions';
 import { setCurrSelected } from '../data/actions/currSelectedActions';
 import { initRooms, addRoom, addUserToRoom, addRoomToJoined } from '../data/actions/roomsActions';
+import { setCallReceive } from '../data/actions/callActions';
 
 const socket = io(`http://localhost:5000`);
 
@@ -41,8 +42,14 @@ const Teams = () => {
             dispatch(deleteUser(id));
         });
 
-        socket.on("calluser", ({from, signal}) => {
-            dispatch(setCaller({is: false, name: from, id: from, signal: signal}));
+        socket.on("receiveCall", ({from, signal}) => {
+            dispatch(setCaller({is: false, from: from, to: socket.id, signal: signal}));
+            dispatch(setCallReceive(true));
+        });
+
+        socket.on("callEndedBefore", () => {
+            dispatch(setCallReceive(false));
+            dispatch(setCaller(null));
         });
 
         socket.on("receiveMessage", ({from, message}) => {
