@@ -12,7 +12,8 @@ import { CHAT } from "../../constants";
 import { setClass } from '../../data/actions/classReducerActions';
 import { setCallJoin,setCallCancel, setCallDecline, setCallAccept, setCallReceive, setCallEnd, setCallSend } from '../../data/actions/callActions';
 import { setWindowState } from '../../data/actions/windowStateActions';
-
+import PhoneEnabledRoundedIcon from '@material-ui/icons/PhoneEnabledRounded';
+import PhoneDisabledRoundedIcon from '@material-ui/icons/PhoneDisabledRounded';
 
 const VideoWindow = () => {
 
@@ -189,14 +190,14 @@ const VideoWindow = () => {
                 </div> :
 
                 <div className="beforeCallOptions">
-                    <span className="beforeCallOptionsButtons">
-                        <label>Video</label>
-                        <Switch color="default" defaultChecked onChange={()=>{muteCam()}} />
-                    </span>
-                    <span className="beforeCallOptionsButtons">
-                        <label>Audio</label>
-                        <Switch color="default" defaultChecked onChange={()=>{muteMic()}} />
-                    </span>
+                    <button className="beforeCallOptionsButtons " onClick={() => 
+                        { muteMic() }}>
+                        {micState ? <MicRoundedIcon fontSize="default" /> : <MicOffRoundedIcon fontSize="default" /> }
+                    </button>
+                    <button className="beforeCallOptionsButtons" onClick={() => 
+                        { muteCam() }}>
+                        {camState ? <VideocamRoundedIcon fontSize="default" /> : <VideocamOffRoundedIcon fontSize="default" /> }
+                    </button>
                     <button className= "cancelButton CandAButton" onClick={()=>{
                         if(caller.is)
                         {
@@ -231,14 +232,14 @@ const VideoWindow = () => {
                         callUser(currSelectedUser.id);
                         dispatch(setCallJoin(true));
                     }}>
-                    Call</button> :
+                    <PhoneEnabledRoundedIcon /></button> :
                     <button className= "CandAButton"
                     onClick={()=>
                     {
                         answerCall();
                         dispatch(setCallJoin(true));
                     }}>
-                    Join Call</button>
+                    Join</button>
                 }
                 </div> }
             </div>

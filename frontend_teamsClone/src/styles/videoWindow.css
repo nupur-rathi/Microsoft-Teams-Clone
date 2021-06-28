@@ -75,7 +75,7 @@
     outline: none;
     border: none;
     width: 25%;
-    height: 100%;
+    height: 90%;
     background-color: var(--greenForegroundColor);
     color: var(--defaultBackgroundColor);
     font-weight: 600;
@@ -84,6 +84,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 2px;
+    /* box-shadow: 0 4px 10px 2px rgb(0 0 0 / 30%); */
 }
 
 .CandAButton_hide{
@@ -91,19 +93,15 @@
 }
 
 .cancelButton{
-    background-color: transparent;
+    background-color: var(--backgroundColor7);  
 }
 
 .beforeCallOptions{
     display: flex;
-    width: 30%;
+    width: 25%;
     justify-content: space-between;
     align-items: center;
     height: 7%;
-    background-color: var(--backgroundColor7);
-    box-shadow: 0 4px 10px 2px rgb(0 0 0 / 30%);
-    border-radius: 3px;
-    overflow: hidden;
     color: var(--defaultBackgroundColor);
     font-size: 1rem;
 }
@@ -115,5 +113,13 @@
     box-sizing: border-box;
     font-weight: lighter;
     font-size: 0.8rem;
-    width: 37%;
+    width: 45px;
+    height: 45px;
+    outline: none;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--backgroundColor7);
+    color: var(--defaultBackgroundColor);
+    /* box-shadow: 0 4px 10px 2px rgb(0 0 0 / 30%); */
+    cursor: pointer;
 }
