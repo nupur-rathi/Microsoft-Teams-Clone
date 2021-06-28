@@ -10,13 +10,19 @@ const CallWindow = () => {
 
     const dispatch = useDispatch();
 
+    function call()
+    {
+        dispatch(setWindowState(CHAT)); 
+        dispatch(setClass(false));
+    }
+
     return (
         <div className="callWindow">
             <div className="callLeft">
                 <div className="callMain">
                 </div>
                 <div className="callOptions">
-                    <button className="callOptionsButtons callOptionsEndcall" onClick={() => {dispatch(setWindowState(CHAT)); dispatch(setClass(false))}}> 
+                    <button className="callOptionsButtons callOptionsEndcall" onClick={() => {call()}}> 
                         <CallEndRoundedIcon fontSize="medium" />
                     </button>
                 </div>

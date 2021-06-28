@@ -28,7 +28,7 @@ const LeftRail = () => {
         if(heading === Chat)
             setCpopupState(false);
             setJpopupState(false);
-    }, [heading])
+    }, [heading]);
 
     return (
         <div className={classState ? "leftRail leftRail_hide": "leftRail"}>
@@ -58,7 +58,6 @@ const LeftRail = () => {
                             <div className="selectDiv">
                                 <select className="selectBox" ref={selectRoomTypeRef} onChange={()=>{
                                     setRoomType(selectRoomTypeRef.current.value)
-                                    console.log(selectRoomTypeRef.current.value)
                                 }
                                 }>
                                     <option className="roomTypeOption" value={Public}>{Public}</option>

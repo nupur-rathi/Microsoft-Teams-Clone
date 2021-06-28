@@ -57,6 +57,8 @@ const VideoWindow = () => {
 
     const answerCall = () => {
     
+        dispatch(setCallJoin(true));
+        
         const peer = new Peer({
           initiator: false,
           trickle: false,
@@ -83,6 +85,8 @@ const VideoWindow = () => {
     };
     
     const callUser = (pid) => {
+
+        dispatch(setCallJoin(true));
 
         const peer = new Peer({
           initiator: true,
@@ -159,6 +163,29 @@ const VideoWindow = () => {
         }
     }
 
+    function cancelCall(){
+        if(caller.is)
+        {
+            dispatch(setWindowState(CHAT));
+            dispatch(setClass(false));
+            dispatch(setCallJoin(false));
+            dispatch(setCallAccept(false));
+            dispatch(setCallDecline(false));
+            dispatch(setCallReceive(false));
+            dispatch(setCallEnd(false));
+            dispatch(setCallSend(false));
+            dispatch(setCallCancel(false));
+            setPStream(null);
+            setCamState(true);
+            setMicState(true);
+            if(stream)
+                stream.getTracks().forEach(track => track.stop());
+        }
+        else
+        {
+            leaveCall();
+        }
+    }
 
     return (
         <div className="videoWindow">
@@ -199,27 +226,7 @@ const VideoWindow = () => {
                         {camState ? <VideocamRoundedIcon fontSize="default" /> : <VideocamOffRoundedIcon fontSize="default" /> }
                     </button>
                     <button className= "cancelButton CandAButton" onClick={()=>{
-                        if(caller.is)
-                        {
-                            dispatch(setWindowState(CHAT));
-                            dispatch(setClass(false));
-                            dispatch(setCallJoin(false));
-                            dispatch(setCallAccept(false));
-                            dispatch(setCallDecline(false));
-                            dispatch(setCallReceive(false));
-                            dispatch(setCallEnd(false));
-                            dispatch(setCallSend(false));
-                            dispatch(setCallCancel(false));
-                            setPStream(null);
-                            setCamState(true);
-                            setMicState(true);
-                            if(stream)
-                                stream.getTracks().forEach(track => track.stop());
-                        }
-                        else
-                        {
-                            leaveCall();
-                        }
+                        cancelCall();    
                     }}>
                         Cancel
                     </button>
@@ -229,15 +236,13 @@ const VideoWindow = () => {
                     <button className= "CandAButton"
                     onClick={()=>
                     {
-                        callUser(currSelectedUser.id);
-                        dispatch(setCallJoin(true));
+                        callUser(currSelectedUser.id);  
                     }}>
                     <PhoneEnabledRoundedIcon /></button> :
                     <button className= "CandAButton"
                     onClick={()=>
                     {
                         answerCall();
-                        dispatch(setCallJoin(true));
                     }}>
                     Join</button>
                 }

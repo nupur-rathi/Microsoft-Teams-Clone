@@ -16,20 +16,24 @@ const LeftRailListItems = ({ users }) => {
     const me = useSelector(state => state.userReducer);
     const roomsList = useSelector(state => state.roomsReducer);
 
+    function selecting(){
+        dispatch(setSelected(id, true));
+        if(curr != null)
+        {   
+            if(curr.type === 'user' && curr.id in usersList){ 
+                dispatch(setSelected(curr.id, false));}
+            else if(curr.type === 'room' && curr.roomName in roomsList['rooms']){ 
+                dispatch(setRSelected(curr.roomName, false));}
+
+        }
+            dispatch(setCurrSelected(users));
+    }
+
     if(users.id !== me.id)
     {
         return (
             <div className={selected ? "leftRailListItems leftRailListItems_selected" : "leftRailListItems"} onClick={()=>{
-                dispatch(setSelected(id, true));
-                if(curr != null)
-                {   
-                    if(curr.type === 'user' && curr.id in usersList){ 
-                        dispatch(setSelected(curr.id, false));}
-                    else if(curr.type === 'room' && curr.roomName in roomsList['rooms']){ 
-                        dispatch(setRSelected(curr.roomName, false));}
-
-                }
-                    dispatch(setCurrSelected(users));
+                    selecting();
                 }}>
                 <BadgeAvatars name={name} imgURL={imgUrl}/>
                 <span className="leftRail_ListItem_Name">{name ? name : id}</span>

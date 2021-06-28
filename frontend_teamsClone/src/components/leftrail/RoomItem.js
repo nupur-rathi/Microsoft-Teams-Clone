@@ -17,28 +17,32 @@ const RoomItem = ({ item, type }) => {
 
     const dispatch = useDispatch();
 
+    function selectingRoom(){
+        if(roomsList.joined.includes(item.roomName))
+        {
+            dispatch(setRSelected(item.roomName, true));
+            if(curr != null)
+            {   
+                if(curr.type === 'user' && curr.id in usersList){ 
+                    dispatch(setSelected(curr.id, false));}
+                else if(curr.type === 'room' && curr.roomName in roomsList['rooms']){ 
+                    dispatch(setRSelected(curr.roomName, false));}
+                
+            }
+                dispatch(setCurrSelected(item));
+        }
+        else
+        {
+            alert("You have not joined this room.")
+        }
+    }
+
     if((item.isPrivate && type === Private && roomsList['joined'].includes(item.roomName)) || (!item.isPrivate && type === Public))
     {
         return (
             <div className={item.selected ? "leftRailListItems leftRailListItems_selected roomItem" : "leftRailListItems roomItem"} 
             onClick={()=>{
-                if(roomsList.joined.includes(item.roomName))
-                {
-                    dispatch(setRSelected(item.roomName, true));
-                    if(curr != null)
-                    {   
-                        if(curr.type === 'user' && curr.id in usersList){ 
-                            dispatch(setSelected(curr.id, false));}
-                        else if(curr.type === 'room' && curr.roomName in roomsList['rooms']){ 
-                            dispatch(setRSelected(curr.roomName, false));}
-                        
-                    }
-                        dispatch(setCurrSelected(item));
-                }
-                else
-                {
-                    alert("You have not joined this room.")
-                }
+                    selectingRoom();
                 }}>
                 <Avatar variant="square" alt={item.roomName} src="#"/>
                 <span className="leftRail_ListItem_Name">{item.roomName}</span>

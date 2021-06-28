@@ -26,6 +26,39 @@ const useStyles = makeStyles((theme) => ({
 
 export default function BasicButtonGroup({currentWindow}) {
 
+  function videoCall()
+  {
+    if(currSelectedUser.id in usersList === true)
+    {
+      dispatch(setWindowState(VIDEOCALL)); 
+      dispatch(setClass(true));
+      dispatch(setCaller({is: true, from: user.id, to: currSelectedUser.id ,signal: null}));
+    }
+    else
+    {
+      alert("This user has disconnected. Cannot call");
+    }
+  }
+
+  function audioCall()
+  {
+    if(currSelectedUser.id in usersList === true)
+    {
+      dispatch(setWindowState(AUDIOCALL)); 
+      dispatch(setClass(true));
+    }
+    else
+    {
+      alert("This user has disconnected. Cannot call");
+    }  
+  }
+
+  function chat()
+  {
+    dispatch(setWindowState(CHAT)); 
+    dispatch(setClass(false));  
+  }
+
   const classes = useStyles();
 
   const dispatch = useDispatch();
@@ -38,34 +71,16 @@ export default function BasicButtonGroup({currentWindow}) {
     <div className={classes.root}>
       <ButtonGroup size="small" aria-label="outlined primary button group">
         <Button onClick={() => {
-          dispatch(setWindowState(CHAT)); 
-          dispatch(setClass(false));
+          chat();
           }}>
           <ChatOutlinedIcon fontSize="small" />
         </Button>
         <Button onClick={() => {
-          if(currSelectedUser.id in usersList === true)
-          {
-            dispatch(setWindowState(VIDEOCALL)); 
-            dispatch(setClass(true));
-            dispatch(setCaller({is: true, from: user.id, to: currSelectedUser.id ,signal: null}));
-          }
-          else
-          {
-            alert("This user has disconnected. Cannot call");
-          }
+          videoCall();
         }}>
           <VideocamOutlinedIcon fontSize="small"/></Button>
         <Button onClick={() => {
-          if(currSelectedUser.id in usersList === true)
-          {
-            dispatch(setWindowState(AUDIOCALL)); 
-            dispatch(setClass(true));
-          }
-          else
-          {
-            alert("This user has disconnected. Cannot call");
-          }
+          audioCall();
         }}>
           <PhoneEnabledOutlinedIcon fontSize="small"/></Button>
       </ButtonGroup>

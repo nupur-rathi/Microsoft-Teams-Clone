@@ -25,6 +25,18 @@ const CallPopup = () => {
 
     }, []);
 
+    function callAccept(){
+        dispatch(setWindowState(VIDEOCALL));
+        dispatch(setClass(true));
+        dispatch(setCallAccept(true));
+        dispatch(setCallReceive(false));
+    }
+
+    function callDecline(){
+        dispatch(setCallReceive(false));
+        me.socket.current.emit("callDecline", caller.from);
+    }
+
     return (
         <div className={(call.callReceive) ? "callPopup" : "callPopup_hide"}>
             <div className="popupName">
@@ -36,17 +48,13 @@ const CallPopup = () => {
             <div className="popupButtonsDiv">
                 <button className="popupButtons popupAcceptButton"
                 onClick={()=>{
-                    dispatch(setWindowState(VIDEOCALL));
-                    dispatch(setClass(true));
-                    dispatch(setCallAccept(true));
-                    dispatch(setCallReceive(false));
+                        callAccept();
                     }}>
                     <PhoneInTalkRoundedIcon fontSize="default" />
                 </button>
                 <button className="popupButtons popupDeclineButton"
                 onClick={()=>{
-                    dispatch(setCallReceive(false));
-                    me.socket.current.emit("callDecline", caller.from);
+                    callDecline();    
                 }}>
                     <CallEndRoundedIcon fontSize="default" /></button>
             </div>
