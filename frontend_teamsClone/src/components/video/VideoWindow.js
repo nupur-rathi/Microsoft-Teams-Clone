@@ -80,6 +80,7 @@ const VideoWindow = () => {
 
         user.socket.current.once("callEnded", () => {
             leaveCall();
+            alert("call ended");
         });
     
     };
@@ -112,10 +113,12 @@ const VideoWindow = () => {
     
         user.socket.current.once("callEnded", () => {
             leaveCall();
+            alert("call ended");
         });
 
         user.socket.current.once("callDeclined", () => {
             leaveCall();
+            alert("call declined");
         });
       
     };
