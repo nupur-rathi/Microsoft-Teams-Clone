@@ -34,6 +34,7 @@
     max-height: 80%;
     flex-basis: 1; 
     overflow: hidden;
+    position: relative;
 }
 
 .videoOptions{
@@ -128,4 +129,20 @@
     font-size: 1.1rem;
     font-weight: 600;
     color: var(--defaultBackgroundColor);
+}
+
+.userVideoName{
+    position: absolute;
+    z-index: 1;
+    font-size: 0.7rem;
+    bottom: 0;
+    left: 0;
+    transform: translateY(-100%);
+    background-color: black;
+    color: var(--defaultBackgroundColor);
+    font-weight: lighter;
+    margin: 0px 0px 0px 8px; 
+    padding: 4px 8px;
+    box-sizing: border-box;
+    border-radius: 2px;
 }

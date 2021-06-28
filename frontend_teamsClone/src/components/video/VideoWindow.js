@@ -257,9 +257,9 @@ const VideoWindow = () => {
         <div className="videoWindow">
             <div className="videoLeft">
                 <div className="videoMain">
-                    <VideoFrame who="me" stream={stream} videoRef={myVideoRef}/>
+                    <VideoFrame who="me" stream={stream} videoRef={myVideoRef} name={user.name}/>
                     {pstream && 
-                    <VideoFrame who="other" stream={pstream} videoRef={peerVideoRef}/>
+                    <VideoFrame who="other" stream={pstream} videoRef={peerVideoRef} name={currSelectedUser.name}/>
                     }
                 </div>
                 
