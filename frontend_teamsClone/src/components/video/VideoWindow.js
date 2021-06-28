@@ -42,7 +42,7 @@ const VideoWindow = () => {
         
         return (() => {
             console.log("component unmount");
-            if(connectionRef)
+            if(connectionRef.current)
             {
                 connectionRef.current.removeAllListeners('close');
                 connectionRef.current.destroy();
@@ -197,6 +197,32 @@ const VideoWindow = () => {
                         <label>Audio</label>
                         <Switch color="default" defaultChecked onChange={()=>{muteMic()}} />
                     </span>
+                    <button className= "cancelButton CandAButton" onClick={()=>{
+                        if(caller.is)
+                        {
+                            dispatch(setWindowState(CHAT));
+                            dispatch(setClass(false));
+                            dispatch(setCallJoin(false));
+                            dispatch(setCallAccept(false));
+                            dispatch(setCallDecline(false));
+                            dispatch(setCallReceive(false));
+                            dispatch(setCallEnd(false));
+                            dispatch(setCallSend(false));
+                            dispatch(setCallCancel(false));
+                            setPStream(null);
+                            setCamState(true);
+                            setMicState(true);
+                            if(stream)
+                                stream.getTracks().forEach(track => track.stop());
+                        }
+                        else
+                        {
+                            leaveCall();
+                        }
+                    }}>
+                        Cancel
+                    </button>
+                    
                 {
                     caller.is ?
                     <button className= "CandAButton"

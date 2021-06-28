@@ -90,9 +90,13 @@
     display: none;
 }
 
+.cancelButton{
+    background-color: var(--redForegroundColor);
+}
+
 .beforeCallOptions{
     display: flex;
-    width: 25%;
+    width: 30%;
     justify-content: space-between;
     align-items: center;
     height: 7%;
