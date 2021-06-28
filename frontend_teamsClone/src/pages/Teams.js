@@ -54,6 +54,7 @@ const Teams = () => {
 
         socket.on("callEndedBefore", () => {
             dispatch(setCallReceive(false));
+            if(streamRef.current)
             streamRef.current.getTracks().forEach(track => track.stop());
             dispatch(setWindowState(CHAT));
             dispatch(setClass(false));
