@@ -9,15 +9,22 @@ import { setCaller } from '../data/actions/callerActions';
 import { addChat } from '../data/actions/chatActions';
 import { setCurrSelected } from '../data/actions/currSelectedActions';
 import { initRooms, addRoom, addUserToRoom, addRoomToJoined } from '../data/actions/roomsActions';
-import { setCallReceive } from '../data/actions/callActions';
+import { CHAT } from "../constants";
+import { setClass } from '../data/actions/classReducerActions';
+import { setCallJoin,setCallCancel, setCallDecline, setCallAccept, setCallReceive, setCallEnd, setCallSend } from '../data/actions/callActions';
+import { setWindowState } from '../data/actions/windowStateActions';
 
 const socket = io(`http://localhost:5000`);
+
+export let streamRef;
 
 const Teams = () => {
     
     const socketRef = useRef(socket);
 
     const dispatch = useDispatch();
+
+    streamRef = useRef();
 
     dispatch(setUser("Nupur Rathi", "", "", "#", socketRef));
 
@@ -47,7 +54,16 @@ const Teams = () => {
 
         socket.on("callEndedBefore", () => {
             dispatch(setCallReceive(false));
-            dispatch(setCaller(null));
+            streamRef.current.getTracks().forEach(track => track.stop());
+            dispatch(setWindowState(CHAT));
+            dispatch(setClass(false));
+            dispatch(setCallJoin(false));
+            dispatch(setCallAccept(false));
+            dispatch(setCallDecline(false));
+            dispatch(setCallReceive(false));
+            dispatch(setCallEnd(false));
+            dispatch(setCallSend(false));
+            dispatch(setCallCancel(false));
             alert("call ended");
         });
 

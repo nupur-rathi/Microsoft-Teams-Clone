@@ -14,6 +14,7 @@ import { setCallJoin,setCallCancel, setCallDecline, setCallAccept, setCallReceiv
 import { setWindowState } from '../../data/actions/windowStateActions';
 import PhoneEnabledRoundedIcon from '@material-ui/icons/PhoneEnabledRounded';
 import PhoneDisabledRoundedIcon from '@material-ui/icons/PhoneDisabledRounded';
+import { streamRef } from '../../pages/Teams';
 
 const VideoWindow = () => {
 
@@ -39,6 +40,7 @@ const VideoWindow = () => {
         .then((currentStream) => {
             setStream(currentStream);
             myVideoRef.current.srcObject = currentStream;
+            streamRef.current = currentStream;
         });
         
         return (() => {
@@ -90,6 +92,7 @@ const VideoWindow = () => {
             setPStream(null);
             setCamState(true);
             setMicState(true);
+            console.log(stream);
             stream.getTracks().forEach(track => track.stop());
             if(connectionRef.current)
             {
