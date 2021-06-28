@@ -78,15 +78,30 @@ const VideoWindow = () => {
         connectionRef.current = peer;
 
         user.socket.current.once("callEnded", () => {
-            leaveCall();
+            dispatch(setWindowState(CHAT));
+            dispatch(setClass(false));
+            dispatch(setCallJoin(false));
+            dispatch(setCallAccept(false));
+            dispatch(setCallDecline(false));
+            dispatch(setCallReceive(false));
+            dispatch(setCallEnd(false));
+            dispatch(setCallSend(false));
+            dispatch(setCallCancel(false));
+            setPStream(null);
+            setCamState(true);
+            setMicState(true);
+            stream.getTracks().forEach(track => track.stop());
+            if(connectionRef.current)
+            {
+                connectionRef.current.removeAllListeners('close');
+                connectionRef.current.destroy();
+            }
             alert("call ended");
         });
     
     };
     
     const callUser = (pid) => {
-
-        dispatch(setCallJoin(true));
 
         const peer = new Peer({
           initiator: true,
@@ -105,18 +120,53 @@ const VideoWindow = () => {
     
         user.socket.current.once("callAccepted", signal => {
             dispatch(setCallAccept(true));
+            dispatch(setCallSend(false));
             peer.signal(signal);    
         });
     
         connectionRef.current = peer;
     
         user.socket.current.once("callEnded", () => {
-            leaveCall();
+            dispatch(setWindowState(CHAT));
+            dispatch(setClass(false));
+            dispatch(setCallJoin(false));
+            dispatch(setCallAccept(false));
+            dispatch(setCallDecline(false));
+            dispatch(setCallReceive(false));
+            dispatch(setCallEnd(false));
+            dispatch(setCallSend(false));
+            dispatch(setCallCancel(false));
+            setPStream(null);
+            setCamState(true);
+            setMicState(true);
+            stream.getTracks().forEach(track => track.stop());
+            if(connectionRef.current)
+            {
+                connectionRef.current.removeAllListeners('close');
+                connectionRef.current.destroy();
+            }
             alert("call ended");
         });
 
         user.socket.current.once("callDeclined", () => {
-            leaveCall();
+            dispatch(setWindowState(CHAT));
+            dispatch(setClass(false));
+            dispatch(setCallJoin(false));
+            dispatch(setCallAccept(false));
+            dispatch(setCallDecline(false));
+            dispatch(setCallReceive(false));
+            dispatch(setCallEnd(false));
+            dispatch(setCallSend(false));
+            dispatch(setCallCancel(false));
+            setPStream(null);
+            setCamState(true);
+            setMicState(true);
+            stream.getTracks().forEach(track => track.stop());
+            if(connectionRef.current)
+            {
+                connectionRef.current.removeAllListeners('close');
+                connectionRef.current.destroy();
+            }
             alert("call declined");
         });
       
@@ -189,6 +239,16 @@ const VideoWindow = () => {
         }
     }
 
+    function sendCall()
+    {
+        callUser(currSelectedUser.id); 
+        dispatch(setCallJoin(true));
+        dispatch(setCallSend(true));
+        setTimeout(()=>{
+            dispatch(setCallSend(false));
+        }, 2500);
+    }
+
     return (
         <div className="videoWindow">
             <div className="videoLeft">
@@ -203,6 +263,7 @@ const VideoWindow = () => {
                 </div>
                 
                 {call.callJoin ? 
+                <>
                 <div className="videoOptions">
                     <button className="videoOptionsButtons videoOptionsEndcall" onClick={() => 
                         {  leaveCall(); }}>
@@ -216,8 +277,12 @@ const VideoWindow = () => {
                         { muteCam() }}>
                         {camState ? <VideocamRoundedIcon fontSize="default" /> : <VideocamOffRoundedIcon fontSize="default" /> }
                     </button>
-                </div> :
-
+                </div> 
+                <div className="videoWindowText">
+                    {call.callSend ? `call send...` : ``}
+                </div>
+                </>
+                    :
                 <div className="beforeCallOptions">
                     <button className="beforeCallOptionsButtons " onClick={() => 
                         { muteMic() }}>
@@ -238,7 +303,7 @@ const VideoWindow = () => {
                     <button className= "CandAButton"
                     onClick={()=>
                     {
-                        callUser(currSelectedUser.id);  
+                        sendCall(); 
                     }}>
                     <PhoneEnabledRoundedIcon /></button> :
                     <button className= "CandAButton"

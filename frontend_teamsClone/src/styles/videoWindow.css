@@ -123,3 +123,9 @@
     /* box-shadow: 0 4px 10px 2px rgb(0 0 0 / 30%); */
     cursor: pointer;
 }
+
+.videoWindowText{
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--defaultBackgroundColor);
+}
