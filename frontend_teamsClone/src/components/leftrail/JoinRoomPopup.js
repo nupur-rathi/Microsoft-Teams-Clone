@@ -8,14 +8,14 @@ const JoinRoomPopup = ({state, setState}) => {
     const passwordRef = useRef();
     const user = useSelector(state => state.userReducer);
 
-    function textToClipboard (text) {
-        var dummy = document.createElement("textarea");
-        document.body.appendChild(dummy);
-        dummy.value = text;
-        dummy.select();
-        document.execCommand("copy");
-        document.body.removeChild(dummy);
-    }
+    // function textToClipboard (text) {
+    //     var dummy = document.createElement("textarea");
+    //     document.body.appendChild(dummy);
+    //     dummy.value = text;
+    //     dummy.select();
+    //     document.execCommand("copy");
+    //     document.body.removeChild(dummy);
+    // }
 
     function joinRoom()
     {
@@ -28,7 +28,7 @@ const JoinRoomPopup = ({state, setState}) => {
             console.log(roomName);
             user.socket.current.emit("joinRoom", {roomName:roomName, eventType: "join", isPrivate: null, password: password});
             setState(false);
-            textToClipboard(roomName);
+            // textToClipboard(roomName);
         }
     }
 
