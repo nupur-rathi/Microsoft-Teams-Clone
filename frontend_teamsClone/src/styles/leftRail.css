@@ -69,6 +69,24 @@
     box-sizing: border-box;
     margin: 0px 0px 0px 9px;
     font-size: 0.92rem;
+    width: 70%;
+}
+
+.roomItemButton{
+    outline: none;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    color: var(--foregroundColor2);
+    opacity: 0.65;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.roomItemButton:hover{
+    opacity: 1;
+    color: var(--brandForegroundColor1);
 }
 
 .leftRailRoomOptions{

@@ -123,6 +123,7 @@
     box-sizing: border-box;
     padding: 8px;
     margin: 0px 0px 8px 0px;
+    border: 1px solid var(--defaultForegroundDisabled);
 }
 
 .chatInput:focus{

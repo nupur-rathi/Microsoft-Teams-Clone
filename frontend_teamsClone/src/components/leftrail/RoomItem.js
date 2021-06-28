@@ -6,6 +6,7 @@ import { setSelected } from '../../data/actions/usersListActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Public, Private } from "../../constants";
 import { Avatar } from '@material-ui/core';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 const RoomItem = ({ item, type }) => {
 
@@ -46,6 +47,7 @@ const RoomItem = ({ item, type }) => {
                 }}>
                 <Avatar variant="square" alt={item.roomName} src="#"/>
                 <span className="leftRail_ListItem_Name">{item.roomName}</span>
+                <button className="roomItemButton"><MoreHorizIcon fontSize="small"/></button>
             </div>        
         );
     }
