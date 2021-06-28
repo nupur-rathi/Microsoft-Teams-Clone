@@ -91,7 +91,7 @@
 }
 
 .cancelButton{
-    background-color: var(--redForegroundColor);
+    background-color: transparent;
 }
 
 .beforeCallOptions{
