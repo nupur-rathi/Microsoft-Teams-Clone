@@ -17,15 +17,15 @@ const LeftRailListItems = ({ users }) => {
     const roomsList = useSelector(state => state.roomsReducer);
 
     function selecting(){
-        dispatch(setSelected(id, true));
         if(curr != null)
         {   
-            if(curr.type === 'user' && curr.id in usersList){ 
+            if(curr.type === 'user' && curr.id in usersList && curr.id !== users.id){ 
                 dispatch(setSelected(curr.id, false));}
             else if(curr.type === 'room' && curr.roomName in roomsList['rooms']){ 
                 dispatch(setRSelected(curr.roomName, false));}
 
         }
+            dispatch(setSelected(id, true));
             dispatch(setCurrSelected(users));
     }
 

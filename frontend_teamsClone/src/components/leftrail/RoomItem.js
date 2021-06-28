@@ -19,8 +19,7 @@ const RoomItem = ({ item, type }) => {
 
     function selectingRoom(){
         if(roomsList.joined.includes(item.roomName))
-        {
-            dispatch(setRSelected(item.roomName, true));
+        {  
             if(curr != null)
             {   
                 if(curr.type === 'user' && curr.id in usersList){ 
@@ -30,6 +29,7 @@ const RoomItem = ({ item, type }) => {
                 
             }
                 dispatch(setCurrSelected(item));
+                dispatch(setRSelected(item.roomName, true));
         }
         else
         {
