@@ -25,6 +25,7 @@ const VideoWindow = () => {
     const call = useSelector(state => state.callReducer);
     const caller = useSelector(state => state.callerReducer);
     const user = useSelector(state => state.userReducer);
+    const usersList = useSelector(state => state.usersListReducer);
 
     const [stream, setStream] = useState(null);
     const [pstream, setPStream] = useState(null);
@@ -259,7 +260,7 @@ const VideoWindow = () => {
                 <div className="videoMain">
                     <VideoFrame who="me" stream={stream} videoRef={myVideoRef} name={user.name}/>
                     {pstream && 
-                    <VideoFrame who="other" stream={pstream} videoRef={peerVideoRef} name={currSelectedUser.name}/>
+                    <VideoFrame who="other" stream={pstream} videoRef={peerVideoRef} name={usersList[caller.from].name}/>
                     }
                 </div>
                 

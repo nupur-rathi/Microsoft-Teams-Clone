@@ -133,7 +133,7 @@
 
 .userVideoName{
     position: absolute;
-    z-index: 1;
+    z-index: 2;
     font-size: 0.7rem;
     bottom: 0;
     left: 0;
@@ -145,4 +145,14 @@
     padding: 4px 8px;
     box-sizing: border-box;
     border-radius: 2px;
+}
+
+.videoDisabledFrame{
+    background-color: red;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
