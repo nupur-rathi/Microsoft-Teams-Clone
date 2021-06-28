@@ -42,7 +42,6 @@ const VideoWindow = () => {
         });
         
         return (() => {
-            console.log("component unmount");
             if(connectionRef.current)
             {
                 connectionRef.current.removeAllListeners('close');

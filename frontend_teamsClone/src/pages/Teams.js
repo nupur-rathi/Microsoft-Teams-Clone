@@ -48,6 +48,7 @@ const Teams = () => {
         socket.on("callEndedBefore", () => {
             dispatch(setCallReceive(false));
             dispatch(setCaller(null));
+            alert("call ended");
         });
 
         socket.on("receiveMessage", ({from, message}) => {
