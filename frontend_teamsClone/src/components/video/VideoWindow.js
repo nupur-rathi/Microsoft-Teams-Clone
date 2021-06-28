@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Peer from 'simple-peer';
 import '../../styles/videoWindow.css';
+import VideoFrame from './VideoFrame';
 import CallEndRoundedIcon from '@material-ui/icons/CallEndRounded';
 import VideocamRoundedIcon from '@material-ui/icons/VideocamRounded';
 import MicRoundedIcon from '@material-ui/icons/MicRounded';
@@ -256,13 +257,10 @@ const VideoWindow = () => {
         <div className="videoWindow">
             <div className="videoLeft">
                 <div className="videoMain">
-                    <div className="userVideos">
-                        {stream && (<video playsInline muted ref={myVideoRef} autoPlay className="video" />)}
-                    </div>
+                    <VideoFrame who="me" stream={stream} videoRef={myVideoRef}/>
                     {pstream && 
-                    <div className="userVideos">
-                        {pstream && <video playsInline muted={false} ref={peerVideoRef} autoPlay className="video" />}
-                    </div>}
+                    <VideoFrame who="other" stream={pstream} videoRef={peerVideoRef}/>
+                    }
                 </div>
                 
                 {call.callJoin ? 
