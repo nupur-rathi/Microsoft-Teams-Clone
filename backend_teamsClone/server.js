@@ -42,19 +42,25 @@ io.on('connection', (socket) => {
     // ----------------------------------
     // video calling oto code
 
-    socket.on("calluser", ({usertocall, from, signalData}) => {
-        console.log(usertocall);
-        io.to(usertocall).emit("calluser", {signal: signalData, from});
+    socket.on("callUser", ({userToCall, from, signalData}) => {
+        io.to(userToCall).emit("receiveCall", {signal: signalData, from});
     });
 
-    socket.on("answercall", (data) => {
-        console.log(data);
-        io.to(data.to).emit("callaccepted", data.signal);
+    socket.on("answerCall", (data) => {
+        io.to(data.to).emit("callAccepted", data.signal);
     });
 
-    socket.on("callend", (from) => 
-        socket.broadcast.emit("callended")
-    );
+    socket.on("callEnd", (to) => {
+        io.to(to).emit("callEnded");
+    });
+
+    socket.on("callEndBefore", (to) => {
+        io.to(to).emit("callEndedBefore");
+    });
+
+    socket.on("callDecline", (to)=>{
+        io.to(to).emit("callDeclined");
+    });
 
     // -------------------------------------------
 

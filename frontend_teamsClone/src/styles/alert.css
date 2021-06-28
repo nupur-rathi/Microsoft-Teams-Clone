@@ -1,0 +1,18 @@
+@import "./variables.css";
+
+.alert{
+    background-color: var(--brandForegroundColor);
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    color: var(--defaultBackgroundColor);
+    position: absolute;
+    left: 50%;
+    top: 10vh;
+    width: 23.5%;
+    transform: translateX(-50%);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px -2px;
+    z-index: 1;
+}

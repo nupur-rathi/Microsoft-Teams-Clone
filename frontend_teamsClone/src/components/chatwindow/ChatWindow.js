@@ -85,7 +85,10 @@ const ChatWindow = () => {
                 <div className="chatWindowBelow">
                     <div className={isMessage ? "hide": "alertOnNoInput"}>
                     Please write a message to send.</div>
-                    <input ref={inputFieldRef} className="chatInput" placeholder="Type a new message"></input>
+                    <input ref={inputFieldRef} className="chatInput" placeholder="Type a new message" onKeyDown={(e)=>{
+                        if(e.keyCode === 13)
+                        {sendMessage();}
+                    }}></input>
                     <div className="chatInputOptions">
                         <div className="chatInputTypes">
                             <button className="chatEmojiButton chatOptionButtons" onClick={()=>{setCloseEP(false);}}>
