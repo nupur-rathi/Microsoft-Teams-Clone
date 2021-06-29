@@ -1,0 +1,86 @@
+@import './variables.css';
+
+.authPage{
+    width: 100%;
+    height: 100%;
+    background-color: var(--brandForegroundColor2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.authBox{
+    height: 50vh;
+    width: 50vh;
+    background-color: var(--defaultBackgroundColor);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.authBoxDivisions{
+    height: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.googleButton{
+    outline: none;
+    border: none;
+    border-radius: 2px;
+    height: 45px;
+    width: 225px;
+    display: flex;
+    align-items: center;
+    background-color: var(--googleBlue);
+    color: var(--defaultBackgroundColor);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.googleButton:hover{
+    text-decoration: underline;
+}
+
+.loginButtonDiv{
+    margin-bottom: 30px; 
+}
+
+.orDiv{
+    margin-bottom: 25px;
+}
+
+.loginSVG{
+    height: 43px;
+    width: 43px;
+    background-color: var(--defaultBackgroundColor);
+    margin: 0 25px 0 2px;
+    box-sizing: border-box;
+    border-radius: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.googleSVG{
+    height: 24px;
+    width: 24px;
+}
+
+.guest{
+    cursor: pointer;
+    margin-left: 8px;
+    font-size: 1.1rem;
+}
+
+.guest:hover{
+    text-decoration: underline;
+}
+
+.or{
+    color: var(--foregroundColor2); 
+}
