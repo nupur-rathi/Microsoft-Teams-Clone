@@ -14,9 +14,9 @@ const chatReducer = (state = initialState, action) => {
             {
                 const chat = {...state};
                 if(payload.key in chat[payload.type])
-                    (chat[payload.type][payload.key]).push({sender: payload.sender, message: payload.message});
+                    (chat[payload.type][payload.key]).push({sender: payload.sender, senderName: payload.senderName, message: payload.message});
                 else
-                    chat[payload.type][payload.key] = [{sender: payload.sender, message: payload.message}];
+                    chat[payload.type][payload.key] = [{sender: payload.sender, senderName: payload.senderName, message: payload.message}];
 
                 return chat;
             }

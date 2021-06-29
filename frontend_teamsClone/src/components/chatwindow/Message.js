@@ -5,8 +5,6 @@ import '../../styles/chatWindow.css';
 const Message = ({item, me}) => {
     //return according to the message sender
 
-    const usersList = useSelector(state => state.usersListReducer);
-
     if(item.sender === me)
     {
         return (
@@ -23,7 +21,7 @@ const Message = ({item, me}) => {
         return(
             <div className="messageDiv otherMessageDiv">
                 <div className="messages otherMessage">
-                    <span className="messageFrom">{`${usersList[item.sender].name} :`}</span>
+                    <span className="messageFrom">{`${item.senderName} :`}</span>
                     <span className="message">{item.message}</span>
                 </div>
             </div>

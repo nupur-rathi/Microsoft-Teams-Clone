@@ -1,6 +1,6 @@
 import { ADD_CHAT } from "../../constants";
 
-export const addChat = (type, key, sender, message) => {
+export const addChat = (type, key, sender, senderName, message) => {
 
     return {
         type: ADD_CHAT,
@@ -8,6 +8,7 @@ export const addChat = (type, key, sender, message) => {
             type: type,
             key: key,
             sender: sender,
+            senderName: senderName,
             message: message,
         },
     }

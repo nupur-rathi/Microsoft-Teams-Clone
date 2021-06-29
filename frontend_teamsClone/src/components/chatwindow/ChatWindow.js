@@ -51,13 +51,13 @@ const ChatWindow = () => {
             setIsMessage(true);
             if(currSelected.type === "user")
             {
-                dispatch(addChat("oto", currSelected.id, user.id, message)); 
-                user.socket.current.emit("sendMessage", {to: currSelected.id, message: message});
+                dispatch(addChat("oto", currSelected.id, user.id, user.name, message)); 
+                user.socket.current.emit("sendMessage", {to: currSelected.id, name: user.name, message: message});
             }
             else if(currSelected.type === "room")
             {
-                dispatch(addChat("room", currSelected.roomName, user.id, message)); 
-                user.socket.current.emit("sendMessageToRoom", {to: currSelected.roomName, message: message, roomName: currSelected.roomName});
+                dispatch(addChat("room", currSelected.roomName, user.id, user.name, message)); 
+                user.socket.current.emit("sendMessageToRoom", {to: currSelected.roomName, name: user.name, message: message, roomName: currSelected.roomName});
             }   
         }
 

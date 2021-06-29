@@ -74,13 +74,13 @@ const Teams = () => {
             alert("call ended");
         });
 
-        socket.on("receiveMessage", ({from, message}) => {
-            dispatch(addChat("oto", from, from, message));
+        socket.on("receiveMessage", ({from, name, message}) => {
+            dispatch(addChat("oto", from, from, name, message));
         });
 
-        socket.on("receiveMessageToRoom", ({from, message, roomName}) => {
+        socket.on("receiveMessageToRoom", ({from, name, message, roomName}) => {
             if(from !== socket.id)
-            dispatch(addChat("room", roomName, from, message));
+            dispatch(addChat("room", roomName, from, name, message));
         });
 
         socket.on("roomJoined", (roomName)=>{

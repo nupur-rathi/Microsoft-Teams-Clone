@@ -69,14 +69,14 @@ io.on('connection', (socket) => {
 
     // chat oto code
 
-    socket.on("sendMessage", ({to, message}) => {
-        io.to(to).emit("receiveMessage", {from: sid, message: message});
+    socket.on("sendMessage", ({to, name, message}) => {
+        io.to(to).emit("receiveMessage", {from: sid, name: name, message: message});
     });
     
     // chat room
 
-    socket.on("sendMessageToRoom", ({to, message, roomName}) => {
-        io.to(to).emit("receiveMessageToRoom", {from: sid, message: message, roomName: roomName});
+    socket.on("sendMessageToRoom", ({to, name, message, roomName}) => {
+        io.to(to).emit("receiveMessageToRoom", {from: sid, name: name, message: message, roomName: roomName});
     });    
 
     // -----------------------------------------
