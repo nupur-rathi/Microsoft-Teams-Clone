@@ -10,7 +10,7 @@ export const setSelected = (id, state) => {
     }
 };
 
-export const addUser = ({name, id, imgUrl}, selected) => {
+export const addUser = ({name, id, imgUrl, email, isGuest}, selected) => {
     return {
         type: ADD_USER,
         payload: {
@@ -19,6 +19,8 @@ export const addUser = ({name, id, imgUrl}, selected) => {
             imgUrl: imgUrl,
             selected: selected,
             type: 'user',
+            email: email,
+            isGuest: isGuest,
         },
     }
 };
@@ -31,6 +33,8 @@ export const deleteUser = (id) => {
 };
 
 export const initUsers = (users) => {
+
+    console.log(users);
 
     return {
         type: INIT_USERS,

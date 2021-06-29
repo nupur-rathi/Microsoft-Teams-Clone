@@ -33,11 +33,11 @@ io.on('connection', (socket) => {
     });
 
     socket.on('addUser', (user)=>{
-        users[user.id] = {name: user.name, id: user.id, imgUrl: "#", selected: false, type: "user"};
+        console.log(user);
+        users[user.id] = {name: user.name, email: user.email, id: user.id, imgUrl: user.imgUrl, selected: false, type: "user", isGuest: user.isGuest};
         socket.broadcast.emit('addUser', users[user.id]);
         socket.emit('initUsers', users);
         socket.emit('initRooms', roomsObj);
-        console.log(users);
     });
 
     const sid = socket.id;

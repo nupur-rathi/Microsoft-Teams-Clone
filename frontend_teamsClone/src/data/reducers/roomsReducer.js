@@ -13,7 +13,6 @@ const roomsReducer = (state = initState, action) => {
                 rooms['rooms'] = {...payload};
                 rooms['joined'] = [];
 
-                console.log(rooms);
                 return rooms;    
             }
         case ADD_ROOM:
@@ -21,7 +20,6 @@ const roomsReducer = (state = initState, action) => {
                 const rooms = {...state};
                 rooms['rooms'][payload.roomName] = {...payload};
 
-                console.log(rooms);
                 return rooms;
             }
         case ADD_USER_TO_ROOM:
@@ -29,15 +27,13 @@ const roomsReducer = (state = initState, action) => {
                 const rooms = {...state};
                 rooms['rooms'][payload.roomName]['users'].push(payload.userID);
 
-                console.log(rooms);
                 return rooms;
             }
         case ADD_ROOM_TO_JOINED:
             {
                 const rooms = {...state};
                 rooms['joined'].push(payload);
-
-                console.log(rooms);
+                
                 return rooms;
             }
         case SETRSELECTED:

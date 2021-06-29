@@ -1,4 +1,4 @@
-import {SET_USER, SET_USER_ID, SET_USER_NAME, SET_USER_EMAIL, SET_USER_SOCKET, SET_USER_PROFILEURL} from "../../constants";
+import {SET_USER, SET_USER_ID, SET_USER_NAME, SET_USER_EMAIL, SET_USER_SOCKET, SET_USER_PROFILEURL, SET_IS_GUEST } from "../../constants";
 
 const userInitialState = {};
 
@@ -35,6 +35,11 @@ const userReducer = (state = userInitialState, action) => {
         case SET_USER_SOCKET:
             {
                 const user = {...state, socket: payload};
+                return user;    
+            }
+        case SET_IS_GUEST:
+            {
+                const user = {...state, isGuest: payload};
                 return user;    
             }
         default:

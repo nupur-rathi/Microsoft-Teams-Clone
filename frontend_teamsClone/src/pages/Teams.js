@@ -24,6 +24,8 @@ const Teams = () => {
 
     const dispatch = useDispatch();
 
+    const user = useSelector(state => state.userReducer);
+
     streamRef = useRef();
 
     useEffect(() => {
@@ -35,10 +37,13 @@ const Teams = () => {
     useEffect(() => {
 
         socket.on('myid', (id) => {
-            console.log(id);
-            dispatch(setUserName(`Guest_${socket.id}`));
+            if(user.isGuest === true)
+                dispatch(setUserName(`Guest_${socket.id}`));
             dispatch(setUserID(socket.id));
-            socket.emit('addUser', {name: `Guest_${socket.id}`, id: socket.id})
+            if(user.isGuest === true)
+                socket.emit('addUser', {name: `Guest_${socket.id}`, id: socket.id, email: user.email, imgUrl: user.profileUrl, isGuest: user.isGuest})
+            else
+                socket.emit('addUser', {name: user.name, id: socket.id, email: user.email, imgUrl: user.profileUrl, isGuest: user.isGuest});
         });
 
         socket.on('initUsers', (obj) => {

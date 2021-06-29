@@ -4,6 +4,7 @@ export const SET_USER_NAME = "SET_USER_NAME";
 export const SET_USER_PROFILEURL = "SET_USER_PROFILEURL";
 export const SET_USER_SOCKET = "SET_USER_SOCKET";
 export const SET_USER_EMAIL = "SET_USER_EMAIL";
+export const SET_IS_GUEST = "SET_IS_GUEST";
 export const SET_WINDOW_STATE = "SET_WINDOW_STATE";
 export const ADD_CHAT = "ADD_CHAT";
 
