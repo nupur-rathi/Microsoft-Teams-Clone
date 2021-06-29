@@ -32,12 +32,15 @@ io.on('connection', (socket) => {
         socket.broadcast.emit("callended");  
     });
 
-    const sid = socket.id;
+    socket.on('addUser', (user)=>{
+        users[user.id] = {name: user.name, id: user.id, imgUrl: "#", selected: false, type: "user"};
+        socket.broadcast.emit('addUser', users[user.id]);
+        socket.emit('initUsers', users);
+        socket.emit('initRooms', roomsObj);
+        console.log(users);
+    });
 
-    users[sid] = {name: sid, id: sid, imgUrl: "#", selected: false, type: "user"};
-    socket.emit('initUsers', users);
-    socket.emit('initRooms', roomsObj);
-    socket.broadcast.emit('addUser', users[sid]);
+    const sid = socket.id;
 
     // ----------------------------------
     // video calling oto code

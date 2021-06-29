@@ -14,25 +14,31 @@ import { setClass } from '../data/actions/classReducerActions';
 import { setCallJoin,setCallCancel, setCallDecline, setCallAccept, setCallReceive, setCallEnd, setCallSend } from '../data/actions/callActions';
 import { setWindowState } from '../data/actions/windowStateActions';
 
-const socket = io(`http://localhost:5000`);
-
 export let streamRef;
 
 const Teams = () => {
     
-    const socketRef = useRef(socket);
+    let socket;
+
+    const socketRef = useRef();
 
     const dispatch = useDispatch();
 
     streamRef = useRef();
 
-    dispatch(setUser("Nupur Rathi", "", "", "#", socketRef));
+    useEffect(() => {
+        socket = io(`http://localhost:5000`);
+        socketRef.current = socket;      
+        dispatch(setUserSocket(socketRef));
+    }, []);
 
     useEffect(() => {
 
         socket.on('myid', (id) => {
-            dispatch(setUserName(id));
-            dispatch(setUserID(id));
+            console.log(id);
+            dispatch(setUserName(`Guest_${socket.id}`));
+            dispatch(setUserID(socket.id));
+            socket.emit('addUser', {name: `Guest_${socket.id}`, id: socket.id})
         });
 
         socket.on('initUsers', (obj) => {
