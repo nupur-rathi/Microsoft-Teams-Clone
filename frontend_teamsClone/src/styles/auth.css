@@ -84,3 +84,8 @@
 .or{
     color: var(--foregroundColor2); 
 }
+
+.links{
+    color: var(--backgroundColor6);
+    text-decoration: none;
+}

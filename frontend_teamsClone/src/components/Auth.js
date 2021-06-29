@@ -30,7 +30,7 @@ const Auth = () => {
                 </div>
                 <div className="authBoxDivisions">
                     <AccountBoxRoundedIcon />
-                    <Link to="/teams">
+                    <Link className="links" to="/teams">
                         <span className="guest" onClick={()=>{
                             initGuest();
                         }}>Continue as Guest ...</span>
