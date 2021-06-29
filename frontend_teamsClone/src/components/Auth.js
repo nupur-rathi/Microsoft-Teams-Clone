@@ -1,6 +1,7 @@
 import React from 'react'
 import '../styles/auth.css';
 import AccountBoxRoundedIcon from '@material-ui/icons/AccountBoxRounded';
+import GoogleSVG from '../assets/GoogleSVG';
 
 const Auth = () => {
     return (
@@ -8,7 +9,7 @@ const Auth = () => {
             <div className="authBox">
                 <div className="authBoxDivisions loginButtonDiv">
                     <button className="googleButton">
-                        <span className="loginSVG"><img className="googleSVG" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1200px-Google_%22G%22_Logo.svg.png"/></span>
+                        <span className="loginSVG"><GoogleSVG /></span>
                         <span className="loginText">Sign in with Google</span>
                     </button>
                 </div>
