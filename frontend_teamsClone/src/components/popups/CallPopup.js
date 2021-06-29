@@ -14,6 +14,7 @@ const CallPopup = () => {
     const me = useSelector(state => state.userReducer);
     const caller = useSelector(state => state.callerReducer);
     const call = useSelector(state => state.callReducer); 
+    const usersList = useSelector(state => state.usersListReducer);
 
     const dispatch = useDispatch();
 
@@ -42,7 +43,7 @@ const CallPopup = () => {
             <div className="popupName">
                 <span className="PopupIncomingCall">Incoming call from...</span>
                 <span className="PopupIncomingName">
-                    {(caller !== null ) ? caller.from : ""}
+                    {(caller !== null ) ? usersList[caller.from].name : ""}
                 </span>
             </div>
             <div className="popupButtonsDiv">
