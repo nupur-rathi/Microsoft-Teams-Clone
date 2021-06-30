@@ -1,8 +1,11 @@
+import { v4 as uuidv4 } from 'uuid';
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import '../../../styles/invitePopup.css';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import LinkRoundedIcon from '@material-ui/icons/LinkRounded';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
+import { addInvite } from '../../../data/actions/inviteActions';
 
 const InviteLinkPopup = ({ setShow }) => {
 
@@ -13,8 +16,14 @@ const InviteLinkPopup = ({ setShow }) => {
     const [ join, showJoin ] = useState(false);
     const [ inviteCreated, setInviteCreated ] = useState("");
 
+    const dispatch = useDispatch();
+
+    const linksList = useSelector(state => state.inviteReducer);
+
     function createInvite(){
-        setInviteCreated("helgggggggggggggggggggggggggggggggggggggg");
+        const inviteLink = uuidv4();
+        setInviteCreated(inviteLink);
+        dispatch(addInvite(inviteLink));
         showJoin(false);
     }
 
@@ -68,8 +77,7 @@ const InviteLinkPopup = ({ setShow }) => {
                     <br></br>
                     <br></br>
                     <ul className="list">
-                        <li>apple</li>
-                        <li>banana</li>
+                        {linksList.map(item => <li key={item}>{item}</li>)}
                     </ul>
                 </div> : <></> }
             </div> 
