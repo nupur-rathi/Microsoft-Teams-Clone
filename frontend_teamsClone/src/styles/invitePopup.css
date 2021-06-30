@@ -52,6 +52,29 @@
     align-items: center;
 }
 
+.inputLink{
+    outline: none;
+    border: none;
+    height: 70%;
+    width: 80%;
+    border-radius: 2px;
+    box-sizing: border-box;
+    padding: 4px;
+}
+
+.joinLink{
+    outline: none;
+    border: none;
+    border-radius: 2px;
+    height: 70%;
+    width: 15%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
 .smallButtonDiv{
     height: 35px;
     width: 100%;

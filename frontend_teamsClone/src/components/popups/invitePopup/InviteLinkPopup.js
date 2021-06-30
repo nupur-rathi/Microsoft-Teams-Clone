@@ -36,8 +36,8 @@ const InviteLinkPopup = ({ setShow }) => {
                 <div className="inviteDivs">
                     {join ? 
                         <>
-                        <input>
-                        </input>
+                            <input className="inputLink"></input>
+                            <button className="joinLink">Join</button>
                         </>
                         :
                         <span>You created an invite :<br></br>{inviteCreated}</span>
