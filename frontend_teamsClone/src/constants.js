@@ -24,6 +24,7 @@ export const ADD_ROOM_TO_JOINED = "ADD_ROOM_TO_JOINED";
 
 export const CHAT = "CHAT";
 export const VIDEOCALL = "VIDEOCALL";
+export const GROUP_VIDEOCALL = "GROUP_VIDEOCALL";
 export const AUDIOCALL = "AUDIOCALL";
 
 export const SET_CALLER = "SET_CALLER";

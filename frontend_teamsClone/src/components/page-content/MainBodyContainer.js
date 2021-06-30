@@ -3,9 +3,9 @@ import '../../styles/mainBody.css';
 import VideoWindow from "../video/VideoWindow";
 import CallWindow from "../callwindow/CallWindow";
 import ChatWindow from "../chatwindow/ChatWindow";
+import GroupVideoWindow from '../video/GroupVideoWindow';
 import { useSelector, useReducer } from 'react-redux';
-
-import { CHAT, VIDEOCALL, AUDIOCALL } from '../../constants';
+import { CHAT, VIDEOCALL, AUDIOCALL, GROUP_VIDEOCALL } from '../../constants';
 
 
 const MainBodyContainer = () => {
@@ -23,6 +23,9 @@ const MainBodyContainer = () => {
         }
         else if(windowState === AUDIOCALL) {
             return (<CallWindow />);
+        }
+        else if(windowState === GROUP_VIDEOCALL) {
+            return (<GroupVideoWindow />);
         }
     }
 

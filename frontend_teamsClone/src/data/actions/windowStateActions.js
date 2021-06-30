@@ -1,4 +1,4 @@
-import { SET_WINDOW_STATE, CHAT, VIDEOCALL, AUDIOCALL } from "../../constants";
+import { SET_WINDOW_STATE, CHAT, VIDEOCALL, AUDIOCALL, GROUP_VIDEOCALL } from "../../constants";
 
 export const setWindowState = (window) => {
     return {

@@ -1,11 +1,14 @@
 import { v4 as uuidv4 } from 'uuid';
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import '../../../styles/invitePopup.css';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import LinkRoundedIcon from '@material-ui/icons/LinkRounded';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import { addInvite } from '../../../data/actions/inviteActions';
+import { setWindowState } from '../../../data/actions/windowStateActions';
+import { setClass } from '../../../data/actions/classReducerActions';
+import { GROUP_VIDEOCALL } from '../../../constants';
 
 const InviteLinkPopup = ({ setShow }) => {
 
@@ -17,19 +20,41 @@ const InviteLinkPopup = ({ setShow }) => {
     const [ inviteCreated, setInviteCreated ] = useState("");
 
     const dispatch = useDispatch();
+    const inputLinkRef = useRef();
 
     const linksList = useSelector(state => state.inviteReducer);
+    const user = useSelector(state => state.userReducer);
 
     function createInvite(){
         const inviteLink = uuidv4();
         setInviteCreated(inviteLink);
         dispatch(addInvite(inviteLink));
         showJoin(false);
+        user.socket.current.emit("addLink", inviteLink);
     }
 
     function showJoinInvite(){
         showJoin(true);
         setInviteCreated("");
+    }
+
+    function joinInvite(link){
+
+        let isValid = false;
+        user.socket.current.emit("isLinkPresent", link, validity => {
+            isValid = validity;
+            console.log(isValid);
+            if(link && isValid)
+            {
+                dispatch(setWindowState(GROUP_VIDEOCALL)); 
+                dispatch(setClass(true));
+                setShow(false);
+            }
+            else
+            {
+                alert("input is empty. Enter a link");
+            }
+        });        
     }
 
     return (
@@ -45,8 +70,8 @@ const InviteLinkPopup = ({ setShow }) => {
                 <div className="inviteDivs">
                     {join ? 
                         <>
-                            <input className="inputLink"></input>
-                            <button className="joinLink">Join</button>
+                            <input className="inputLink" ref={inputLinkRef}></input>
+                            <button className="joinLink" onClick={()=>joinInvite(inputLinkRef.current.value)}>Join</button>
                         </>
                         :
                         <span>You created an invite :<br></br>{inviteCreated}</span>
