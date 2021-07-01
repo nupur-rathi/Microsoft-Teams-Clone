@@ -16,6 +16,7 @@ import PhoneEnabledRoundedIcon from '@material-ui/icons/PhoneEnabledRounded';
 import PhoneDisabledRoundedIcon from '@material-ui/icons/PhoneDisabledRounded';
 import { streamRef } from '../../pages/Teams';
 import { Socket } from 'socket.io-client';
+import { setVideoRoom } from '../../data/actions/videoRoomActions';
 
 const GroupVideoWindow = () => {
 
@@ -23,11 +24,11 @@ const GroupVideoWindow = () => {
 
     const user = useSelector(state => state.userReducer);
     const call = useSelector(state => state.callReducer);
+    const videoRoom = useSelector(state => state.videoRoomReducer);
 
     const [stream, setStream] = useState(null);
     const [micState, setMicState] = useState(true);
     const [camState, setCamState] = useState(true);
-    const [videoRoom, setVideoRoom] = useState(null);
 
     const myVideoRef = useRef();
 
@@ -64,6 +65,8 @@ const GroupVideoWindow = () => {
         setCamState(true);
         setMicState(true);
         stream.getTracks().forEach(track => track.stop());
+        user.socket.current.emit("leaveVideoRoom", videoRoom['videoRoom']);
+        dispatch(setVideoRoom(null));
     }
 
     function cancelCall(){
@@ -73,11 +76,12 @@ const GroupVideoWindow = () => {
         setCamState(true);
         setMicState(true);
         stream.getTracks().forEach(track => track.stop());
+        dispatch(setVideoRoom(null));
     }
 
     function joinCall(){
         dispatch(setCallJoin(true));
-        user.socket.current.emit("joinVideoRoom", )
+        user.socket.current.emit("joinVideoRoom", videoRoom['videoRoom']);
     }
 
     return (

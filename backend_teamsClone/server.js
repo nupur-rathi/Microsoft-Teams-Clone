@@ -143,6 +143,15 @@ io.on('connection', (socket) => {
             cb(false);
     });
 
+    socket.on("joinVideoRoom", videoRoom => {
+        socket.join(videoRoom);
+        console.log(rooms.get(videoRoom));
+    });
+    
+    socket.on("leaveVideoRoom", videoRoom => {
+        socket.leave(videoRoom);
+    });
+
 });
 
 server.listen(port, () => { console.log(`listening on port ${port}`) });
