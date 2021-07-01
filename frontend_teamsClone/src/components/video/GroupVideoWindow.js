@@ -47,7 +47,7 @@ const GroupVideoWindow = () => {
         user.socket.current.on("usersInVideoRoom", users => {
             const peers = [];
             users.forEach(userID => {
-                const peer = createPeer(userID, user.id, stream);
+                const peer = createPeer(userID, user.id, streamRef);
                 peersRef.current.push({
                     peerID: userID,
                     peer,
@@ -58,7 +58,7 @@ const GroupVideoWindow = () => {
         });
 
         user.socket.current.on("userJoinedVideo", payload =>{
-            const peer = addPeer(payload.signal, payload.callerID, stream);
+            const peer = addPeer(payload.signal, payload.callerID, streamRef);
             peersRef.current.push({
                 peerID: payload.callerID,
                 peer,
@@ -109,33 +109,26 @@ const GroupVideoWindow = () => {
         const peer = new Peer({
             initiator: true,
             trickle: false,
-            stream,
+            stream: stream.current,
         });
 
         peer.on("signal", signal => {
             user.socket.current.emit("sendSignal", {userToSignal, callerID, signal});
         });
 
-        peer.on("stream", (currStream) => {
-            console.log(currStream);
-        });
-
         return peer;
     }
 
     function addPeer(incomingSignal, callerID, stream){
+
         const peer = new Peer({
             initiator: false,
             trickle: false,
-            stream,
+            stream: stream.current,
         });
 
         peer.on("signal", signal => {
             user.socket.current.emit("returnSignal", {signal, callerID});
-        });
-
-        peer.on("stream", (currStream) => {
-            console.log(currStream);
         });
 
         peer.signal(incomingSignal);
@@ -161,7 +154,9 @@ const GroupVideoWindow = () => {
                     })}
                 </div>
                  
-                {/* <div className="videoOptions">
+                {call.callJoin ?
+
+                <div className="videoOptions">
                     <button className="videoOptionsButtons videoOptionsEndcall" onClick={() => 
                         {  leaveCall(); }}>
                         <CallEndRoundedIcon fontSize="default" />
@@ -174,7 +169,7 @@ const GroupVideoWindow = () => {
                         { muteCam() }}>
                         {camState ? <VideocamRoundedIcon fontSize="default" /> : <VideocamOffRoundedIcon fontSize="default" /> }
                     </button>
-                </div> : */}
+                </div> :
 
                 <div className="beforeCallOptions">
                     <button className="beforeCallOptionsButtons " onClick={() => 
@@ -192,7 +187,7 @@ const GroupVideoWindow = () => {
                     </button>
                     <button className= "CandAButton" onClick={()=>{joinCall()}}>Continue</button>
                 </div> 
-
+                }
             </div>
         </div>
     );
