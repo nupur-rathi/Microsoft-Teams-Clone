@@ -145,7 +145,18 @@ io.on('connection', (socket) => {
 
     socket.on("joinVideoRoom", videoRoom => {
         socket.join(videoRoom);
-        console.log(rooms.get(videoRoom));
+        const usersInRoom = rooms.get(videoRoom);
+        let roomUsers = [...usersInRoom];
+        roomUsers = roomUsers.filter(id => id !== socket.id);
+        socket.emit("usersInVideoRoom", roomUsers);
+    });
+
+    socket.on("sendSignal", payload => {
+        io.to(payload.userToSignal).emit("userJoinedVideo", {signal: payload.signal, callerID: payload.callerID});
+    });
+
+    socket.on("returnSignal", payload => {
+        io.to(payload.callerId).emit("receiveReturnedSignal", {signal: payload.signal, id: socket.id});
     });
     
     socket.on("leaveVideoRoom", videoRoom => {

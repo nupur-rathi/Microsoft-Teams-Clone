@@ -29,8 +29,10 @@ const GroupVideoWindow = () => {
     const [stream, setStream] = useState(null);
     const [micState, setMicState] = useState(true);
     const [camState, setCamState] = useState(true);
+    const [peers, setPeers] = useState([]);
 
     const myVideoRef = useRef();
+    const peersRef = useRef([]);
 
     useEffect(() => {
 
@@ -79,9 +81,68 @@ const GroupVideoWindow = () => {
         dispatch(setVideoRoom(null));
     }
 
+    function createPeer(userToSignal, callerID, stream){
+        const peer = new Peer({
+            initiator: true,
+            trickle: false,
+            stream: stream,
+        });
+
+        peer.on("signal", signal => {
+            user.socket.current.emit("sendSignal", {userToSignal, callerID, signal});
+        });
+
+        return peer;
+    }
+
+    function addPeer(incomingSignal, callerID, stream){
+        console.log(incomingSignal);
+        const peer = new Peer({
+            initiator: false,
+            trickle: false,
+            stream: stream,
+        });
+
+        peer.on("signal", signal => {
+            user.socket.current.emit("returnSignal", {signal, callerID});
+        });
+
+        peer.signal(incomingSignal);
+
+        return peer;
+    }
+
     function joinCall(){
         dispatch(setCallJoin(true));
         user.socket.current.emit("joinVideoRoom", videoRoom['videoRoom']);
+        user.socket.current.on("usersInVideoRoom", users => {
+            console.log(users);
+            const peers = [];
+            users.forEach(userID => {
+                const peer = createPeer(userID, user.id, stream);
+                peersRef.current.push({
+                    peerID: userID,
+                    peer,
+                });
+                peers.push(peer);
+            });
+            setPeers(peers);
+        });
+
+        user.socket.current.on("userJoinedVideo", payload =>{
+            console.log(payload);
+            const peer = addPeer(payload.signal, payload.callerID, stream);
+            peersRef.current.push({
+                peerID: payload.callerID,
+                peer,
+            });
+            setPeers(users => [...users, peer]);
+        });
+
+        user.socket.current.on("receiveReturnedSignal", payload =>{
+            const item = peersRef.current.find(p => p.peerID === payload.id);
+            item.peer.signal(payload.signal);
+        });
     }
 
     return (
