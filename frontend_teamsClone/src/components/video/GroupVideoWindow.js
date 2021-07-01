@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Peer from 'simple-peer';
 import '../../styles/videoWindow.css';
 import VideoFrame from './VideoFrame';
+import GroupVideoFrame from './GroupVideoFrame';
 import CallEndRoundedIcon from '@material-ui/icons/CallEndRounded';
 import VideocamRoundedIcon from '@material-ui/icons/VideocamRounded';
 import MicRoundedIcon from '@material-ui/icons/MicRounded';
@@ -42,9 +43,32 @@ const GroupVideoWindow = () => {
             myVideoRef.current.srcObject = currentStream;
             streamRef.current = currentStream;
         });
-        
-        return (() => {
-            
+
+        user.socket.current.on("usersInVideoRoom", users => {
+            const peers = [];
+            users.forEach(userID => {
+                const peer = createPeer(userID, user.id, stream);
+                peersRef.current.push({
+                    peerID: userID,
+                    peer,
+                });
+                peers.push(peer);
+            });
+            setPeers(peers);
+        });
+
+        user.socket.current.on("userJoinedVideo", payload =>{
+            const peer = addPeer(payload.signal, payload.callerID, stream);
+            peersRef.current.push({
+                peerID: payload.callerID,
+                peer,
+            });
+            setPeers(users => [...users, peer]);
+        });
+
+        user.socket.current.on("receiveReturnedSignal", payload => {
+            const item = peersRef.current.find(p => p.peerID === payload.id);
+            item.peer.signal(payload.signal);
         });
     
     }, []);
@@ -85,26 +109,33 @@ const GroupVideoWindow = () => {
         const peer = new Peer({
             initiator: true,
             trickle: false,
-            stream: stream,
+            stream,
         });
 
         peer.on("signal", signal => {
             user.socket.current.emit("sendSignal", {userToSignal, callerID, signal});
         });
 
+        peer.on("stream", (currStream) => {
+            console.log(currStream);
+        });
+
         return peer;
     }
 
     function addPeer(incomingSignal, callerID, stream){
-        console.log(incomingSignal);
         const peer = new Peer({
             initiator: false,
             trickle: false,
-            stream: stream,
+            stream,
         });
 
         peer.on("signal", signal => {
             user.socket.current.emit("returnSignal", {signal, callerID});
+        });
+
+        peer.on("stream", (currStream) => {
+            console.log(currStream);
         });
 
         peer.signal(incomingSignal);
@@ -115,34 +146,7 @@ const GroupVideoWindow = () => {
     function joinCall(){
         dispatch(setCallJoin(true));
         user.socket.current.emit("joinVideoRoom", videoRoom['videoRoom']);
-        user.socket.current.on("usersInVideoRoom", users => {
-            console.log(users);
-            const peers = [];
-            users.forEach(userID => {
-                const peer = createPeer(userID, user.id, stream);
-                peersRef.current.push({
-                    peerID: userID,
-                    peer,
-                });
-                peers.push(peer);
-            });
-            setPeers(peers);
-        });
-
-        user.socket.current.on("userJoinedVideo", payload =>{
-            console.log(payload);
-            const peer = addPeer(payload.signal, payload.callerID, stream);
-            peersRef.current.push({
-                peerID: payload.callerID,
-                peer,
-            });
-            setPeers(users => [...users, peer]);
-        });
-
-        user.socket.current.on("receiveReturnedSignal", payload =>{
-            const item = peersRef.current.find(p => p.peerID === payload.id);
-            item.peer.signal(payload.signal);
-        });
+        
     }
 
     return (
@@ -150,12 +154,14 @@ const GroupVideoWindow = () => {
             <div className="videoLeft">
                 <div className="videoMain">
                     <VideoFrame who="me" stream={stream} videoRef={myVideoRef} name={user.name}/>
+                    {peers.map((peer, index) => {
+                        return (
+                            <GroupVideoFrame key={index} peer={peer} />
+                        );
+                    })}
                 </div>
-                
-
-                {call.callJoin ? 
-
-                <div className="videoOptions">
+                 
+                {/* <div className="videoOptions">
                     <button className="videoOptionsButtons videoOptionsEndcall" onClick={() => 
                         {  leaveCall(); }}>
                         <CallEndRoundedIcon fontSize="default" />
@@ -168,7 +174,7 @@ const GroupVideoWindow = () => {
                         { muteCam() }}>
                         {camState ? <VideocamRoundedIcon fontSize="default" /> : <VideocamOffRoundedIcon fontSize="default" /> }
                     </button>
-                </div> :
+                </div> : */}
 
                 <div className="beforeCallOptions">
                     <button className="beforeCallOptionsButtons " onClick={() => 
@@ -186,7 +192,6 @@ const GroupVideoWindow = () => {
                     </button>
                     <button className= "CandAButton" onClick={()=>{joinCall()}}>Continue</button>
                 </div> 
-                }
 
             </div>
         </div>
