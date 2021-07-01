@@ -21,6 +21,7 @@ const GroupVideoWindow = () => {
     const dispatch = useDispatch();
 
     const user = useSelector(state => state.userReducer);
+    const call = useSelector(state => state.callReducer);
 
     const [stream, setStream] = useState(null);
     const [micState, setMicState] = useState(true);
@@ -57,6 +58,7 @@ const GroupVideoWindow = () => {
 
         dispatch(setWindowState(CHAT));
         dispatch(setClass(false));
+        dispatch(setCallJoin(false));
         setCamState(true);
         setMicState(true);
         stream.getTracks().forEach(track => track.stop());
@@ -65,9 +67,14 @@ const GroupVideoWindow = () => {
     function cancelCall(){
         dispatch(setWindowState(CHAT));
         dispatch(setClass(false));
+        dispatch(setCallJoin(false));
         setCamState(true);
         setMicState(true);
         stream.getTracks().forEach(track => track.stop());
+    }
+
+    function joinCall(){
+        dispatch(setCallJoin(true));
     }
 
     return (
@@ -77,6 +84,24 @@ const GroupVideoWindow = () => {
                     <VideoFrame who="me" stream={stream} videoRef={myVideoRef} name={user.name}/>
                 </div>
                 
+
+                {call.callJoin ? 
+
+                <div className="videoOptions">
+                    <button className="videoOptionsButtons videoOptionsEndcall" onClick={() => 
+                        {  leaveCall(); }}>
+                        <CallEndRoundedIcon fontSize="default" />
+                    </button>
+                    <button className="videoOptionsButtons" onClick={() => 
+                        { muteMic() }}>
+                        {micState ? <MicRoundedIcon fontSize="default" /> : <MicOffRoundedIcon fontSize="default" /> }
+                    </button>
+                    <button className="videoOptionsButtons" onClick={() => 
+                        { muteCam() }}>
+                        {camState ? <VideocamRoundedIcon fontSize="default" /> : <VideocamOffRoundedIcon fontSize="default" /> }
+                    </button>
+                </div> :
+
                 <div className="beforeCallOptions">
                     <button className="beforeCallOptionsButtons " onClick={() => 
                         { muteMic() }}>
@@ -91,8 +116,10 @@ const GroupVideoWindow = () => {
                     }}>
                         Cancel
                     </button>
-                    <button className= "CandAButton">Continue</button>
+                    <button className= "CandAButton" onClick={()=>{joinCall()}}>Continue</button>
                 </div> 
+                }
+
             </div>
         </div>
     );
