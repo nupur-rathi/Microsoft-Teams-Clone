@@ -15,6 +15,7 @@ import { setWindowState } from '../../data/actions/windowStateActions';
 import PhoneEnabledRoundedIcon from '@material-ui/icons/PhoneEnabledRounded';
 import PhoneDisabledRoundedIcon from '@material-ui/icons/PhoneDisabledRounded';
 import { streamRef } from '../../pages/Teams';
+import { Socket } from 'socket.io-client';
 
 const GroupVideoWindow = () => {
 
@@ -26,6 +27,7 @@ const GroupVideoWindow = () => {
     const [stream, setStream] = useState(null);
     const [micState, setMicState] = useState(true);
     const [camState, setCamState] = useState(true);
+    const [videoRoom, setVideoRoom] = useState(null);
 
     const myVideoRef = useRef();
 
@@ -75,6 +77,7 @@ const GroupVideoWindow = () => {
 
     function joinCall(){
         dispatch(setCallJoin(true));
+        user.socket.current.emit("joinVideoRoom", )
     }
 
     return (

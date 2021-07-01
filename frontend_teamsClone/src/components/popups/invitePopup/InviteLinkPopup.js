@@ -8,6 +8,7 @@ import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import { addInvite } from '../../../data/actions/inviteActions';
 import { setWindowState } from '../../../data/actions/windowStateActions';
 import { setClass } from '../../../data/actions/classReducerActions';
+import { setVideoRoom } from '../../../data/actions/videoRoomActions';
 import { GROUP_VIDEOCALL } from '../../../constants';
 
 const InviteLinkPopup = ({ setShow }) => {
@@ -48,6 +49,7 @@ const InviteLinkPopup = ({ setShow }) => {
             {
                 dispatch(setWindowState(GROUP_VIDEOCALL)); 
                 dispatch(setClass(true));
+                dispatch(setVideoRoom(link));
                 setShow(false);
             }
             else

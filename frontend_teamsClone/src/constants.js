@@ -21,6 +21,7 @@ export const INIT_ROOMS = "INIT_ROOMS";
 export const ADD_ROOM = "ADD_ROOM";
 export const ADD_USER_TO_ROOM = "ADD_USER_TO_ROOM";
 export const ADD_ROOM_TO_JOINED = "ADD_ROOM_TO_JOINED";
+export const SET_VIDEOROOM = "SET_VIDEOROOM";
 
 export const CHAT = "CHAT";
 export const VIDEOCALL = "VIDEOCALL";
