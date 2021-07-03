@@ -99,7 +99,6 @@ const GroupVideoWindow = () => {
 
     useEffect(()=>{
 
-        user.socket.current.off("userLeft");
         user.socket.current.on("userLeft", sid => {
             let temp = [];
             peers.forEach(item => {
@@ -109,6 +108,10 @@ const GroupVideoWindow = () => {
                 }
             });
             setPeers(temp);
+        });
+
+        return (() => {
+            user.socket.current.off("userLeft");
         });
 
     }, [peers]);
