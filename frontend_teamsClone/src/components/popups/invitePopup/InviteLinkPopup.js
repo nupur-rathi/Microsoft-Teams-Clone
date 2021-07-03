@@ -5,11 +5,14 @@ import '../../../styles/invitePopup.css';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import LinkRoundedIcon from '@material-ui/icons/LinkRounded';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
+import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 import { addInvite } from '../../../data/actions/inviteActions';
 import { setWindowState } from '../../../data/actions/windowStateActions';
 import { setClass } from '../../../data/actions/classReducerActions';
 import { setVideoRoom } from '../../../data/actions/videoRoomActions';
 import { GROUP_VIDEOCALL } from '../../../constants';
+import { textToClipboard } from '../../../utilities';
+import { CREATE_INVITE_LINK, INVITE_LINK_CREATED, JOIN_INVITE_LINK } from '../../../messageConstants';
 
 const InviteLinkPopup = ({ setShow }) => {
 
@@ -19,6 +22,7 @@ const InviteLinkPopup = ({ setShow }) => {
     const [ showInvites, setShowInvites] = useState(false);
     const [ join, showJoin ] = useState(false);
     const [ inviteCreated, setInviteCreated ] = useState("");
+    const [copied, setCopied] = useState(false);
 
     const dispatch = useDispatch();
     const inputLinkRef = useRef();
@@ -59,6 +63,11 @@ const InviteLinkPopup = ({ setShow }) => {
         });        
     }
 
+    function copyLink(){
+        textToClipboard(inviteCreated);
+        setCopied(true);
+    }
+
     return (
         <div className="invitePopup">
             <div className="invPopFixed">
@@ -66,9 +75,9 @@ const InviteLinkPopup = ({ setShow }) => {
                     <button className="inviteSmallButtons" onClick={()=>{setShow(false);}}><CloseRoundedIcon /></button>
                 </div>
                 <button className="inviteButtons" onClick={()=>{ createInvite(); }}>
-                    Create a new Invite Link</button>
+                    {CREATE_INVITE_LINK}</button>
                 <button className="inviteButtons" onClick={()=>{ showJoinInvite(); }}>
-                    Join a Invite Link</button>
+                    {JOIN_INVITE_LINK}</button>
                 <div className="inviteDivs">
                     {join ? 
                         <>
@@ -76,7 +85,15 @@ const InviteLinkPopup = ({ setShow }) => {
                             <button className="joinLink" onClick={()=>joinInvite(inputLinkRef.current.value)}>Join</button>
                         </>
                         :
-                        <span>You created an invite :<br></br>{inviteCreated}</span>
+                        <>
+                        <span>{INVITE_LINK_CREATED}<br></br>{inviteCreated}</span>
+                        <span>
+                            <center>
+                                <button className="copyLink" onClick={copyLink}><FileCopyOutlinedIcon fontSize="small"/></button>
+                                {copied ? <><br></br><span>copied</span></> : <></>}
+                            </center>
+                        </span>
+                        </>
                     }
                 </div>
                 <div className="smallButtonDiv inviteSmallButtonDivs">

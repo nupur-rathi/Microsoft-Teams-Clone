@@ -138,3 +138,11 @@
     color: var(--foregroundColor1);
     margin: 1rem;
 }
+
+.copyLink{
+    outline: none;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    color: var(--defaultBackgroundColor);
+}
