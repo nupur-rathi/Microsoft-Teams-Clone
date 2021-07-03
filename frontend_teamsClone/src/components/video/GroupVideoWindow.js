@@ -5,6 +5,7 @@ import '../../styles/videoWindow.css';
 import VideoFrame from './VideoFrame';
 import GroupVideoFrame from './GroupVideoFrame';
 import CallEndRoundedIcon from '@material-ui/icons/CallEndRounded';
+import SendOutlinedIcon from '@material-ui/icons/SendOutlined';
 import VideocamRoundedIcon from '@material-ui/icons/VideocamRounded';
 import MicRoundedIcon from '@material-ui/icons/MicRounded';
 import MicOffRoundedIcon from '@material-ui/icons/MicOffRounded';
@@ -18,6 +19,8 @@ import PhoneDisabledRoundedIcon from '@material-ui/icons/PhoneDisabledRounded';
 import { streamRef } from '../../pages/Teams';
 import { Socket } from 'socket.io-client';
 import { setVideoRoom } from '../../data/actions/videoRoomActions';
+import Message from '../chatwindow/Message';
+import VideoMessage from './VideoMessage';
 
 const GroupVideoWindow = () => {
 
@@ -31,6 +34,7 @@ const GroupVideoWindow = () => {
     const [micState, setMicState] = useState(true);
     const [camState, setCamState] = useState(true);
     const [peers, setPeers] = useState([]);
+    const [peerNames, setPeerNames] = useState({});
 
     const myVideoRef = useRef();
     const peersRef = useRef([]);
@@ -63,6 +67,7 @@ const GroupVideoWindow = () => {
                 peerID: payload.callerID,
                 peer,
             });
+            const pid = payload.callerID;
             setPeers(users => [...users, peer]);
         });
 
@@ -149,7 +154,7 @@ const GroupVideoWindow = () => {
                     <VideoFrame who="me" stream={stream} videoRef={myVideoRef} name={user.name}/>
                     {peers.map((peer, index) => {
                         return (
-                            <GroupVideoFrame key={index} peer={peer} />
+                            <GroupVideoFrame key={index} peer={peer}/>
                         );
                     })}
                 </div>
@@ -188,6 +193,16 @@ const GroupVideoWindow = () => {
                     <button className= "CandAButton" onClick={()=>{joinCall()}}>Continue</button>
                 </div> 
                 }
+            </div>
+
+            <div className="videoRight">
+                <div className="videoRightHeader">Chat</div>
+                <div className="videoRightBody">
+                </div>
+                <div className="videoRightBelow">
+                    <input className="videoInput"></input>
+                    <button className="videoChatSend"><SendOutlinedIcon fontSize="small"/></button>
+                </div>
             </div>
         </div>
     );

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import '../../styles/chatWindow.css';
 
 const Message = ({item, me}) => {
     //return according to the message sender
