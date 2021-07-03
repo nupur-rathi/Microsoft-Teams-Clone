@@ -9,6 +9,8 @@ import windowStateReducer from './windowStateReducer';
 import chatReducer from './chatReducer';
 import roomsReducer from './roomsReducer';
 import callReducer from './callReducer';
+import inviteReducer from './inviteReducer';
+import videoRoomReducer from './videoRoomReducer';
 
 const allReducers = combineReducers({
     userReducer: userReducer,
@@ -21,6 +23,8 @@ const allReducers = combineReducers({
     chatReducer: chatReducer,
     roomsReducer: roomsReducer,
     callReducer: callReducer,
+    inviteReducer: inviteReducer,
+    videoRoomReducer: videoRoomReducer,
 });
 
 export default allReducers;

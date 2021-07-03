@@ -1,0 +1,140 @@
+@import './variables.css';
+
+.invitePopup{
+    position: absolute;
+    top: 10vh;
+    left: 50%;
+    transform: translateX(-50%);
+    min-height: 35vh;
+    height: auto;
+    width: 25vw;
+    background-color: var(--brandForegroundColor);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px -2px;
+    z-index: 1;   
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 2px;
+    color: var(--defaultBackgroundColor);
+}
+
+.invPopFixed{
+    min-height: 35vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.inviteButtons{
+    height: 30px;
+    width: 85%;
+    border-radius: 2px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+.inviteButtons:active{
+    transform: scale(1.01);
+}
+
+.inviteDivs{
+    height: 35px;
+    width: 85%;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    font-size: 0.85rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.inputLink{
+    outline: none;
+    border: none;
+    height: 70%;
+    width: 80%;
+    border-radius: 2px;
+    box-sizing: border-box;
+    padding: 4px;
+}
+
+.joinLink{
+    outline: none;
+    border: none;
+    border-radius: 2px;
+    height: 70%;
+    width: 15%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.smallButtonDiv{
+    height: 35px;
+    width: 100%;
+}
+
+.inviteSmallButtonDivs{
+    display: flex;
+    justify-content: flex-end;
+    box-sizing: border-box;
+    padding: 4px;
+    align-items: center;
+}
+
+.inviteSmallButtons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: var(--defaultBackgroundColor);
+    margin-left: 8px;
+    cursor: pointer;
+}
+
+.inviteSmallButtons:active{
+    transform: scale(1.05);
+}
+
+.expandDiv{
+    width: 100%;
+    height: 30vh; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.infoDiv{
+    width: 90%;
+    height: 85%;
+    background-color: var(--defaultBackgroundColor);
+    padding: 8px;
+    color: var(--foregroundColor1);
+    word-wrap: break-word;
+    font-size: 0.9rem;
+    text-align: justify;
+}
+
+.invitesListDiv{
+    width: 90%;
+    height: 85%;
+    background-color: var(--defaultBackgroundColor);
+    padding: 8px;
+    color: var(--foregroundColor1);
+    word-wrap: break-word;
+    font-size: 0.9rem;
+    overflow-y: auto;
+}
+
+.list{
+    color: var(--foregroundColor1);
+    margin: 1rem;
+}

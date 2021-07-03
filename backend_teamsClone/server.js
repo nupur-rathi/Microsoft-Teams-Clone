@@ -14,6 +14,7 @@ const io = require("socket.io")(server, {
 
 users = {};
 const roomsObj = {};
+const inviteLinks = [];
 
 const port = process.env.PORT || 5000;
 
@@ -128,6 +129,39 @@ io.on('connection', (socket) => {
     });
     
     // -----------------------------------------
+
+    //invites and group calls
+
+    socket.on("addLink", (link, cb) => {
+        inviteLinks.push(link);
+    });
+
+    socket.on("isLinkPresent", (link, cb) => {
+        if(inviteLinks.includes(link))
+            cb(true);
+        else
+            cb(false);
+    });
+
+    socket.on("joinVideoRoom", videoRoom => {
+        socket.join(videoRoom);
+        const usersInRoom = rooms.get(videoRoom);
+        let roomUsers = [...usersInRoom];
+        roomUsers = roomUsers.filter(id => id !== socket.id);
+        socket.emit("usersInVideoRoom", roomUsers);
+    });
+
+    socket.on("sendSignal", payload => {
+        io.to(payload.userToSignal).emit("userJoinedVideo", {signal: payload.signal, callerID: payload.callerID});
+    });
+
+    socket.on("returnSignal", payload => {
+        io.to(payload.callerID).emit("receiveReturnedSignal", {signal: payload.signal, id: socket.id});
+    });
+    
+    socket.on("leaveVideoRoom", videoRoom => {
+        socket.leave(videoRoom);
+    });
 
 });
 

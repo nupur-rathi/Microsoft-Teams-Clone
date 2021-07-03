@@ -7,6 +7,7 @@ export const SET_USER_EMAIL = "SET_USER_EMAIL";
 export const SET_IS_GUEST = "SET_IS_GUEST";
 export const SET_WINDOW_STATE = "SET_WINDOW_STATE";
 export const ADD_CHAT = "ADD_CHAT";
+export const ADD_INVITE = "ADD_INVITE";
 
 export const SETSIDERAIL = "SETSIDERAIL";
 export const ADD_USER = "ADD_USER";
@@ -20,9 +21,11 @@ export const INIT_ROOMS = "INIT_ROOMS";
 export const ADD_ROOM = "ADD_ROOM";
 export const ADD_USER_TO_ROOM = "ADD_USER_TO_ROOM";
 export const ADD_ROOM_TO_JOINED = "ADD_ROOM_TO_JOINED";
+export const SET_VIDEOROOM = "SET_VIDEOROOM";
 
 export const CHAT = "CHAT";
 export const VIDEOCALL = "VIDEOCALL";
+export const GROUP_VIDEOCALL = "GROUP_VIDEOCALL";
 export const AUDIOCALL = "AUDIOCALL";
 
 export const SET_CALLER = "SET_CALLER";
