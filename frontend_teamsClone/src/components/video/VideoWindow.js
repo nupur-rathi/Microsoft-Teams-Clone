@@ -258,9 +258,9 @@ const VideoWindow = () => {
         <div className="videoWindow">
             <div className="videoLeft">
                 <div className="videoMain">
-                    <VideoFrame who="me" stream={stream} videoRef={myVideoRef} name={user.name}/>
+                    <VideoFrame who="me" stream={stream} videoRef={myVideoRef} name="You"/>
                     {pstream && 
-                    <VideoFrame who="other" stream={pstream} videoRef={peerVideoRef} name={usersList[caller.from].name}/>
+                    <VideoFrame who="other" stream={pstream} videoRef={peerVideoRef} name={(caller.from === user.id) ? usersList[caller.to].name : usersList[caller.from].name}/>
                     }
                 </div>
                 

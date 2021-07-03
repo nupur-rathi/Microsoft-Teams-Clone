@@ -198,7 +198,7 @@ const GroupVideoWindow = () => {
         <div className="videoWindow">
             <div className={(videochat || peoples) ? "videoLeft videoLeft_Small": "videoLeft"}>
                 <div className="videoMain">
-                    <VideoFrame who="me" stream={stream} videoRef={myVideoRef} name={user.name} />
+                    <VideoFrame who="me" stream={stream} videoRef={myVideoRef} name="You" />
                     {peers.map((peerObj, index) => {
                         return (
                             <GroupVideoFrame key={index} peer={peerObj.peer} name={peerObj.peerName} />

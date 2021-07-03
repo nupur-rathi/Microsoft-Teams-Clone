@@ -11,4 +11,4 @@ function VideoFrame({ who, stream, videoRef, name }) {
     )
 }
 
-export default VideoFrame
+export default VideoFrame;

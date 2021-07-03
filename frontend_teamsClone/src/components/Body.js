@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import '../styles/body.css';
 import LeftNav from './leftnav/LeftNav';
 import LeftRail from './leftrail/LeftRail';
@@ -12,12 +13,14 @@ const Body = () => {
 
     const [ show, setShow ] = useState(false);
 
+    const call = useSelector(state => state.callReducer);
+
     return (
         <div className="bodyContainer">
             <LeftNav setShow={setShow} />
             <LeftRail />
             <MainBody />
-            <CallPopup />
+            { call.callReceive ? <CallPopup /> : <></> }
             { show ? <InviteLinkPopup setShow={setShow} /> : <></> }
         </div>
     );
