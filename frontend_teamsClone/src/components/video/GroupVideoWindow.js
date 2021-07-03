@@ -10,17 +10,18 @@ import VideocamRoundedIcon from '@material-ui/icons/VideocamRounded';
 import MicRoundedIcon from '@material-ui/icons/MicRounded';
 import MicOffRoundedIcon from '@material-ui/icons/MicOffRounded';
 import VideocamOffRoundedIcon from '@material-ui/icons/VideocamOffRounded';
+import ChatRoundedIcon from '@material-ui/icons/ChatRounded';
+import PeopleRoundedIcon from '@material-ui/icons/PeopleRounded';
+import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import { CHAT } from "../../constants";
 import { setClass } from '../../data/actions/classReducerActions';
 import { setCallJoin, setCallCancel, setCallDecline, setCallAccept, setCallReceive, setCallEnd, setCallSend } from '../../data/actions/callActions';
 import { setWindowState } from '../../data/actions/windowStateActions';
-import PhoneEnabledRoundedIcon from '@material-ui/icons/PhoneEnabledRounded';
-import PhoneDisabledRoundedIcon from '@material-ui/icons/PhoneDisabledRounded';
 import { streamRef } from '../../pages/Teams';
 import { Socket } from 'socket.io-client';
 import { setVideoRoom } from '../../data/actions/videoRoomActions';
-import Message from '../chatwindow/Message';
 import VideoMessage from './VideoMessage';
+import { PEOPLES, VIDEOCHAT_HEAD } from '../../messageConstants';
 
 const GroupVideoWindow = () => {
 
@@ -35,6 +36,8 @@ const GroupVideoWindow = () => {
     const [camState, setCamState] = useState(true);
     const [peers, setPeers] = useState([]);
     const [chats, setChats] = useState([]);
+    const [peoples, setPeoples] = useState(false);
+    const [videochat, setVideochat] = useState(false);
 
     const myVideoRef = useRef();
     const peersRef = useRef([]);
@@ -167,9 +170,24 @@ const GroupVideoWindow = () => {
 
     }
 
+    function onVideoChat(){
+        setVideochat(true);
+        setPeoples(false);
+    }
+
+    function onPeoples(){
+        setVideochat(false);
+        setPeoples(true);
+    }
+
+    function closeSideBar(){
+        setVideochat(false);
+        setPeoples(false);
+    }
+
     return (
         <div className="videoWindow">
-            <div className="videoLeft">
+            <div className={(videochat || peoples) ? "videoLeft videoLeft_Small": "videoLeft"}>
                 <div className="videoMain">
                     <VideoFrame who="me" stream={stream} videoRef={myVideoRef} name={user.name} />
                     {peers.map((peerObj, index) => {
@@ -185,12 +203,18 @@ const GroupVideoWindow = () => {
                         <button className="videoOptionsButtons videoOptionsEndcall" onClick={() => { leaveCall(); }}>
                             <CallEndRoundedIcon fontSize="default" />
                         </button>
-                        <button className="videoOptionsButtons" onClick={() => { muteMic() }}>
+                        <button className="videoOptionsButtons" onClick={ onPeoples }>
+                            <PeopleRoundedIcon fontSize="small"/>
+                        </button>
+                        <button className="videoOptionsButtons" onClick={ onVideoChat }>
+                            <ChatRoundedIcon fontSize="small"/>
+                        </button>
+                        <button className="videoOptionsButtons" onClick={ muteMic }>
                             {micState ? <MicRoundedIcon fontSize="default" /> : <MicOffRoundedIcon fontSize="default" />}
                         </button>
-                        <button className="videoOptionsButtons" onClick={() => { muteCam() }}>
+                        <button className="videoOptionsButtons" onClick={ muteCam }>
                             {camState ? <VideocamRoundedIcon fontSize="default" /> : <VideocamOffRoundedIcon fontSize="default" />}
-                        </button>
+                        </button>     
                     </div> :
 
                     <div className="beforeCallOptions">
@@ -205,23 +229,37 @@ const GroupVideoWindow = () => {
                         }}>
                             Cancel
                         </button>
-                        <button className="CandAButton" onClick={() => { joinCall() }}>Continue</button>
+                        <button className="CandAButton" onClick={() => { joinCall() }}>Join Now</button>
                     </div>
                 }
             </div>
-
-            <div className="videoRight">
-                <div className="videoRightHeader">Chat</div>
-                <div className="videoRightBody">
-                    {chats.map((item, index) => <VideoMessage key={index} item={item} />)}
+            
+            { (videochat || peoples) ? 
+                <div className="videoRight">
+                    <div className="videoRightHeader">
+                        <span>{ videochat ? VIDEOCHAT_HEAD : PEOPLES }</span>
+                        <button className="closeButtonVideoRight" onClick={ closeSideBar }><CloseRoundedIcon fontSize="small" /></button>    
+                    </div>
+                    { videochat ? 
+                        <>
+                            <div className="videoRightBody">
+                                {chats.map((item, index) => <VideoMessage key={index} item={item} />)}
+                            </div>
+                            <div className="videoRightBelow">
+                                <input className="videoInput" ref={inputRef} onKeyDown={(e) => {
+                                    if (e.keyCode === 13) { sendMessage(); }
+                                }}></input>
+                                <button className="videoChatSend" onClick={ sendMessage }><SendOutlinedIcon fontSize="small" /></button>
+                            </div>
+                        </> :
+                        <ul>
+                            {peers.map((peerObj, index) => <li className="peopleItem">{peerObj.peerName}</li>)}
+                        </ul> 
+                    }
                 </div>
-                <div className="videoRightBelow">
-                    <input className="videoInput" ref={inputRef} onKeyDown={(e) => {
-                        if (e.keyCode === 13) { sendMessage(); }
-                    }}></input>
-                    <button className="videoChatSend" onClick={() => { sendMessage(); }}><SendOutlinedIcon fontSize="small" /></button>
-                </div>
-            </div>
+            :
+                <></>
+            }
         </div>
     );
 }
