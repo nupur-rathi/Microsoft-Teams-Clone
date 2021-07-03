@@ -161,6 +161,7 @@ io.on('connection', (socket) => {
     
     socket.on("leaveVideoRoom", videoRoom => {
         socket.leave(videoRoom);
+        io.to(videoRoom).emit("userLeft", sid);
     });
 
     socket.on("sendMessageToVideoRoom", ({to, name, message, roomName}) => {

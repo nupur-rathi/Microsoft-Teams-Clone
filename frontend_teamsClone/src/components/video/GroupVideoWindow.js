@@ -92,9 +92,26 @@ const GroupVideoWindow = () => {
             user.socket.current.off("receiveMessageToVideoRoom");
             user.socket.current.off("receiveReturnedSignal");
             user.socket.current.off("userJoinedVideo");
+            user.socket.current.off("userLeft");
         });
 
     }, []);
+
+    useEffect(()=>{
+
+        user.socket.current.off("userLeft");
+        user.socket.current.on("userLeft", sid => {
+            let temp = [];
+            peers.forEach(item => {
+                if(item.peerID !== sid)
+                {
+                    temp.push(item);
+                }
+            });
+            setPeers(temp);
+        });
+
+    }, [peers]);
 
     function muteMic() {
         stream.getAudioTracks().forEach(track => track.enabled = !track.enabled);
