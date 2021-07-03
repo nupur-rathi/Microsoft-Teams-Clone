@@ -87,6 +87,13 @@ const GroupVideoWindow = () => {
             setChats(chat => [...chat, chatObj]);
         });
 
+        return (() => {
+            user.socket.current.off("usersInVideoRoom");
+            user.socket.current.off("receiveMessageToVideoRoom");
+            user.socket.current.off("receiveReturnedSignal");
+            user.socket.current.off("userJoinedVideo");
+        });
+
     }, []);
 
     function muteMic() {
@@ -107,6 +114,7 @@ const GroupVideoWindow = () => {
         setCamState(true);
         setMicState(true);
         stream.getTracks().forEach(track => track.stop());
+        peersRef.current.forEach(element => element.peer.destroy());         
         user.socket.current.emit("leaveVideoRoom", videoRoom['videoRoom']);
         dispatch(setVideoRoom(null));
     }
@@ -128,7 +136,7 @@ const GroupVideoWindow = () => {
             stream: stream.current,
         });
 
-        peer.on("signal", signal => {
+        peer.once("signal", signal => {
             user.socket.current.emit("sendSignal", { userToSignal, callerID, signal });
         });
 
@@ -143,7 +151,7 @@ const GroupVideoWindow = () => {
             stream: stream.current,
         });
 
-        peer.on("signal", signal => {
+        peer.once("signal", signal => {
             user.socket.current.emit("returnSignal", { signal, callerID });
         });
 
