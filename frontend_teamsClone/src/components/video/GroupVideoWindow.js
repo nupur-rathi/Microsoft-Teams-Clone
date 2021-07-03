@@ -34,10 +34,11 @@ const GroupVideoWindow = () => {
     const [micState, setMicState] = useState(true);
     const [camState, setCamState] = useState(true);
     const [peers, setPeers] = useState([]);
-    const [peerNames, setPeerNames] = useState({});
+    const [chats, setChats] = useState([]);
 
     const myVideoRef = useRef();
     const peersRef = useRef([]);
+    const inputRef = useRef();
 
     useEffect(() => {
 
@@ -74,6 +75,10 @@ const GroupVideoWindow = () => {
         user.socket.current.on("receiveReturnedSignal", payload => {
             const item = peersRef.current.find(p => p.peerID === payload.id);
             item.peer.signal(payload.signal);
+        });
+
+        user.socket.current.on("receiveMessageToVideoRoom", chatObj => {
+            setChats(chat => [...chat, chatObj]);
         });
     
     }, []);
@@ -147,6 +152,21 @@ const GroupVideoWindow = () => {
         
     }
 
+    function sendMessage(){
+
+        const message = inputRef.current.value;
+        inputRef.current.value = "";
+        if(message === "")
+        {
+            alert("empty field...");
+        }
+        else
+        {
+            user.socket.current.emit("sendMessageToVideoRoom", {to: videoRoom['videoRoom'], name: user.name, message: message, roomName: videoRoom['videoRoom']});  
+        }
+
+    }
+
     return (
         <div className="videoWindow">
             <div className="videoLeft">
@@ -198,10 +218,14 @@ const GroupVideoWindow = () => {
             <div className="videoRight">
                 <div className="videoRightHeader">Chat</div>
                 <div className="videoRightBody">
+                    {chats.map((item, index)=><VideoMessage key={index} item={item}/>)}
                 </div>
                 <div className="videoRightBelow">
-                    <input className="videoInput"></input>
-                    <button className="videoChatSend"><SendOutlinedIcon fontSize="small"/></button>
+                    <input className="videoInput" ref={inputRef} onKeyDown={(e)=>{
+                        if(e.keyCode === 13)
+                        {sendMessage();}
+                    }}></input>
+                    <button className="videoChatSend" onClick={()=>{sendMessage();}}><SendOutlinedIcon fontSize="small"/></button>
                 </div>
             </div>
         </div>

@@ -163,6 +163,10 @@ io.on('connection', (socket) => {
         socket.leave(videoRoom);
     });
 
+    socket.on("sendMessageToVideoRoom", ({to, name, message, roomName}) => {
+        io.to(to).emit("receiveMessageToVideoRoom", {from: sid, name: name, message: message, roomName: roomName});
+    });
+
 });
 
 server.listen(port, () => { console.log(`listening on port ${port}`) });

@@ -5,7 +5,7 @@ const VideoMessage = ({item}) => {
 
     return (
         <div className="mssgDiv">
-            <span className="mssgFrom">{`${item.senderName} :`}</span>
+            <span className="mssgFrom">{`${item.name} :`}</span>
             <span className="mssg">{item.message}</span>
         </div>
     )
