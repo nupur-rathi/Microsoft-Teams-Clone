@@ -22,6 +22,7 @@ import { Socket } from 'socket.io-client';
 import { setVideoRoom } from '../../data/actions/videoRoomActions';
 import VideoMessage from './VideoMessage';
 import { PEOPLES, VIDEOCHAT_HEAD } from '../../messageConstants';
+import { constraints } from '../../utilities';
 
 const GroupVideoWindow = () => {
 
@@ -45,7 +46,7 @@ const GroupVideoWindow = () => {
 
     useEffect(() => {
 
-        navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+        navigator.mediaDevices.getUserMedia({ video: constraints, audio: true })
             .then((currentStream) => {
                 setStream(currentStream);
                 myVideoRef.current.srcObject = currentStream;

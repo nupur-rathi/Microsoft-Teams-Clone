@@ -6,3 +6,9 @@ export function textToClipboard (text) {
     document.execCommand("copy");
     document.body.removeChild(dummy);
 }
+
+export const constraints = {
+    width: 1500,
+    height: 1080,
+    aspectRatio: 1.777777778
+};
