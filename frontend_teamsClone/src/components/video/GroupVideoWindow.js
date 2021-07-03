@@ -12,7 +12,7 @@ import MicOffRoundedIcon from '@material-ui/icons/MicOffRounded';
 import VideocamOffRoundedIcon from '@material-ui/icons/VideocamOffRounded';
 import { CHAT } from "../../constants";
 import { setClass } from '../../data/actions/classReducerActions';
-import { setCallJoin,setCallCancel, setCallDecline, setCallAccept, setCallReceive, setCallEnd, setCallSend } from '../../data/actions/callActions';
+import { setCallJoin, setCallCancel, setCallDecline, setCallAccept, setCallReceive, setCallEnd, setCallSend } from '../../data/actions/callActions';
 import { setWindowState } from '../../data/actions/windowStateActions';
 import PhoneEnabledRoundedIcon from '@material-ui/icons/PhoneEnabledRounded';
 import PhoneDisabledRoundedIcon from '@material-ui/icons/PhoneDisabledRounded';
@@ -43,33 +43,35 @@ const GroupVideoWindow = () => {
     useEffect(() => {
 
         navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-        .then((currentStream) => {
-            setStream(currentStream);
-            myVideoRef.current.srcObject = currentStream;
-            streamRef.current = currentStream;
-        });
+            .then((currentStream) => {
+                setStream(currentStream);
+                myVideoRef.current.srcObject = currentStream;
+                streamRef.current = currentStream;
+            });
 
-        user.socket.current.on("usersInVideoRoom", users => {
-            const peers = [];
-            users.forEach(userID => {
+        user.socket.current.once("usersInVideoRoom", ({ roomUsers, users }) => {
+            const peersList = [];
+            roomUsers.forEach(userID => {
                 const peer = createPeer(userID, user.id, streamRef);
                 peersRef.current.push({
                     peerID: userID,
                     peer,
                 });
-                peers.push(peer);
+                const username = (users[userID]).name;
+                peersList.push({ peerID: userID, peerName: username, peer });
             });
-            setPeers(peers);
+            setPeers(peersList);
         });
 
-        user.socket.current.on("userJoinedVideo", payload =>{
+        user.socket.current.on("userJoinedVideo", payload => {
             const peer = addPeer(payload.signal, payload.callerID, streamRef);
             peersRef.current.push({
                 peerID: payload.callerID,
                 peer,
             });
             const pid = payload.callerID;
-            setPeers(users => [...users, peer]);
+            const obj = { peerID: payload.callerID, peerName: payload.name, peer };
+            setPeers(peerObj => [...peerObj, obj]);
         });
 
         user.socket.current.on("receiveReturnedSignal", payload => {
@@ -80,7 +82,7 @@ const GroupVideoWindow = () => {
         user.socket.current.on("receiveMessageToVideoRoom", chatObj => {
             setChats(chat => [...chat, chatObj]);
         });
-    
+
     }, []);
 
     function muteMic() {
@@ -92,8 +94,8 @@ const GroupVideoWindow = () => {
         stream.getVideoTracks().forEach(track => track.enabled = !track.enabled);
         setCamState(!camState);
     }
-    
-    function leaveCall(){
+
+    function leaveCall() {
 
         dispatch(setWindowState(CHAT));
         dispatch(setClass(false));
@@ -105,7 +107,7 @@ const GroupVideoWindow = () => {
         dispatch(setVideoRoom(null));
     }
 
-    function cancelCall(){
+    function cancelCall() {
         dispatch(setWindowState(CHAT));
         dispatch(setClass(false));
         dispatch(setCallJoin(false));
@@ -115,7 +117,7 @@ const GroupVideoWindow = () => {
         dispatch(setVideoRoom(null));
     }
 
-    function createPeer(userToSignal, callerID, stream){
+    function createPeer(userToSignal, callerID, stream) {
         const peer = new Peer({
             initiator: true,
             trickle: false,
@@ -123,13 +125,13 @@ const GroupVideoWindow = () => {
         });
 
         peer.on("signal", signal => {
-            user.socket.current.emit("sendSignal", {userToSignal, callerID, signal});
+            user.socket.current.emit("sendSignal", { userToSignal, callerID, signal });
         });
 
         return peer;
     }
 
-    function addPeer(incomingSignal, callerID, stream){
+    function addPeer(incomingSignal, callerID, stream) {
 
         const peer = new Peer({
             initiator: false,
@@ -138,7 +140,7 @@ const GroupVideoWindow = () => {
         });
 
         peer.on("signal", signal => {
-            user.socket.current.emit("returnSignal", {signal, callerID});
+            user.socket.current.emit("returnSignal", { signal, callerID });
         });
 
         peer.signal(incomingSignal);
@@ -146,23 +148,21 @@ const GroupVideoWindow = () => {
         return peer;
     }
 
-    function joinCall(){
+    function joinCall() {
         dispatch(setCallJoin(true));
         user.socket.current.emit("joinVideoRoom", videoRoom['videoRoom']);
-        
+
     }
 
-    function sendMessage(){
+    function sendMessage() {
 
         const message = inputRef.current.value;
         inputRef.current.value = "";
-        if(message === "")
-        {
+        if (message === "") {
             alert("empty field...");
         }
-        else
-        {
-            user.socket.current.emit("sendMessageToVideoRoom", {to: videoRoom['videoRoom'], name: user.name, message: message, roomName: videoRoom['videoRoom']});  
+        else {
+            user.socket.current.emit("sendMessageToVideoRoom", { to: videoRoom['videoRoom'], name: user.name, message: message, roomName: videoRoom['videoRoom'] });
         }
 
     }
@@ -171,61 +171,55 @@ const GroupVideoWindow = () => {
         <div className="videoWindow">
             <div className="videoLeft">
                 <div className="videoMain">
-                    <VideoFrame who="me" stream={stream} videoRef={myVideoRef} name={user.name}/>
-                    {peers.map((peer, index) => {
+                    <VideoFrame who="me" stream={stream} videoRef={myVideoRef} name={user.name} />
+                    {peers.map((peerObj, index) => {
                         return (
-                            <GroupVideoFrame key={index} peer={peer}/>
+                            <GroupVideoFrame key={index} peer={peerObj.peer} name={peerObj.peerName} />
                         );
                     })}
                 </div>
-                 
+
                 {call.callJoin ?
 
-                <div className="videoOptions">
-                    <button className="videoOptionsButtons videoOptionsEndcall" onClick={() => 
-                        {  leaveCall(); }}>
-                        <CallEndRoundedIcon fontSize="default" />
-                    </button>
-                    <button className="videoOptionsButtons" onClick={() => 
-                        { muteMic() }}>
-                        {micState ? <MicRoundedIcon fontSize="default" /> : <MicOffRoundedIcon fontSize="default" /> }
-                    </button>
-                    <button className="videoOptionsButtons" onClick={() => 
-                        { muteCam() }}>
-                        {camState ? <VideocamRoundedIcon fontSize="default" /> : <VideocamOffRoundedIcon fontSize="default" /> }
-                    </button>
-                </div> :
+                    <div className="videoOptions">
+                        <button className="videoOptionsButtons videoOptionsEndcall" onClick={() => { leaveCall(); }}>
+                            <CallEndRoundedIcon fontSize="default" />
+                        </button>
+                        <button className="videoOptionsButtons" onClick={() => { muteMic() }}>
+                            {micState ? <MicRoundedIcon fontSize="default" /> : <MicOffRoundedIcon fontSize="default" />}
+                        </button>
+                        <button className="videoOptionsButtons" onClick={() => { muteCam() }}>
+                            {camState ? <VideocamRoundedIcon fontSize="default" /> : <VideocamOffRoundedIcon fontSize="default" />}
+                        </button>
+                    </div> :
 
-                <div className="beforeCallOptions">
-                    <button className="beforeCallOptionsButtons " onClick={() => 
-                        { muteMic() }}>
-                        {micState ? <MicRoundedIcon fontSize="default" /> : <MicOffRoundedIcon fontSize="default" /> }
-                    </button>
-                    <button className="beforeCallOptionsButtons" onClick={() => 
-                        { muteCam() }}>
-                        {camState ? <VideocamRoundedIcon fontSize="default" /> : <VideocamOffRoundedIcon fontSize="default" /> }
-                    </button>
-                    <button className= "cancelButton CandAButton" onClick={()=>{
-                        cancelCall();    
-                    }}>
-                        Cancel
-                    </button>
-                    <button className= "CandAButton" onClick={()=>{joinCall()}}>Continue</button>
-                </div> 
+                    <div className="beforeCallOptions">
+                        <button className="beforeCallOptionsButtons " onClick={() => { muteMic() }}>
+                            {micState ? <MicRoundedIcon fontSize="default" /> : <MicOffRoundedIcon fontSize="default" />}
+                        </button>
+                        <button className="beforeCallOptionsButtons" onClick={() => { muteCam() }}>
+                            {camState ? <VideocamRoundedIcon fontSize="default" /> : <VideocamOffRoundedIcon fontSize="default" />}
+                        </button>
+                        <button className="cancelButton CandAButton" onClick={() => {
+                            cancelCall();
+                        }}>
+                            Cancel
+                        </button>
+                        <button className="CandAButton" onClick={() => { joinCall() }}>Continue</button>
+                    </div>
                 }
             </div>
 
             <div className="videoRight">
                 <div className="videoRightHeader">Chat</div>
                 <div className="videoRightBody">
-                    {chats.map((item, index)=><VideoMessage key={index} item={item}/>)}
+                    {chats.map((item, index) => <VideoMessage key={index} item={item} />)}
                 </div>
                 <div className="videoRightBelow">
-                    <input className="videoInput" ref={inputRef} onKeyDown={(e)=>{
-                        if(e.keyCode === 13)
-                        {sendMessage();}
+                    <input className="videoInput" ref={inputRef} onKeyDown={(e) => {
+                        if (e.keyCode === 13) { sendMessage(); }
                     }}></input>
-                    <button className="videoChatSend" onClick={()=>{sendMessage();}}><SendOutlinedIcon fontSize="small"/></button>
+                    <button className="videoChatSend" onClick={() => { sendMessage(); }}><SendOutlinedIcon fontSize="small" /></button>
                 </div>
             </div>
         </div>

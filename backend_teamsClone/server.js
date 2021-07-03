@@ -148,11 +148,11 @@ io.on('connection', (socket) => {
         const usersInRoom = rooms.get(videoRoom);
         let roomUsers = [...usersInRoom];
         roomUsers = roomUsers.filter(id => id !== socket.id);
-        socket.emit("usersInVideoRoom", roomUsers);
+        socket.emit("usersInVideoRoom", {roomUsers, users});
     });
 
     socket.on("sendSignal", payload => {
-        io.to(payload.userToSignal).emit("userJoinedVideo", {signal: payload.signal, callerID: payload.callerID});
+        io.to(payload.userToSignal).emit("userJoinedVideo", {signal: payload.signal, callerID: payload.callerID, name: users[payload.callerID].name});
     });
 
     socket.on("returnSignal", payload => {
