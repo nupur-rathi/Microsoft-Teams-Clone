@@ -1,6 +1,7 @@
 @import './variables.css';
 
 .header{
+    position: relative;
     height: 48px;
     background-color: var(--brandBackgroundColor3);
     display: flex;
@@ -29,6 +30,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .MuiAvatar-root{
@@ -38,4 +40,68 @@
     font-weight: 500 !important;
     background-color: var(--brandForegroundColor2) !important;
     color: var(--brandForegroundColor1) !important;
+}
+
+.userInfoDropdown{
+    position: absolute;
+    top: 52px;
+    right: 10px;
+    height: 135px;
+    width: 250px;
+    border-radius: 3px;
+    background-color: var(--defaultBackgroundColor);
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 12px;
+    color: var(--defaultForegroundColor);
+    justify-content: space-between;
+}
+
+.userInfo{
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid var(--backgroundColor5);
+    height: 50%;
+}
+
+.userName{
+    font-size: 0.9rem;
+    word-wrap: break-word;
+}
+
+.userEmail{
+    box-sizing: border-box;
+    word-wrap: break-word;
+    margin: 4px 0px 12px;
+    font-size: 0.8rem;
+    color: var(--foregroundColor2);
+}
+
+.logoutDiv{
+    height: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logoutButton{
+    outline: none;
+    border: none;
+    padding: 8px 12px;
+    width: 90%;
+    background-color: var(--brandForegroundColor);
+    font-weight: 600;
+    letter-spacing: 1px;
+    border-radius: 2px;
+    color: var(--defaultBackgroundColor);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logoutButton:active{
+    transform: scale(1.01);
 }
