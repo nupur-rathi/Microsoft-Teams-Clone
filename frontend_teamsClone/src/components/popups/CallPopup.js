@@ -19,10 +19,14 @@ const CallPopup = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        
+
+        var audio = new Audio('microsoft-teams-call-sound-effect.mp3');
+        audio.play();
 
         return (() => {
-        });
+            audio.pause();
+            audio.currentTime = 0;
+        }); 
 
     }, []);
 
