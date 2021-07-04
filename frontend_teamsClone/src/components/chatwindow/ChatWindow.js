@@ -3,7 +3,6 @@ import '../../styles/chatWindow.css';
 import { useDispatch, useSelector } from 'react-redux';
 import SendOutlinedIcon from '@material-ui/icons/SendOutlined';
 import SentimentSatisfiedOutlinedIcon from '@material-ui/icons/SentimentSatisfiedOutlined';
-import AttachmentOutlinedIcon from '@material-ui/icons/AttachmentOutlined';
 import Message from './Message';
 import { addChat } from '../../data/actions/chatActions';
 import Picker from 'emoji-picker-react';
@@ -93,9 +92,6 @@ const ChatWindow = () => {
                         <div className="chatInputTypes">
                             <button className="chatEmojiButton chatOptionButtons" onClick={()=>{setCloseEP(false);}}>
                                 <SentimentSatisfiedOutlinedIcon fontSize="small"/>
-                            </button>
-                            <button className="chatEmojiButton chatOptionButtons">
-                                <AttachmentOutlinedIcon fontSize="small"/>
                             </button>
                         </div>
                         <button className="chatSendButton chatOptionButtons" onClick={()=>{sendMessage();}}>

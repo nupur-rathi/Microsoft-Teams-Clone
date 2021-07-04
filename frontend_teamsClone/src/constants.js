@@ -26,7 +26,6 @@ export const SET_VIDEOROOM = "SET_VIDEOROOM";
 export const CHAT = "CHAT";
 export const VIDEOCALL = "VIDEOCALL";
 export const GROUP_VIDEOCALL = "GROUP_VIDEOCALL";
-export const AUDIOCALL = "AUDIOCALL";
 
 export const SET_CALLER = "SET_CALLER";
 export const SET_CALL_ACCEPT = "SET_CALL_ACCEPT";

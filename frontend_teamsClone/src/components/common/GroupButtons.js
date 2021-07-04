@@ -3,9 +3,8 @@ import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import { makeStyles } from '@material-ui/core/styles';
 import VideocamOutlinedIcon from '@material-ui/icons/VideocamOutlined';
-import PhoneEnabledOutlinedIcon from '@material-ui/icons/PhoneEnabledOutlined';
 import ChatOutlinedIcon from '@material-ui/icons/ChatOutlined';
-import { CHAT, VIDEOCALL, AUDIOCALL } from '../../constants';
+import { CHAT, VIDEOCALL } from '../../constants';
 import { setClass } from '../../data/actions/classReducerActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCaller } from '../../data/actions/callerActions';
@@ -40,19 +39,6 @@ export default function BasicButtonGroup({currentWindow}) {
     }
   }
 
-  function audioCall()
-  {
-    if(currSelectedUser.id in usersList === true)
-    {
-      dispatch(setWindowState(AUDIOCALL)); 
-      dispatch(setClass(true));
-    }
-    else
-    {
-      alert("This user has disconnected. Cannot call");
-    }  
-  }
-
   function chat()
   {
     dispatch(setWindowState(CHAT)); 
@@ -79,10 +65,6 @@ export default function BasicButtonGroup({currentWindow}) {
           videoCall();
         }}>
           <VideocamOutlinedIcon fontSize="small"/></Button>
-        <Button onClick={() => {
-          audioCall();
-        }}>
-          <PhoneEnabledOutlinedIcon fontSize="small"/></Button>
       </ButtonGroup>
     </div>
   );
