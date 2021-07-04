@@ -24,6 +24,7 @@ const InviteLinkPopup = ({ setShow }) => {
     const [ inviteCreated, setInviteCreated ] = useState("");
     const [copied, setCopied] = useState(false);
     const [copyshow, setCopyshow] = useState(false);
+    const [inv, showInv] = useState(false);
 
     const dispatch = useDispatch();
     const inputLinkRef = useRef();
@@ -38,11 +39,13 @@ const InviteLinkPopup = ({ setShow }) => {
         showJoin(false);
         setCopyshow(true);
         setCopied(false);
+        showInv(true);
         user.socket.current.emit("addLink", inviteLink);
     }
 
     function showJoinInvite(){
         showJoin(true);
+        showInv(false);
         setInviteCreated("");
     }
 
@@ -89,13 +92,17 @@ const InviteLinkPopup = ({ setShow }) => {
                         </>
                         :
                         <>
-                        <span>{INVITE_LINK_CREATED}<br></br>{inviteCreated}</span>
-                        <span>
-                            <center>
-                                {copyshow ? <button className="copyLink" onClick={copyLink}><FileCopyOutlinedIcon fontSize="small"/></button> : <></> }
-                                {copied ? <><br></br><span>copied</span></> : <></>}
-                            </center>
-                        </span>
+                        { inv && 
+                        <>
+                            <span>{INVITE_LINK_CREATED}<br></br>{inviteCreated}</span>
+                            <span>
+                                <center>
+                                    {copyshow ? <button className="copyLink" onClick={copyLink}><FileCopyOutlinedIcon fontSize="small"/></button> : <></> }
+                                    {copied ? <><br></br><span>copied</span></> : <></>}
+                                </center>
+                            </span>
+                        </>
+                        }
                         </>
                     }
                 </div>
