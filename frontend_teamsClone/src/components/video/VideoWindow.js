@@ -8,7 +8,7 @@ import VideocamRoundedIcon from '@material-ui/icons/VideocamRounded';
 import MicRoundedIcon from '@material-ui/icons/MicRounded';
 import MicOffRoundedIcon from '@material-ui/icons/MicOffRounded';
 import VideocamOffRoundedIcon from '@material-ui/icons/VideocamOffRounded';
-import Switch from '@material-ui/core/Switch';
+import Tooltip from '@material-ui/core/Tooltip';
 import { CHAT } from "../../constants";
 import { setClass } from '../../data/actions/classReducerActions';
 import { setCallJoin,setCallCancel, setCallDecline, setCallAccept, setCallReceive, setCallEnd, setCallSend } from '../../data/actions/callActions';
@@ -267,18 +267,24 @@ const VideoWindow = () => {
                 {call.callJoin ? 
                 <>
                 <div className="videoOptions">
-                    <button className="videoOptionsButtons videoOptionsEndcall" onClick={() => 
-                        {  leaveCall(); }}>
-                        <CallEndRoundedIcon fontSize="default" />
-                    </button>
-                    <button className="videoOptionsButtons" onClick={() => 
-                        { muteMic() }}>
-                        {micState ? <MicRoundedIcon fontSize="default" /> : <MicOffRoundedIcon fontSize="default" /> }
-                    </button>
-                    <button className="videoOptionsButtons" onClick={() => 
-                        { muteCam() }}>
-                        {camState ? <VideocamRoundedIcon fontSize="default" /> : <VideocamOffRoundedIcon fontSize="default" /> }
-                    </button>
+                    <Tooltip title="Leave Call">  
+                        <button className="videoOptionsButtons videoOptionsEndcall" onClick={() => 
+                            {  leaveCall(); }}>
+                            <CallEndRoundedIcon fontSize="default" />
+                        </button>
+                    </Tooltip>
+                    <Tooltip title={ micState ? "Turn off Mic" : "Turn on Mic" }>
+                        <button className="videoOptionsButtons" onClick={() => 
+                            { muteMic() }}>
+                            {micState ? <MicRoundedIcon fontSize="default" /> : <MicOffRoundedIcon fontSize="default" /> }
+                        </button>
+                    </Tooltip>
+                    <Tooltip title={ camState ? "Turn off camera" : "Turn on camera" }>
+                        <button className="videoOptionsButtons" onClick={() => 
+                            { muteCam() }}>
+                            {camState ? <VideocamRoundedIcon fontSize="default" /> : <VideocamOffRoundedIcon fontSize="default" /> }
+                        </button>
+                    </Tooltip>
                 </div> 
                 <div className="videoWindowText">
                     {call.callSend ? `call send...` : ``}
@@ -286,34 +292,47 @@ const VideoWindow = () => {
                 </>
                     :
                 <div className="beforeCallOptions">
-                    <button className="beforeCallOptionsButtons " onClick={() => 
-                        { muteMic() }}>
-                        {micState ? <MicRoundedIcon fontSize="default" /> : <MicOffRoundedIcon fontSize="default" /> }
-                    </button>
-                    <button className="beforeCallOptionsButtons" onClick={() => 
-                        { muteCam() }}>
-                        {camState ? <VideocamRoundedIcon fontSize="default" /> : <VideocamOffRoundedIcon fontSize="default" /> }
-                    </button>
-                    <button className= "cancelButton CandAButton" onClick={()=>{
-                        cancelCall();    
-                    }}>
-                        Cancel
-                    </button>
+                    <Tooltip title={ micState ? "Turn off Mic" : "Turn on Mic" }>
+                        <button className="beforeCallOptionsButtons " onClick={() => 
+                            { muteMic() }}>
+                            {micState ? <MicRoundedIcon fontSize="default" /> : <MicOffRoundedIcon fontSize="default" /> }
+                        </button>
+                    </Tooltip>
+                    <Tooltip title={ camState ? "Turn off camera" : "Turn on camera" }>
+                        <button className="beforeCallOptionsButtons" onClick={() => 
+                            { muteCam() }}>
+                            {camState ? <VideocamRoundedIcon fontSize="default" /> : <VideocamOffRoundedIcon fontSize="default" /> }
+                        </button>
+                    </Tooltip>
+                    <Tooltip title="cancel call">
+                        <button className= "cancelButton CandAButton" onClick={()=>{
+                            cancelCall();    
+                        }}>
+                            Cancel
+                        </button>
+                    </Tooltip>
                     
                 {
                     caller.is ?
-                    <button className= "CandAButton"
-                    onClick={()=>
-                    {
-                        sendCall(); 
-                    }}>
-                    <PhoneEnabledRoundedIcon /></button> :
-                    <button className= "CandAButton"
-                    onClick={()=>
-                    {
-                        answerCall();
-                    }}>
-                    Join</button>
+                    <Tooltip title={`Call ${currSelectedUser.name}`}>
+                        <button className= "CandAButton"
+                        onClick={()=>
+                        {
+                            sendCall(); 
+                        }}>
+                        <PhoneEnabledRoundedIcon />
+                        </button>
+                    </Tooltip>
+                    :
+                    <Tooltip title="Join Call">
+                        <button className= "CandAButton"
+                        onClick={()=>
+                        {
+                            answerCall();
+                        }}>
+                        Join
+                        </button>
+                    </Tooltip>
                 }
                 </div> }
             </div>

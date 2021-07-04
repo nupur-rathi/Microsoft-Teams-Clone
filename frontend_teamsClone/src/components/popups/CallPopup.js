@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import '../../styles/callpopup.css';
 import PhoneInTalkRoundedIcon from '@material-ui/icons/PhoneInTalkRounded';
 import CallEndRoundedIcon from '@material-ui/icons/CallEndRounded';
+import Tooltip from '@material-ui/core/Tooltip';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCallAccept, setCallDecline, setCallReceive } from "../../data/actions/callActions";
 import { setWindowState } from "../../data/actions/windowStateActions";
@@ -51,17 +52,22 @@ const CallPopup = () => {
                 </span>
             </div>
             <div className="popupButtonsDiv">
-                <button className="popupButtons popupAcceptButton"
-                onClick={()=>{
-                        callAccept();
+                <Tooltip title="answer call">
+                    <button className="popupButtons popupAcceptButton"
+                    onClick={()=>{
+                            callAccept();
+                        }}>
+                        <PhoneInTalkRoundedIcon fontSize="default" />
+                    </button>
+                </Tooltip>
+                <Tooltip title="decline call">
+                    <button className="popupButtons popupDeclineButton"
+                    onClick={()=>{
+                        callDecline();    
                     }}>
-                    <PhoneInTalkRoundedIcon fontSize="default" />
-                </button>
-                <button className="popupButtons popupDeclineButton"
-                onClick={()=>{
-                    callDecline();    
-                }}>
-                    <CallEndRoundedIcon fontSize="default" /></button>
+                        <CallEndRoundedIcon fontSize="default" />
+                    </button>
+                </Tooltip>
             </div>
         </div>
     );

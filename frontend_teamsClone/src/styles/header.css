@@ -44,6 +44,7 @@
 
 .userInfoDropdown{
     position: absolute;
+    z-index: 1;
     top: 52px;
     right: 10px;
     height: 135px;

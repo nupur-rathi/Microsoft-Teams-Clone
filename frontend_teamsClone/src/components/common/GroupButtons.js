@@ -4,6 +4,7 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import { makeStyles } from '@material-ui/core/styles';
 import VideocamOutlinedIcon from '@material-ui/icons/VideocamOutlined';
 import ChatOutlinedIcon from '@material-ui/icons/ChatOutlined';
+import Tooltip from '@material-ui/core/Tooltip';
 import { CHAT, VIDEOCALL } from '../../constants';
 import { setClass } from '../../data/actions/classReducerActions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -56,15 +57,20 @@ export default function BasicButtonGroup({currentWindow}) {
   return (
     <div className={classes.root}>
       <ButtonGroup size="small" aria-label="outlined primary button group">
-        <Button onClick={() => {
-          chat();
+        <Tooltip title="Chat">
+          <Button onClick={() => {
+            chat();
+            }}>
+            <ChatOutlinedIcon fontSize="small" />
+          </Button>
+        </Tooltip>
+        <Tooltip title="Video Call">
+          <Button onClick={() => {
+            videoCall();
           }}>
-          <ChatOutlinedIcon fontSize="small" />
-        </Button>
-        <Button onClick={() => {
-          videoCall();
-        }}>
-          <VideocamOutlinedIcon fontSize="small"/></Button>
+            <VideocamOutlinedIcon fontSize="small"/>
+          </Button>
+        </Tooltip>
       </ButtonGroup>
     </div>
   );

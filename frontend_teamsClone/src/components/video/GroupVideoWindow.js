@@ -13,6 +13,7 @@ import VideocamOffRoundedIcon from '@material-ui/icons/VideocamOffRounded';
 import ChatRoundedIcon from '@material-ui/icons/ChatRounded';
 import PeopleRoundedIcon from '@material-ui/icons/PeopleRounded';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
+import Tooltip from '@material-ui/core/Tooltip';
 import { CHAT } from "../../constants";
 import { setClass } from '../../data/actions/classReducerActions';
 import { setCallJoin, setCallCancel, setCallDecline, setCallAccept, setCallReceive, setCallEnd, setCallSend } from '../../data/actions/callActions';
@@ -229,36 +230,54 @@ const GroupVideoWindow = () => {
                 {call.callJoin ?
 
                     <div className="videoOptions">
-                        <button className="videoOptionsButtons videoOptionsEndcall" onClick={() => { leaveCall(); }}>
-                            <CallEndRoundedIcon fontSize="default" />
-                        </button>
-                        <button className="videoOptionsButtons" onClick={ onPeoples }>
-                            <PeopleRoundedIcon fontSize="small"/>
-                        </button>
-                        <button className="videoOptionsButtons" onClick={ onVideoChat }>
-                            <ChatRoundedIcon fontSize="small"/>
-                        </button>
-                        <button className="videoOptionsButtons" onClick={ muteMic }>
-                            {micState ? <MicRoundedIcon fontSize="default" /> : <MicOffRoundedIcon fontSize="default" />}
-                        </button>
-                        <button className="videoOptionsButtons" onClick={ muteCam }>
-                            {camState ? <VideocamRoundedIcon fontSize="default" /> : <VideocamOffRoundedIcon fontSize="default" />}
-                        </button>     
+                        <Tooltip title="Leave Call">
+                            <button className="videoOptionsButtons videoOptionsEndcall" onClick={() => { leaveCall(); }}>
+                                <CallEndRoundedIcon fontSize="default" />
+                            </button>
+                        </Tooltip>
+                        <Tooltip title="Show everyone">
+                            <button className="videoOptionsButtons" onClick={ onPeoples }>
+                                <PeopleRoundedIcon fontSize="small"/>
+                            </button>
+                        </Tooltip>
+                        <Tooltip title="Chat with everyone">
+                            <button className="videoOptionsButtons" onClick={ onVideoChat }>
+                                <ChatRoundedIcon fontSize="small"/>
+                            </button>
+                        </Tooltip>
+                        <Tooltip title={ micState ? "Turn off Mic" : "Turn on Mic" }>
+                            <button className="videoOptionsButtons" onClick={ muteMic }>
+                                {micState ? <MicRoundedIcon fontSize="default" /> : <MicOffRoundedIcon fontSize="default" />}
+                            </button>
+                        </Tooltip>
+                        <Tooltip title={ camState ? "Turn off camera" : "Turn on camera" }>
+                            <button className="videoOptionsButtons" onClick={ muteCam }>
+                                {camState ? <VideocamRoundedIcon fontSize="default" /> : <VideocamOffRoundedIcon fontSize="default" />}
+                            </button>
+                        </Tooltip>     
                     </div> :
 
                     <div className="beforeCallOptions">
-                        <button className="beforeCallOptionsButtons " onClick={() => { muteMic() }}>
-                            {micState ? <MicRoundedIcon fontSize="default" /> : <MicOffRoundedIcon fontSize="default" />}
-                        </button>
-                        <button className="beforeCallOptionsButtons" onClick={() => { muteCam() }}>
-                            {camState ? <VideocamRoundedIcon fontSize="default" /> : <VideocamOffRoundedIcon fontSize="default" />}
-                        </button>
-                        <button className="cancelButton CandAButton" onClick={() => {
-                            cancelCall();
-                        }}>
-                            Cancel
-                        </button>
-                        <button className="CandAButton" onClick={() => { joinCall() }}>Join Now</button>
+                        <Tooltip title={ micState ? "Turn off Mic" : "Turn on Mic" }>
+                            <button className="beforeCallOptionsButtons " onClick={() => { muteMic() }}>
+                                {micState ? <MicRoundedIcon fontSize="default" /> : <MicOffRoundedIcon fontSize="default" />}
+                            </button>
+                        </Tooltip>
+                        <Tooltip title={ camState ? "Turn off camera" : "Turn on camera" }>
+                            <button className="beforeCallOptionsButtons" onClick={() => { muteCam() }}>
+                                {camState ? <VideocamRoundedIcon fontSize="default" /> : <VideocamOffRoundedIcon fontSize="default" />}
+                            </button>
+                        </Tooltip>
+                        <Tooltip title="cancel call">
+                            <button className="cancelButton CandAButton" onClick={() => {
+                                cancelCall();
+                            }}>
+                                Cancel
+                            </button>
+                        </Tooltip>
+                        <Tooltip title="Join call">
+                            <button className="CandAButton" onClick={() => { joinCall() }}>Join Now</button>
+                        </Tooltip>
                     </div>
                 }
             </div>

@@ -6,6 +6,7 @@ import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import LinkRoundedIcon from '@material-ui/icons/LinkRounded';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
+import Tooltip from '@material-ui/core/Tooltip';
 import { addInvite } from '../../../data/actions/inviteActions';
 import { setWindowState } from '../../../data/actions/windowStateActions';
 import { setClass } from '../../../data/actions/classReducerActions';
@@ -97,7 +98,7 @@ const InviteLinkPopup = ({ setShow }) => {
                             <span>{INVITE_LINK_CREATED}<br></br>{inviteCreated}</span>
                             <span>
                                 <center>
-                                    {copyshow ? <button className="copyLink" onClick={copyLink}><FileCopyOutlinedIcon fontSize="small"/></button> : <></> }
+                                    {copyshow ? <Tooltip title="Copy"><button className="copyLink" onClick={copyLink}><FileCopyOutlinedIcon fontSize="small"/></button></Tooltip> : <></> }
                                     {copied ? <><br></br><span>copied</span></> : <></>}
                                 </center>
                             </span>
@@ -107,16 +108,22 @@ const InviteLinkPopup = ({ setShow }) => {
                     }
                 </div>
                 <div className="smallButtonDiv inviteSmallButtonDivs">
-                    <button className="inviteSmallButtons" onClick={()=>{
-                        setInfo(false); 
-                        setShowInvites(!showInvites);
-                        }}>
-                        <LinkRoundedIcon /></button>
-                    <button className="inviteSmallButtons" onClick={()=>{
-                        setInfo(!info); 
-                        setShowInvites(false);
-                        }}>
-                        <InfoOutlinedIcon /></button>
+                    <Tooltip title="Links">
+                        <button className="inviteSmallButtons" onClick={()=>{
+                            setInfo(false); 
+                            setShowInvites(!showInvites);
+                            }}>
+                            <LinkRoundedIcon />
+                        </button>
+                    </Tooltip>
+                    <Tooltip title="Info">
+                        <button className="inviteSmallButtons" onClick={()=>{
+                            setInfo(!info); 
+                            setShowInvites(false);
+                            }}>
+                            <InfoOutlinedIcon />
+                        </button>
+                    </Tooltip>
                 </div>
             </div>
             {(info || showInvites) ? <div className="expandDiv">
