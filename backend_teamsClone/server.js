@@ -15,6 +15,7 @@ const io = require("socket.io")(server, {
 users = {};
 const roomsObj = {};
 const inviteLinks = [];
+const people = {};
 
 const port = process.env.PORT || 5000;
 
@@ -100,7 +101,7 @@ io.on('connection', (socket) => {
         }
         else if(eventType === 'join')
         {
-            if(!rooms.get(roomName))
+            if(!(rooms.has(roomName)))
             {
                 socket.emit("notExists");
                 return;    
@@ -144,9 +145,15 @@ io.on('connection', (socket) => {
     });
 
     socket.on("joinVideoRoom", videoRoom => {
-        socket.join(videoRoom);
-        const usersInRoom = rooms.get(videoRoom);
-        let roomUsers = [...usersInRoom];
+        if(videoRoom in people)
+        {
+            (people[videoRoom]).push(socket.id);
+        }
+        else
+        {
+            people[videoRoom] = [ (socket.id) ];    
+        }
+        let roomUsers = people[videoRoom];
         roomUsers = roomUsers.filter(id => id !== socket.id);
         socket.emit("usersInVideoRoom", {roomUsers, users});
     });
@@ -160,12 +167,13 @@ io.on('connection', (socket) => {
     });
     
     socket.on("leaveVideoRoom", videoRoom => {
-        socket.leave(videoRoom);
-        io.to(videoRoom).emit("userLeft", sid);
+        people[videoRoom] = people[videoRoom].filter(id => id !== socket.id);
+        people[videoRoom].forEach(item => io.to(item).emit("userLeft", socket.id));
     });
 
     socket.on("sendMessageToVideoRoom", ({to, name, message, roomName}) => {
-        io.to(to).emit("receiveMessageToVideoRoom", {from: sid, name: name, message: message, roomName: roomName});
+        if(inviteLinks.includes(roomName));
+            io.to(to).emit("receiveMessageToVideoRoom", {from: sid, name: name, message: message, roomName: roomName});
     });
 
 });

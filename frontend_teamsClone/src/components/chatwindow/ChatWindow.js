@@ -57,6 +57,7 @@ const ChatWindow = () => {
             {
                 dispatch(addChat("room", currSelected.roomName, user.id, user.name, message)); 
                 user.socket.current.emit("sendMessageToRoom", {to: currSelected.roomName, name: user.name, message: message, roomName: currSelected.roomName});
+                user.socket.current.emit("sendMessageToVideoRoom", { to: currSelected.roomName, name: user.name, message: message, roomName: currSelected.roomName });
             }   
         }
 

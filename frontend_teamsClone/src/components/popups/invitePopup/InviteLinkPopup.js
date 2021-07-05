@@ -32,6 +32,7 @@ const InviteLinkPopup = ({ setShow }) => {
 
     const linksList = useSelector(state => state.inviteReducer);
     const user = useSelector(state => state.userReducer);
+    const rooms = useSelector(state => state.roomsReducer);
 
     function createInvite(){
         const inviteLink = uuidv4();
@@ -42,6 +43,13 @@ const InviteLinkPopup = ({ setShow }) => {
         setCopied(false);
         showInv(true);
         user.socket.current.emit("addLink", inviteLink);
+        user.socket.current.emit("joinRoom", 
+        {
+            roomName: inviteLink, 
+            eventType: "create",
+            isPrivate: true,
+            password: inviteLink,
+        });
     }
 
     function showJoinInvite(){
@@ -55,9 +63,18 @@ const InviteLinkPopup = ({ setShow }) => {
         let isValid = false;
         user.socket.current.emit("isLinkPresent", link, validity => {
             isValid = validity;
-            console.log(isValid);
             if(link && isValid)
             {
+                if(!((rooms['joined']).includes(link)))
+                {
+                    user.socket.current.emit("joinRoom", 
+                    {
+                        roomName: link, 
+                        eventType: "join",
+                        isPrivate: true,
+                        password: link,
+                    });
+                }
                 dispatch(setWindowState(GROUP_VIDEOCALL)); 
                 dispatch(setClass(true));
                 dispatch(setVideoRoom(link));
@@ -65,7 +82,10 @@ const InviteLinkPopup = ({ setShow }) => {
             }
             else
             {
-                alert("input is empty. Enter a link");
+                if(link !== "")
+                    alert("No such meeting link exists.");
+                else
+                    alert("input is empty. Enter a link");
             }
         });        
     }
