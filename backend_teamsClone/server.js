@@ -100,7 +100,7 @@ io.on('connection', (socket) => {
         }
         else if(eventType === 'join')
         {
-            if(!rooms.has(roomName))
+            if(!(rooms.has(roomName)))
             {
                 socket.emit("notExists");
                 return;    
@@ -112,8 +112,7 @@ io.on('connection', (socket) => {
             }
             else if((rooms.get(roomName)).has(sid))
             {
-                if(!(inviteLinks.includes(roomName)))
-                    socket.emit("alreadyJoined");
+                socket.emit("alreadyJoined");
                 return;
             }
             else if(roomsObj[roomName].isPrivate && roomsObj[roomName].password !== password)
