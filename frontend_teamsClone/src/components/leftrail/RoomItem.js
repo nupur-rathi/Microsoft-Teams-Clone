@@ -51,7 +51,7 @@ const RoomItem = ({ item, type }) => {
                 <Avatar variant="square" alt={item.roomName} src="#"/>
                 <span className="leftRail_ListItem_Name">{item.roomName}</span>
                 <button className="roomItemButton" onClick={ () => setShow(!show) }><MoreHorizIcon fontSize="small"/></button>
-                { show ? <RoomItemDropdown /> : <></> }
+                { show ? <RoomItemDropdown item={item} /> : <></> }
             </div>        
         );
     }
