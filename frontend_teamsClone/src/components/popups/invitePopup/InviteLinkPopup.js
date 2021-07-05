@@ -63,7 +63,6 @@ const InviteLinkPopup = ({ setShow }) => {
         let isValid = false;
         user.socket.current.emit("isLinkPresent", link, validity => {
             isValid = validity;
-            console.log(isValid);
             if(link && isValid)
             {
                 if(!((rooms['joined']).includes(link)))

@@ -5,8 +5,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import VideocamOutlinedIcon from '@material-ui/icons/VideocamOutlined';
 import ChatOutlinedIcon from '@material-ui/icons/ChatOutlined';
 import Tooltip from '@material-ui/core/Tooltip';
-import { CHAT, VIDEOCALL } from '../../constants';
+import { CHAT, VIDEOCALL, GROUP_VIDEOCALL } from '../../constants';
 import { setClass } from '../../data/actions/classReducerActions';
+import { setVideoRoom } from '../../data/actions/videoRoomActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCaller } from '../../data/actions/callerActions';
 import { setWindowState } from '../../data/actions/windowStateActions'
@@ -28,15 +29,35 @@ export default function BasicButtonGroup({currentWindow}) {
 
   function videoCall()
   {
-    if(currSelectedUser.id in usersList === true)
+    if(currSelectedUser.type === 'user')
     {
-      dispatch(setWindowState(VIDEOCALL)); 
-      dispatch(setClass(true));
-      dispatch(setCaller({is: true, from: user.id, to: currSelectedUser.id ,signal: null}));
+      if(currSelectedUser.id in usersList === true)
+      {
+        dispatch(setWindowState(VIDEOCALL)); 
+        dispatch(setClass(true));
+        dispatch(setCaller({is: true, from: user.id, to: currSelectedUser.id ,signal: null}));
+      }
+      else
+      {
+        alert("This user has disconnected. Cannot call");
+      }
     }
     else
     {
-      alert("This user has disconnected. Cannot call");
+      let isLink = false;
+      user.socket.current.emit("isLinkPresent", currSelectedUser.roomName, valid => {
+        isLink = valid;
+        if(valid)
+        {
+          dispatch(setWindowState(GROUP_VIDEOCALL)); 
+          dispatch(setClass(true));
+          dispatch(setVideoRoom(currSelectedUser.roomName));
+        }
+        else
+        {
+          alert("This is only a chat room. For group videocall please create and join a link.")
+        }
+      });    
     }
   }
 
