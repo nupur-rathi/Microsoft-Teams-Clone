@@ -312,7 +312,12 @@ const GroupVideoWindow = () => {
                             </div>
                         </> :
                         <ul>
-                            {peers.map((peerObj, index) => <li className="peopleItem">{peerObj.peerName}</li>)}
+                            {peers.map((peerObj, index) => { 
+                                if(pl.includes(peerObj.peerID))
+                                {
+                                    return (<li className="peopleItem">{peerObj.peerName}</li>)
+                                }})
+                            }
                         </ul> 
                     }
                 </div>
