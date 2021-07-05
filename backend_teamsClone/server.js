@@ -100,7 +100,7 @@ io.on('connection', (socket) => {
         }
         else if(eventType === 'join')
         {
-            if(!rooms.get(roomName))
+            if(!rooms.has(roomName))
             {
                 socket.emit("notExists");
                 return;    
@@ -112,7 +112,8 @@ io.on('connection', (socket) => {
             }
             else if((rooms.get(roomName)).has(sid))
             {
-                socket.emit("alreadyJoined");
+                if(!(inviteLinks.includes(roomName)))
+                    socket.emit("alreadyJoined");
                 return;
             }
             else if(roomsObj[roomName].isPrivate && roomsObj[roomName].password !== password)
@@ -144,7 +145,6 @@ io.on('connection', (socket) => {
     });
 
     socket.on("joinVideoRoom", videoRoom => {
-        socket.join(videoRoom);
         const usersInRoom = rooms.get(videoRoom);
         let roomUsers = [...usersInRoom];
         roomUsers = roomUsers.filter(id => id !== socket.id);
@@ -160,12 +160,12 @@ io.on('connection', (socket) => {
     });
     
     socket.on("leaveVideoRoom", videoRoom => {
-        socket.leave(videoRoom);
         io.to(videoRoom).emit("userLeft", sid);
     });
 
     socket.on("sendMessageToVideoRoom", ({to, name, message, roomName}) => {
-        io.to(to).emit("receiveMessageToVideoRoom", {from: sid, name: name, message: message, roomName: roomName});
+        if(inviteLinks.includes(roomName));
+            io.to(to).emit("receiveMessageToVideoRoom", {from: sid, name: name, message: message, roomName: roomName});
     });
 
 });

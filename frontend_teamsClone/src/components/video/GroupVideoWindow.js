@@ -15,6 +15,7 @@ import PeopleRoundedIcon from '@material-ui/icons/PeopleRounded';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import Tooltip from '@material-ui/core/Tooltip';
 import { CHAT } from "../../constants";
+import { addChat } from '../../data/actions/chatActions';
 import { setClass } from '../../data/actions/classReducerActions';
 import { setCallJoin, setCallCancel, setCallDecline, setCallAccept, setCallReceive, setCallEnd, setCallSend } from '../../data/actions/callActions';
 import { setWindowState } from '../../data/actions/windowStateActions';
@@ -182,9 +183,8 @@ const GroupVideoWindow = () => {
     }
 
     function joinCall() {
-        dispatch(setCallJoin(true));
         user.socket.current.emit("joinVideoRoom", videoRoom['videoRoom']);
-
+        dispatch(setCallJoin(true));
     }
 
     function sendMessage() {
@@ -196,6 +196,8 @@ const GroupVideoWindow = () => {
         }
         else {
             user.socket.current.emit("sendMessageToVideoRoom", { to: videoRoom['videoRoom'], name: user.name, message: message, roomName: videoRoom['videoRoom'] });
+            user.socket.current.emit("sendMessageToRoom", {to: videoRoom['videoRoom'], name: user.name, message: message, roomName: videoRoom['videoRoom']});
+            dispatch(addChat("room", videoRoom['videoRoom'], user.id, user.name, message)); 
         }
 
     }

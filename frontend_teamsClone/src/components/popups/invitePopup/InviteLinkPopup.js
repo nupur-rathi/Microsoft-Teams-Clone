@@ -42,6 +42,13 @@ const InviteLinkPopup = ({ setShow }) => {
         setCopied(false);
         showInv(true);
         user.socket.current.emit("addLink", inviteLink);
+        user.socket.current.emit("joinRoom", 
+        {
+            roomName: inviteLink, 
+            eventType: "create",
+            isPrivate: true,
+            password: inviteLink,
+        });
     }
 
     function showJoinInvite(){
@@ -58,6 +65,13 @@ const InviteLinkPopup = ({ setShow }) => {
             console.log(isValid);
             if(link && isValid)
             {
+                user.socket.current.emit("joinRoom", 
+                {
+                    roomName: link, 
+                    eventType: "join",
+                    isPrivate: true,
+                    password: link,
+                });
                 dispatch(setWindowState(GROUP_VIDEOCALL)); 
                 dispatch(setClass(true));
                 dispatch(setVideoRoom(link));
