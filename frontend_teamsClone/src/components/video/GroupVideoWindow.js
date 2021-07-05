@@ -38,6 +38,7 @@ const GroupVideoWindow = () => {
     const [micState, setMicState] = useState(true);
     const [camState, setCamState] = useState(true);
     const [peers, setPeers] = useState([]);
+    const [pl, setPl] = useState([]);
     const [chats, setChats] = useState([]);
     const [peoples, setPeoples] = useState(false);
     const [videochat, setVideochat] = useState(false);
@@ -57,6 +58,7 @@ const GroupVideoWindow = () => {
 
         user.socket.current.once("usersInVideoRoom", ({ roomUsers, users }) => {
             const peersList = [];
+            const list = [];
             roomUsers.forEach(userID => {
                 const peer = createPeer(userID, user.id, streamRef);
                 peersRef.current.push({
@@ -64,9 +66,12 @@ const GroupVideoWindow = () => {
                     peer,
                 });
                 const username = (users[userID]).name;
-                peersList.push({ peerID: userID, peerName: username, peer });
+                const obj = { peerID: userID, peerName: username, peer };
+                peersList.push(obj);
+                list.push(userID);
             });
             setPeers(peersList);
+            setPl(list);
         });
 
         user.socket.current.on("userJoinedVideo", payload => {
@@ -78,6 +83,7 @@ const GroupVideoWindow = () => {
             const pid = payload.callerID;
             const obj = { peerID: payload.callerID, peerName: payload.name, peer };
             setPeers(peerObj => [...peerObj, obj]);
+            setPl(i => [...i, payload.callerID]);
         });
 
         user.socket.current.on("receiveReturnedSignal", payload => {
@@ -103,20 +109,20 @@ const GroupVideoWindow = () => {
 
         user.socket.current.on("userLeft", sid => {
             let temp = [];
-            peers.forEach(item => {
-                if(item.peerID !== sid)
+            pl.forEach(item => {
+                if(item !== sid)
                 {
                     temp.push(item);
                 }
             });
-            setPeers(temp);
+            setPl(temp);
         });
 
         return (() => {
             user.socket.current.off("userLeft");
         });
 
-    }, [peers]);
+    }, [pl]);
 
     function muteMic() {
         stream.getAudioTracks().forEach(track => track.enabled = !track.enabled);
@@ -223,9 +229,12 @@ const GroupVideoWindow = () => {
                 <div className="videoMain">
                     <VideoFrame who="me" stream={stream} videoRef={myVideoRef} name="You" />
                     {peers.map((peerObj, index) => {
-                        return (
-                            <GroupVideoFrame key={index} peer={peerObj.peer} name={peerObj.peerName} />
-                        );
+                        if(pl.includes(peerObj.peerID))
+                        {
+                            return (
+                                <GroupVideoFrame key={index} peer={peerObj.peer} name={peerObj.peerName} />
+                            );
+                        }
                     })}
                 </div>
 
