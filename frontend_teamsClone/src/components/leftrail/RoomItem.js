@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../../styles/leftRail.css';
 import { setCurrSelected } from '../../data/actions/currSelectedActions';
 import { setRSelected } from '../../data/actions/roomsActions';
@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Public, Private } from "../../constants";
 import { Avatar } from '@material-ui/core';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import RoomItemDropdown from '../dropdowns/RoomItemDropdown';
 
 const RoomItem = ({ item, type }) => {
 
@@ -17,6 +18,8 @@ const RoomItem = ({ item, type }) => {
     console.log(item.isPrivate, type);
 
     const dispatch = useDispatch();
+
+    const [show, setShow] = useState(false);
 
     function selectingRoom(){
         if(roomsList.joined.includes(item.roomName))
@@ -47,7 +50,8 @@ const RoomItem = ({ item, type }) => {
                 }}>
                 <Avatar variant="square" alt={item.roomName} src="#"/>
                 <span className="leftRail_ListItem_Name">{item.roomName}</span>
-                <button className="roomItemButton"><MoreHorizIcon fontSize="small"/></button>
+                <button className="roomItemButton" onClick={ () => setShow(!show) }><MoreHorizIcon fontSize="small"/></button>
+                { show ? <RoomItemDropdown /> : <></> }
             </div>        
         );
     }

@@ -45,6 +45,7 @@
 }
 
 .leftRailListItems{
+    position: relative;
     display: flex;
     box-sizing: border-box;
     padding: 0px 18px 0px 20px;
@@ -213,4 +214,37 @@
 .roomItem > .MuiAvatar-root{
     box-sizing: border-box;
     margin-right: 20px;
+}
+
+.roomDropdown{
+    position: absolute;
+    z-index: 1;
+    bottom: -90px;
+    right: 8px;
+    width: 100px;
+    height: 100px;
+    background-color: var(--defaultBackgroundColor);
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    display: flex;
+    flex-direction: column;
+    padding: 4px;
+    box-sizing: border-box;
+}
+
+.dropdownButtons{
+    outline: none;
+    border: none;
+    background-color: transparent;
+    height: 33%;
+    font-size: 0.7rem;
+    box-sizing: border-box;
+    border-bottom: 1px solid var(--backgroundColor5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.dropdownButtons:active{
+    background-color: var(--defaultForegroundDisabled);
 }
