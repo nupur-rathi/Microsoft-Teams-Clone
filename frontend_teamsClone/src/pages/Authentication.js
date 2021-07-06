@@ -1,9 +1,9 @@
 import React from 'react'
 import Auth from '../components/Auth';
 
-const Authentication = () => {
+const Authentication = ({ log }) => {
     return (
-        <Auth />
+        <Auth log={ log }/>
     )
 }
 

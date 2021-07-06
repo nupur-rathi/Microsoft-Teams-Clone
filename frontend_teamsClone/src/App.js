@@ -1,26 +1,41 @@
 import './App.css';
 import Teams from './pages/Teams';
-import { createStore } from 'redux';
-import allReducers from './data/reducers/allReducers';
-import {Provider} from 'react-redux';
 import Authentication from './pages/Authentication';
-import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
+import { useState } from 'react';
 
-const store = createStore (allReducers);
+const log={
+  isLoggedIn:false,
+  onAuthentication(){
+    this.isLoggedIn=true;
+  },
+  getLogInStatus(){
+    return this.isLoggedIn;
+  }
+}
+
+function SecuredRoute({ path, Component }){
+  
+  return (
+    <Route path={path} render={data => log.getLogInStatus() ?
+      (<Component {...data}></Component>) :
+      (<Redirect to={{pathname: '/'}}></Redirect>)
+    }></Route>
+  )
+
+}
 
 function App() {
+
   return (
     <Router>
-      <Provider store={store}>
-        <div className="App">
-          <Route path="/" exact >
-            <Authentication />
-          </Route>
-          <Route path="/teams" exact >
-            <Teams />
-          </Route>
-        </div>
-      </Provider>
+      <div className="App">
+        <Route path="/" exact >
+          <Authentication log={log}/>
+        </Route>
+        <SecuredRoute path="/teams" Component={Teams} >
+        </SecuredRoute>
+      </div>
     </Router>
   );
 }

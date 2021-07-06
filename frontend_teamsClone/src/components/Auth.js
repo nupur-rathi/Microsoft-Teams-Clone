@@ -8,7 +8,8 @@ import GoogleSVG from '../assets/GoogleSVG';
 import { setUser } from '../data/actions/userActions';
 
 
-const Auth = () => {
+
+const Auth = ({ log }) => {
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -16,6 +17,7 @@ const Auth = () => {
     const googleProvider = new firebase.auth.GoogleAuthProvider();
 
     function initializeUser({name, email, id, imgUrl, socket, isGuest}){
+        log.onAuthentication();
         dispatch(setUser(name, email, id, imgUrl, socket, isGuest));
         history.push('/teams');
     }
