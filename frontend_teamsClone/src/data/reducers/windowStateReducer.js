@@ -1,4 +1,4 @@
-import { SET_WINDOW_STATE, CHAT, VIDEOCALL, AUDIOCALL } from "../../constants";
+import { SET_WINDOW_STATE, CHAT, VIDEOCALL, GROUP_VIDEOCALL } from "../../constants";
 
 const windowStateReducer = (state = CHAT, action) => {
 
