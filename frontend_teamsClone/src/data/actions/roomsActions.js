@@ -1,4 +1,4 @@
-import { INIT_ROOMS, ADD_ROOM, ADD_USER_TO_ROOM, ADD_ROOM_TO_JOINED, SETRSELECTED } from "../../constants";
+import { INIT_ROOMS, ADD_ROOM, ADD_USER_TO_ROOM, ADD_ROOM_TO_JOINED, DELETE_ROOM_FROM_JOINED, SETRSELECTED } from "../../constants";
 
 export const initRooms = (roomsObj) => {
     return {
@@ -27,6 +27,13 @@ export const addUserToRoom = (userID, roomName) => {
 export const addRoomToJoined = (roomName) => {
     return {
         type: ADD_ROOM_TO_JOINED,
+        payload: roomName,
+    }
+};
+
+export const deleteRoomFromJoined = (roomName) => {
+    return {
+        type: DELETE_ROOM_FROM_JOINED,
         payload: roomName,
     }
 };

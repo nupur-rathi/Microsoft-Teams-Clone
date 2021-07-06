@@ -131,6 +131,13 @@
     align-items: center;
 }
 
+.notJoinedBelow{
+    background-color: var(--backgroundColor6);
+    font-size:  1rem;
+    color: var(--defaultBackgroundColor);
+    padding: 8px 12px;
+}
+
 .alertOnNoInput{
     background-color: var(--backgroundColor6);
     width: 100%;

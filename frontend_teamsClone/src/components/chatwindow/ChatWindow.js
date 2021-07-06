@@ -17,6 +17,7 @@ const ChatWindow = () => {
     const currSelected = useSelector(state => state.currSelectedReducer);
     const user = useSelector(state => state.userReducer);
     const messages = useSelector(state => state.chatReducer);
+    const rooms = useSelector(state => state.roomsReducer);
 
     const chatWindowMainRef = useRef(null);
 
@@ -38,7 +39,6 @@ const ChatWindow = () => {
     const [isMessage, setIsMessage] = useState(true);
 
     const sendMessage = () => {
-
         const message = inputFieldRef.current.value;
         inputFieldRef.current.value = "";
         if(message === "")
@@ -82,6 +82,15 @@ const ChatWindow = () => {
                         currMessagesToShow && currMessagesToShow.map((item,index) => <Message key={index} item={item} me={user.id}/>)
                     }   
                 </div>
+
+                { ((currSelected.type === "room") && !(rooms['joined'].includes(currSelected.roomName))) ?
+                <div className="chatWindowBelow">
+                    <div className="notJoinedBelow">
+                        You cannot send messages to this room. Please join it.
+                    </div>
+                </div> 
+                :
+                <>
                 <div className="chatWindowBelow">
                     <div className={isMessage ? "hide": "alertOnNoInput"}>
                     Please write a message to send.</div>
@@ -104,6 +113,8 @@ const ChatWindow = () => {
                     <Picker onEmojiClick={onEmojiClick} />
                     <button className="emojiPickerClose" onClick={()=>{setCloseEP(true);}}><CloseIcon fontSize="small"/></button>
                 </div>
+                </>
+                }
             </div>
             }
         </div>

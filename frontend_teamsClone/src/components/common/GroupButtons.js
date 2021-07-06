@@ -47,7 +47,11 @@ export default function BasicButtonGroup({currentWindow}) {
       let isLink = false;
       user.socket.current.emit("isLinkPresent", currSelectedUser.roomName, valid => {
         isLink = valid;
-        if(valid)
+        if(valid && !rooms['joined'].includes(currSelectedUser.roomName))
+        {
+          alert("you have unjoned this videoroom. cannot call");
+        }
+        else if(valid)
         {
           dispatch(setWindowState(GROUP_VIDEOCALL)); 
           dispatch(setClass(true));
@@ -74,6 +78,7 @@ export default function BasicButtonGroup({currentWindow}) {
   const currSelectedUser = useSelector(state => state.currSelectedReducer);
   const usersList = useSelector(state => state.usersListReducer);
   const user = useSelector(state => state.userReducer);
+  const rooms = useSelector(state => state.roomsReducer);
 
   return (
     <div className={classes.root}>

@@ -21,9 +21,7 @@ const RoomItem = ({ item, type }) => {
 
     const [show, setShow] = useState(false);
 
-    function selectingRoom(){
-        if(roomsList.joined.includes(item.roomName))
-        {  
+    function selectingRoom(){ 
             if(curr != null)
             {   
                 if(curr.type === 'user' && curr.id in usersList){ 
@@ -34,11 +32,6 @@ const RoomItem = ({ item, type }) => {
             }
                 dispatch(setCurrSelected(item));
                 dispatch(setRSelected(item.roomName, true));
-        }
-        else
-        {
-            alert("You have not joined this room.")
-        }
     }
 
     if((item.isPrivate && type === Private && roomsList['joined'].includes(item.roomName)) || (!item.isPrivate && type === Public))

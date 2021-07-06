@@ -101,7 +101,7 @@ io.on('connection', (socket) => {
         }
         else if(eventType === 'join')
         {
-            if(!(rooms.has(roomName)))
+            if(!(roomName in roomsObj))
             {
                 socket.emit("notExists");
                 return;    
@@ -111,7 +111,7 @@ io.on('connection', (socket) => {
                 socket.emit("cannotJoin");
                 return;
             }
-            else if((rooms.get(roomName)).has(sid))
+            else if(roomsObj[roomName]['users'].includes(sid))
             {
                 socket.emit("alreadyJoined");
                 return;
@@ -169,6 +169,11 @@ io.on('connection', (socket) => {
     socket.on("leaveVideoRoom", videoRoom => {
         people[videoRoom] = people[videoRoom].filter(id => id !== socket.id);
         people[videoRoom].forEach(item => io.to(item).emit("userLeft", socket.id));
+    });
+
+    socket.on("leaveRoom", room => {
+        socket.leave(room);
+        roomsObj[room]['users'] = (roomsObj[room]['users']).filter(id => id !== socket.id);
     });
 
     socket.on("sendMessageToVideoRoom", ({to, name, message, roomName}) => {

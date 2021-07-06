@@ -1,4 +1,4 @@
-import { INIT_ROOMS, ADD_ROOM, ADD_USER_TO_ROOM, ADD_ROOM_TO_JOINED, SETRSELECTED } from "../../constants";
+import { INIT_ROOMS, ADD_ROOM, ADD_USER_TO_ROOM, ADD_ROOM_TO_JOINED, SETRSELECTED, DELETE_ROOM_FROM_JOINED } from "../../constants";
 
 const initState = {'rooms': {}, 'joined': []}
 
@@ -34,6 +34,12 @@ const roomsReducer = (state = initState, action) => {
                 const rooms = {...state};
                 rooms['joined'].push(payload);
                 
+                return rooms;
+            }
+        case DELETE_ROOM_FROM_JOINED:
+            {
+                const rooms = {...state};
+                rooms['joined'] = rooms['joined'].filter(room => room !== payload);
                 return rooms;
             }
         case SETRSELECTED:
