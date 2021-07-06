@@ -28,10 +28,20 @@ io.on('connection', (socket) => {
     socket.emit('myid', socket.id);
 
     socket.on('disconnect', () => {
+        socket.broadcast.emit("callEnded");
         io.emit('deleteUser', socket.id);
+
+        for (const key in people) {
+            people[key] = people[key].filter(id => id !== socket.id);
+            people[key].forEach(item => io.to(item).emit("userLeft", socket.id));
+        }
+
+        for (const key in roomsObj) {
+            roomsObj[key]['users'] = (roomsObj[key]['users']).filter(id => id !== socket.id);
+        }
+        
         delete users[socket.id];
-        console.log(`${socket.id} got disconnected`);
-        socket.broadcast.emit("callended");  
+        console.log(`${socket.id} got disconnected`);  
     });
 
     socket.on('addUser', (user)=>{
