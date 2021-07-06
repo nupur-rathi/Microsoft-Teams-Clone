@@ -17,7 +17,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { CHAT } from "../../constants";
 import { addChat } from '../../data/actions/chatActions';
 import { setClass } from '../../data/actions/classReducerActions';
-import { setCallJoin, setCallCancel, setCallDecline, setCallAccept, setCallReceive, setCallEnd, setCallSend } from '../../data/actions/callActions';
+import { setCallBusy, setCallJoin, setCallCancel, setCallDecline, setCallAccept, setCallReceive, setCallEnd, setCallSend } from '../../data/actions/callActions';
 import { setWindowState } from '../../data/actions/windowStateActions';
 import { streamRef } from '../../pages/Teams';
 import { Socket } from 'socket.io-client';
@@ -48,6 +48,8 @@ const GroupVideoWindow = () => {
     const inputRef = useRef();
 
     useEffect(() => {
+
+        dispatch(setCallBusy(true));
 
         navigator.mediaDevices.getUserMedia({ video: constraints, audio: true })
             .then((currentStream) => {
@@ -101,6 +103,7 @@ const GroupVideoWindow = () => {
             user.socket.current.off("receiveReturnedSignal");
             user.socket.current.off("userJoinedVideo");
             user.socket.current.off("userLeft");
+            dispatch(setCallBusy(false));
         });
 
     }, []);

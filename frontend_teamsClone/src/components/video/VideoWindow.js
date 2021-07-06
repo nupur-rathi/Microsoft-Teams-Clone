@@ -11,7 +11,7 @@ import VideocamOffRoundedIcon from '@material-ui/icons/VideocamOffRounded';
 import Tooltip from '@material-ui/core/Tooltip';
 import { CHAT } from "../../constants";
 import { setClass } from '../../data/actions/classReducerActions';
-import { setCallJoin,setCallCancel, setCallDecline, setCallAccept, setCallReceive, setCallEnd, setCallSend } from '../../data/actions/callActions';
+import { setCallBusy, setCallJoin,setCallCancel, setCallDecline, setCallAccept, setCallReceive, setCallEnd, setCallSend } from '../../data/actions/callActions';
 import { setWindowState } from '../../data/actions/windowStateActions';
 import PhoneEnabledRoundedIcon from '@material-ui/icons/PhoneEnabledRounded';
 import PhoneDisabledRoundedIcon from '@material-ui/icons/PhoneDisabledRounded';
@@ -38,6 +38,8 @@ const VideoWindow = () => {
 
     useEffect(() => {
 
+        dispatch(setCallBusy(true));
+
         navigator.mediaDevices.getUserMedia({ video: true, audio: true })
         .then((currentStream) => {
             setStream(currentStream);
@@ -54,6 +56,7 @@ const VideoWindow = () => {
             user.socket.current.off("callAccepted");
             user.socket.current.off("callEnded");
             user.socket.current.off("callDeclined");
+            dispatch(setCallBusy(false));
         });
     
     }, []);

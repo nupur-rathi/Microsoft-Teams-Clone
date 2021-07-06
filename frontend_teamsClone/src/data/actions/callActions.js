@@ -1,4 +1,4 @@
-import { SET_CALL_ACCEPT, SET_CALL_END, SET_CALL_CANCEL, SET_CALL_DECLINE, SET_CALL_JOIN, SET_CALL_RECEIVE, SET_CALL_SEND } from "../../constants";
+import { SET_CALL_BUSY, SET_CALL_ACCEPT, SET_CALL_END, SET_CALL_CANCEL, SET_CALL_DECLINE, SET_CALL_JOIN, SET_CALL_RECEIVE, SET_CALL_SEND } from "../../constants";
 
 export const setCallAccept= (state) => {
     return {
@@ -10,6 +10,13 @@ export const setCallAccept= (state) => {
 export const setCallDecline= (state) => {
     return {
         type: SET_CALL_DECLINE,
+        payload: state,
+    }
+};
+
+export const setCallBusy= (state) => {
+    return {
+        type: SET_CALL_BUSY,
         payload: state,
     }
 };
