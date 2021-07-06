@@ -13,6 +13,7 @@ const UserInfoDropdown = ({ name, email }) => {
     function onLogout(){
         user.socket.current.disconnect();
         history.push("/");
+        window.location.reload();
     }
 
     return (
