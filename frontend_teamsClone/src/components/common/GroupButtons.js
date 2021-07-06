@@ -33,9 +33,19 @@ export default function BasicButtonGroup({currentWindow}) {
     {
       if(currSelectedUser.id in usersList === true)
       {
-        dispatch(setWindowState(VIDEOCALL)); 
-        dispatch(setClass(true));
-        dispatch(setCaller({is: true, from: user.id, to: currSelectedUser.id ,signal: null}));
+        user.socket.current.emit("checkBusy", currSelectedUser.id, state => {
+          if(state)
+          {
+            alert("user is busy. try again later.");
+          }
+          else
+          {
+            dispatch(setCaller({is: true, from: user.id, to: currSelectedUser.id ,signal: null}));
+            dispatch(setWindowState(VIDEOCALL)); 
+            dispatch(setClass(true));
+          }
+        })
+        
       }
       else
       {

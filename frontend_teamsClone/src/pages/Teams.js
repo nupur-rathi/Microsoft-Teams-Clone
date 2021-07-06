@@ -11,7 +11,7 @@ import { setCurrSelected } from '../data/actions/currSelectedActions';
 import { initRooms, addRoom, addUserToRoom, addRoomToJoined } from '../data/actions/roomsActions';
 import { CHAT } from "../constants";
 import { setClass } from '../data/actions/classReducerActions';
-import { setCallBusy, setCallJoin,setCallCancel, setCallDecline, setCallAccept, setCallReceive, setCallEnd, setCallSend } from '../data/actions/callActions';
+import { setCallJoin,setCallCancel, setCallDecline, setCallAccept, setCallReceive, setCallEnd, setCallSend } from '../data/actions/callActions';
 import { setWindowState } from '../data/actions/windowStateActions';
 
 export let streamRef;
@@ -61,7 +61,7 @@ const Teams = () => {
         socket.on("receiveCall", ({from, signal}) => {
             dispatch(setCaller({is: false, from: from, to: socket.id, signal: signal}));
             dispatch(setCallReceive(true));
-            dispatch(setCallBusy(true));
+            socket.emit("setBusy", true);
         });
 
         socket.on("callEndedBefore", () => {
@@ -77,7 +77,7 @@ const Teams = () => {
             dispatch(setCallEnd(false));
             dispatch(setCallSend(false));
             dispatch(setCallCancel(false));
-            dispatch(setCallBusy(false));
+            socket.emit("setBusy", false);
             alert("call ended");
         });
 

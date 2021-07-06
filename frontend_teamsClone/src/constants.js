@@ -36,7 +36,6 @@ export const SET_CALL_CANCEL = "SET_CALL_CANCEL";
 export const SET_CALL_RECEIVE = "SET_CALL_RECEIVE";
 export const SET_CALL_DECLINE = "SET_CALL_DECLINE";
 export const SET_CALL_JOIN = "SET_CALL_JOIN";
-export const SET_CALL_BUSY = "SET_CALL_BUSY";
 
 export const Rooms = "Rooms";
 export const Chat = "Chat";

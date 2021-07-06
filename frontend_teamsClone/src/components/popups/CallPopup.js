@@ -4,7 +4,7 @@ import PhoneInTalkRoundedIcon from '@material-ui/icons/PhoneInTalkRounded';
 import CallEndRoundedIcon from '@material-ui/icons/CallEndRounded';
 import Tooltip from '@material-ui/core/Tooltip';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCallAccept, setCallDecline, setCallReceive, setCallBusy } from "../../data/actions/callActions";
+import { setCallAccept, setCallDecline, setCallReceive } from "../../data/actions/callActions";
 import { setWindowState } from "../../data/actions/windowStateActions";
 import { VIDEOCALL } from '../../constants';
 import { setClass } from '../../data/actions/classReducerActions';
@@ -40,8 +40,8 @@ const CallPopup = () => {
 
     function callDecline(){
         dispatch(setCallReceive(false));
-        dispatch(setCallBusy(false));
         me.socket.current.emit("callDecline", caller.from);
+        me.socket.current.emit("setBusy", false);
     }
 
     return (

@@ -16,6 +16,7 @@ users = {};
 const roomsObj = {};
 const inviteLinks = [];
 const people = {};
+const busy = {};
 
 const port = process.env.PORT || 5000;
 
@@ -41,6 +42,7 @@ io.on('connection', (socket) => {
         }
         
         delete users[socket.id];
+        delete busy[socket.id];
         console.log(`${socket.id} got disconnected`);  
     });
 
@@ -51,6 +53,18 @@ io.on('connection', (socket) => {
         socket.emit('initUsers', users);
         socket.emit('initRooms', roomsObj);
     });
+
+    socket.on("setBusy", state => {
+        busy[socket.id] = state;
+    })
+
+    socket.on("checkBusy", (userID, cb) => {
+        console.log(busy[userID]);
+        if(busy[userID] === true)
+            cb(true);
+        else
+            cb(false);
+    })
 
     const sid = socket.id;
 

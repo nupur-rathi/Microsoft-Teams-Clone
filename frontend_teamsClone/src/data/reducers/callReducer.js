@@ -1,4 +1,4 @@
-import { SET_CALL_BUSY, SET_CALL_ACCEPT, SET_CALL_END, SET_CALL_CANCEL, SET_CALL_DECLINE, SET_CALL_JOIN, SET_CALL_RECEIVE, SET_CALL_SEND } from "../../constants";
+import { SET_CALL_ACCEPT, SET_CALL_END, SET_CALL_CANCEL, SET_CALL_DECLINE, SET_CALL_JOIN, SET_CALL_RECEIVE, SET_CALL_SEND } from "../../constants";
 
 const initState = {callSend: false, callJoin: false, callCancel: false, callAccept: false, callDecline: false, classReceive: false, callEnd: false};
 
@@ -44,12 +44,6 @@ const callReducer = (state = initState, action) => {
                 return call;
             }
         case SET_CALL_CANCEL:
-            {
-                const call = {...state, callCancel: payload}
-
-                return call;
-            }
-        case SET_CALL_BUSY:
             {
                 const call = {...state, callCancel: payload}
 
