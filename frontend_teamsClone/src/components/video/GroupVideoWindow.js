@@ -56,6 +56,19 @@ const GroupVideoWindow = () => {
                 setStream(currentStream);
                 myVideoRef.current.srcObject = currentStream;
                 streamRef.current = currentStream;
+            }).catch(function(err) {
+                alert(err);
+                dispatch(setWindowState(CHAT));
+                dispatch(setClass(false));
+                dispatch(setCallJoin(false));
+                dispatch(setCallAccept(false));
+                dispatch(setCallDecline(false));
+                dispatch(setCallReceive(false));
+                dispatch(setCallEnd(false));
+                dispatch(setCallSend(false));
+                dispatch(setCallCancel(false));
+                setCamState(true);
+                setMicState(true);
             });
 
         user.socket.current.once("usersInVideoRoom", ({ roomUsers, users }) => {
@@ -128,13 +141,19 @@ const GroupVideoWindow = () => {
     }, [pl]);
 
     function muteMic() {
-        stream.getAudioTracks().forEach(track => track.enabled = !track.enabled);
-        setMicState(!micState);
+        if(stream)
+        {
+            stream.getAudioTracks().forEach(track => track.enabled = !track.enabled);
+            setMicState(!micState);
+        }
     }
 
     function muteCam() {
-        stream.getVideoTracks().forEach(track => track.enabled = !track.enabled);
-        setCamState(!camState);
+        if(stream)
+        {
+            stream.getVideoTracks().forEach(track => track.enabled = !track.enabled);
+            setCamState(!camState);
+        }
     }
 
     function leaveCall() {
