@@ -58,6 +58,8 @@ const VideoWindow = () => {
             user.socket.current.off("callDeclined");
             dispatch(setCallBusy(false));
         });
+
+        
     
     }, []);
 
@@ -249,12 +251,19 @@ const VideoWindow = () => {
 
     function sendCall()
     {
-        callUser(currSelectedUser.id); 
-        dispatch(setCallJoin(true));
-        dispatch(setCallSend(true));
-        setTimeout(()=>{
-            dispatch(setCallSend(false));
-        }, 2500);
+        if(currSelectedUser.id in usersList)
+        {
+            callUser(currSelectedUser.id); 
+            dispatch(setCallJoin(true));
+            dispatch(setCallSend(true));
+            setTimeout(()=>{
+                dispatch(setCallSend(false));
+            }, 2500);
+        }
+        else
+        {
+            alert("user disconnected. cannot call");
+        }
     }
 
     return (
