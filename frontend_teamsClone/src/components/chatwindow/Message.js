@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 
 const Message = ({item, me}) => {
     //return according to the message sender

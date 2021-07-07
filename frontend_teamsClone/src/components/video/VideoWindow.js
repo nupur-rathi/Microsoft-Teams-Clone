@@ -14,7 +14,6 @@ import { setClass } from '../../data/actions/classReducerActions';
 import { setCallJoin,setCallCancel, setCallDecline, setCallAccept, setCallReceive, setCallEnd, setCallSend } from '../../data/actions/callActions';
 import { setWindowState } from '../../data/actions/windowStateActions';
 import PhoneEnabledRoundedIcon from '@material-ui/icons/PhoneEnabledRounded';
-import PhoneDisabledRoundedIcon from '@material-ui/icons/PhoneDisabledRounded';
 import { streamRef } from '../../pages/Teams';
 
 const VideoWindow = () => {

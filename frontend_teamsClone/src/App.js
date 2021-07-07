@@ -1,8 +1,7 @@
 import './App.css';
 import Teams from './pages/Teams';
 import Authentication from './pages/Authentication';
-import { BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
-import { useState } from 'react';
+import { BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 
 const log={
   isLoggedIn:false,
