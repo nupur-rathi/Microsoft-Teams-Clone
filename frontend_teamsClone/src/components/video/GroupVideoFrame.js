@@ -15,11 +15,6 @@ const GroupVideoFrame = ({peer, name}) => {
 
     }, []);
 
-    useEffect(() => {
-        count.current = count.current+1;
-        console.log(count.current);
-    },[]);
-
     if(stream && peer)
     {
         return (

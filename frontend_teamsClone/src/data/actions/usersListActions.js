@@ -34,8 +34,6 @@ export const deleteUser = (id) => {
 
 export const initUsers = (users) => {
 
-    console.log(users);
-
     return {
         type: INIT_USERS,
         payload: users,

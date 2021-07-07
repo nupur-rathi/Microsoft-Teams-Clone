@@ -15,8 +15,6 @@ const RoomItem = ({ item, type }) => {
     const roomsList = useSelector(state => state.roomsReducer);
     const usersList = useSelector(state => state.usersListReducer);
 
-    console.log(item.isPrivate, type);
-
     const dispatch = useDispatch();
 
     const [show, setShow] = useState(false);

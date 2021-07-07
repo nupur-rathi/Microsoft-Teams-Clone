@@ -47,7 +47,6 @@ io.on('connection', (socket) => {
     });
 
     socket.on('addUser', (user)=>{
-        console.log(user);
         users[user.id] = {name: user.name, email: user.email, id: user.id, imgUrl: user.imgUrl, selected: false, type: "user", isGuest: user.isGuest};
         socket.broadcast.emit('addUser', users[user.id]);
         socket.emit('initUsers', users);
@@ -59,7 +58,6 @@ io.on('connection', (socket) => {
     })
 
     socket.on("checkBusy", (userID, cb) => {
-        console.log(busy[userID]);
         if(busy[userID] === true)
             cb(true);
         else
@@ -149,7 +147,6 @@ io.on('connection', (socket) => {
             io.emit("addUserToRoom", {userID: sid, roomName: roomName});
         }
         socket.join(roomName);  
-        console.log(roomsObj);
         socket.emit("roomJoined", roomName);
     });
     
