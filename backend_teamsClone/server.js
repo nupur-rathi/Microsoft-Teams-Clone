@@ -188,8 +188,11 @@ io.on('connection', (socket) => {
     });
     
     socket.on("leaveVideoRoom", videoRoom => {
-        people[videoRoom] = people[videoRoom].filter(id => id !== socket.id);
-        people[videoRoom].forEach(item => io.to(item).emit("userLeft", socket.id));
+        if( videoRoom in people)
+        {
+            people[videoRoom] = people[videoRoom].filter(id => id !== socket.id);
+            people[videoRoom].forEach(item => io.to(item).emit("userLeft", socket.id));
+        }
     });
 
     socket.on("leaveRoom", room => {
