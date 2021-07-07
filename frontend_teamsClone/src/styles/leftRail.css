@@ -248,3 +248,11 @@
 .dropdownButtons:active{
     background-color: var(--defaultForegroundDisabled);
 }
+
+@media only screen and (max-width: 1000px) {
+    .leftRail{
+        width: 0px;
+        overflow: hidden;
+    }
+    
+}
