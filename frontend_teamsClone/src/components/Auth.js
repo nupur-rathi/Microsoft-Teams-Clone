@@ -17,8 +17,8 @@ const Auth = ({ log }) => {
     const googleProvider = new firebase.auth.GoogleAuthProvider();
 
     function initializeUser({name, email, id, imgUrl, socket, isGuest}){
-        log.onAuthentication();
         dispatch(setUser(name, email, id, imgUrl, socket, isGuest));
+        log.onAuthentication();
         history.push('/teams');
     }
 
@@ -27,6 +27,8 @@ const Auth = ({ log }) => {
         .auth()
         .signInWithPopup(googleProvider)
         .then((res) => {
+            const {displayName, email, photoURL} = res.user;
+            initializeUser({name: displayName, email: email, id: "", imgUrl: photoURL, socket: null, isGuest: false});
             return res.user;
         })
         .catch((err) => {
@@ -35,9 +37,7 @@ const Auth = ({ log }) => {
     }
 
     const authentication = async () => {
-        const res = await googleAuth();
-        const {displayName, email, photoURL} = res;
-        initializeUser({name: displayName, email: email, id: "", imgUrl: photoURL, socket: null, isGuest: false});
+        const res = await googleAuth();    
     };
 
     return (
