@@ -3,7 +3,7 @@ import '../../styles/mainBody.css';
 import VideoWindow from "../video/VideoWindow";
 import ChatWindow from "../chatwindow/ChatWindow";
 import GroupVideoWindow from '../video/GroupVideoWindow';
-import { useSelector, useReducer } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { CHAT, VIDEOCALL, GROUP_VIDEOCALL } from '../../constants';
 
 

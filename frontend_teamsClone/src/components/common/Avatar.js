@@ -9,17 +9,6 @@ const StyledBadge = withStyles((theme) => ({
     backgroundColor: '#44b700',
     color: '#44b700',
     boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
-    // '&::after': {
-    //   position: 'absolute',
-    //   top: 0,
-    //   left: 0,
-    //   width: '100%',
-    //   height: '100%',
-    //   borderRadius: '50%',
-    //   animation: '$ripple 1.2s infinite ease-in-out',
-    //   border: '1px solid currentColor',
-    //   content: '""',
-    // },
   },
   '@keyframes ripple': {
     '0%': {
@@ -32,14 +21,6 @@ const StyledBadge = withStyles((theme) => ({
     },
   },
 }))(Badge);
-
-const SmallAvatar = withStyles((theme) => ({
-  root: {
-    width: 22,
-    height: 22,
-    border: `2px solid ${theme.palette.background.paper}`,
-  },
-}))(Avatar);
 
 const useStyles = makeStyles((theme) => ({
   root: {

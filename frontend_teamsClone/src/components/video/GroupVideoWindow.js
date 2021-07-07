@@ -20,7 +20,6 @@ import { setClass } from '../../data/actions/classReducerActions';
 import { setCallJoin, setCallCancel, setCallDecline, setCallAccept, setCallReceive, setCallEnd, setCallSend } from '../../data/actions/callActions';
 import { setWindowState } from '../../data/actions/windowStateActions';
 import { streamRef } from '../../pages/Teams';
-import { Socket } from 'socket.io-client';
 import { setVideoRoom } from '../../data/actions/videoRoomActions';
 import VideoMessage from './VideoMessage';
 import { PEOPLES, VIDEOCHAT_HEAD } from '../../messageConstants';
@@ -95,7 +94,6 @@ const GroupVideoWindow = () => {
                 peerID: payload.callerID,
                 peer,
             });
-            const pid = payload.callerID;
             const obj = { peerID: payload.callerID, peerName: payload.name, peer };
             setPeers(peerObj => [...peerObj, obj]);
             setPl(i => [...i, payload.callerID]);
@@ -257,6 +255,10 @@ const GroupVideoWindow = () => {
                                 <GroupVideoFrame key={index} peer={peerObj.peer} name={peerObj.peerName} />
                             );
                         }
+                        else
+                        {
+                            return <></>
+                        }
                     })}
                 </div>
 
@@ -330,15 +332,22 @@ const GroupVideoWindow = () => {
                                 <input className="videoInput" ref={inputRef} onKeyDown={(e) => {
                                     if (e.keyCode === 13) { sendMessage(); }
                                 }}></input>
-                                <button className="videoChatSend" onClick={ sendMessage }><SendOutlinedIcon fontSize="small" /></button>
+                                <button className="videoChatSend" onClick={ sendMessage }>
+                                    <SendOutlinedIcon fontSize="small" />
+                                </button>
                             </div>
                         </> :
                         <ul>
                             {peers.map((peerObj, index) => { 
                                 if(pl.includes(peerObj.peerID))
                                 {
-                                    return (<li className="peopleItem">{peerObj.peerName}</li>)
-                                }})
+                                    return (<li key={index} className="peopleItem">{peerObj.peerName}</li>)
+                                }
+                                else
+                                {
+                                    return <></>
+                                }
+                            })
                             }
                         </ul> 
                     }

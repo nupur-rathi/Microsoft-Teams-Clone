@@ -5,7 +5,6 @@ const GroupVideoFrame = ({peer, name}) => {
 
     const [stream, setStream] = useState(null);
     const videoRef = useRef();
-    const count = useRef(0);
 
     useEffect(() => {
             peer.once("stream", (currStream) => {

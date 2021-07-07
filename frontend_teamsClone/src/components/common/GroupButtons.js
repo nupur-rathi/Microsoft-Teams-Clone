@@ -54,9 +54,7 @@ export default function BasicButtonGroup({currentWindow}) {
     }
     else
     {
-      let isLink = false;
       user.socket.current.emit("isLinkPresent", currSelectedUser.roomName, valid => {
-        isLink = valid;
         if(valid && !rooms['joined'].includes(currSelectedUser.roomName))
         {
           alert("you have unjoned this videoroom. cannot call");

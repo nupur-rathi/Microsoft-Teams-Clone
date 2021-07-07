@@ -3,7 +3,7 @@ import '../../styles/mainBody.css';
 import BadgeAvatars from '../common/Avatar';
 import { Avatar } from '@material-ui/core';
 import BasicButtonGroup from '../common/GroupButtons';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const MainBodyHeader = () => {
 

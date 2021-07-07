@@ -4,11 +4,10 @@ import PhoneInTalkRoundedIcon from '@material-ui/icons/PhoneInTalkRounded';
 import CallEndRoundedIcon from '@material-ui/icons/CallEndRounded';
 import Tooltip from '@material-ui/core/Tooltip';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCallAccept, setCallDecline, setCallReceive } from "../../data/actions/callActions";
+import { setCallAccept, setCallReceive } from "../../data/actions/callActions";
 import { setWindowState } from "../../data/actions/windowStateActions";
 import { VIDEOCALL } from '../../constants';
 import { setClass } from '../../data/actions/classReducerActions';
-import { setCaller } from '../../data/actions/callerActions';
 
 const CallPopup = () => {
 

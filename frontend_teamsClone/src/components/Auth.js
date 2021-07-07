@@ -29,7 +29,6 @@ const Auth = ({ log }) => {
         .then((res) => {
             const {displayName, email, photoURL} = res.user;
             initializeUser({name: displayName, email: email, id: "", imgUrl: photoURL, socket: null, isGuest: false});
-            return res.user;
         })
         .catch((err) => {
             return err;
@@ -37,7 +36,7 @@ const Auth = ({ log }) => {
     }
 
     const authentication = async () => {
-        const res = await googleAuth();    
+        await googleAuth();    
     };
 
     return (
