@@ -74,7 +74,7 @@ The Tech stack for this project includes -
 ### Links to Project features and journey
 
 
-* [Link to the doc for the walkthrough of web app features](https://docs.google.com/document/d/1luzI31T39OWQ1E4sl8xPn33jrcOw3ssAxTxX2ltfAd0/edit?usp=sharing)
+* [Link to the doc for the walkthrough of web app features](https://github.com/nupur-rathi/Microsoft-Teams-Clone/blob/main/Microsoft%20Teams%20Clone%20Tour%20and%20Features.pdf)
 
 * [Link to the doc on the journey with this project](https://docs.google.com/document/d/1upqePbh9QUWu2euEt1_Z7jT_7NJAxejmRFKwx2tbV8I/edit?usp=sharing)
 
