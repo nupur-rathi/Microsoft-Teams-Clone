@@ -14,8 +14,14 @@ const io = require("socket.io")(server, {
 
 users = {};
 const roomsObj = {};
+
+// inviteLinks is a array containing all the roomnames of all the rooms created
 const inviteLinks = [];
+
+// people = { 'roomName': [list of people currently in this room and having a videocall], ... }
 const people = {};
+
+//people = { 'socket.id': ture or false, .....}
 const busy = {};
 
 const port = process.env.PORT || 5000;

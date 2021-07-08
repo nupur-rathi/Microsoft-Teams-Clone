@@ -1,3 +1,4 @@
+//copy any text to clipboard function
 export function textToClipboard (text) {
     var dummy = document.createElement("textarea");
     document.body.appendChild(dummy);
@@ -7,6 +8,7 @@ export function textToClipboard (text) {
     document.body.removeChild(dummy);
 }
 
+//constraints for videoFrame
 export const constraints = {
     width: 1500,
     height: 1080,

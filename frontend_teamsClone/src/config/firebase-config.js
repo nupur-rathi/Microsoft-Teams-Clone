@@ -1,5 +1,7 @@
 import firebase from "firebase";
 
+//config for firebase project
+
 const firebaseConfig = {
     apiKey: "AIzaSyBNkJxW5ghABErBu_b4PVDJcJQkS7feD4U",
     authDomain: "teams-clone-b1e74.firebaseapp.com",
