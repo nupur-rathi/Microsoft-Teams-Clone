@@ -33,6 +33,7 @@ const VideoWindow = () => {
 
     const myVideoRef = useRef();
     const peerVideoRef = useRef();
+    //reference to our peer connection to the user
     const connectionRef = useRef();
 
     useEffect(() => {

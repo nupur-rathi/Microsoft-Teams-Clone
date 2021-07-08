@@ -4,6 +4,8 @@ import "../../styles/leftRail.css";
 import { textToClipboard } from '../../utilities';
 import { deleteRoomFromJoined } from '../../data/actions/roomsActions';
 
+//dropdown component with options as join, un-join, copy roomname and room pwd for roomItem
+
 const RoomItemDropdown = ({ item }) => {
 
     const rooms = useSelector(state => state.roomsReducer);
@@ -12,11 +14,13 @@ const RoomItemDropdown = ({ item }) => {
 
     const dispatch = useDispatch();
 
+    //function on clicking join room
     function joinRoom(){
         setState(true);
         user.socket.current.emit("joinRoom", {roomName: item.roomName, eventType: "join", isPrivate: null, password: item.password});
     }
 
+    //function on un-joining a room
     function leaveRoom(){
         setState(false);
         user.socket.current.emit("leaveRoom", item.roomName);

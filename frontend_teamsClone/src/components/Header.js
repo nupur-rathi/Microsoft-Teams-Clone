@@ -8,8 +8,10 @@ import UserInfoDropdown from './dropdowns/UserInfoDropdown';
 
 const Header = () => {
 
+    //user state from user reducer
     const {name, email, profileUrl} = useSelector(state => state.userReducer);
 
+    //open state for userInfoDropdown
     const [ open, setOpen ] = useState(false);
 
     return (

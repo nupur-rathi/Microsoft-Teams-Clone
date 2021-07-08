@@ -3,7 +3,9 @@ import '../../styles/videoWindow.css';
 
 const GroupVideoFrame = ({peer, name}) => {
 
+    //peer stream state
     const [stream, setStream] = useState(null);
+    //peer videoFrame ref
     const videoRef = useRef();
 
     useEffect(() => {

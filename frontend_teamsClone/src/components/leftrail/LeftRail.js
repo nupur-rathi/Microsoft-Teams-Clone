@@ -11,6 +11,7 @@ const LeftRail = () => {
 
     const classState = useSelector(state => state.classReducer);
 
+    //show state for create and join room popups
     const [cpopupState, setCpopupState] = useState(false);
     const [jpopupState, setJpopupState] = useState(false);
 
@@ -22,6 +23,7 @@ const LeftRail = () => {
     
     const selectRoomTypeRef = useRef();
 
+    //state for public or private room list to show
     const [roomType, setRoomType] = useState(Public);
 
     useEffect(() => {

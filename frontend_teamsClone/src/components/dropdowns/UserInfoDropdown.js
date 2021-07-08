@@ -10,6 +10,8 @@ const UserInfoDropdown = ({ name, email }) => {
 
     const user = useSelector(state => state.userReducer);
 
+    //function on logging-out
+    
     function onLogout(){
         user.socket.current.disconnect();
         history.push("/");

@@ -4,17 +4,21 @@ import '../../styles/leftRail.css';
 
 const CreateRoomPopup = ({state, setState}) => {
 
+    //references to input fields for room name, room pwd, type of room
     const nameRef = useRef();
     const passwordRef = useRef();
     const publicRef = useRef();
     const privateRef = useRef();
 
+    //state to check if public or private is selected
     const [isChecked, setIsChecked] = useState(false);
 
     const user = useSelector(state => state.userReducer);
 
+    //creating a room function
     function createRoom()
     {
+        //alert on if any input field is empty
         if(nameRef.current.value === "")
             alert("room name field empty");
         else if(passwordRef.current && passwordRef.current.value === "")
@@ -34,6 +38,7 @@ const CreateRoomPopup = ({state, setState}) => {
         }
     }
 
+    //to show room popup if create room button is clicked 
     if(state === true)
     {
         return (

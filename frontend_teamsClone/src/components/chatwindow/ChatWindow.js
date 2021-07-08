@@ -12,6 +12,7 @@ const ChatWindow = () => {
 
     const dispatch = useDispatch();
 
+    //curr messages to show in chat window for the currently selected user or room
     let currMessagesToShow = [];
 
     const currSelected = useSelector(state => state.currSelectedReducer);
@@ -19,12 +20,15 @@ const ChatWindow = () => {
     const messages = useSelector(state => state.chatReducer);
     const rooms = useSelector(state => state.roomsReducer);
 
+    //reference to the chat window main body
     const chatWindowMainRef = useRef(null);
 
+    //scrolling to bottom on opening new messages or receiving new messages
     useEffect(() => {
         chatWindowMainRef.current?.scroll({ top: chatWindowMainRef.current.scrollHeight, behavior: "smooth"});
     }, [currMessagesToShow]);
 
+    //initializing currently selected messages
     if(currSelected !== null && currSelected.type === "user")
     {
         currMessagesToShow = messages["oto"][currSelected.id];
@@ -34,10 +38,13 @@ const ChatWindow = () => {
         currMessagesToShow = messages["room"][currSelected.roomName];
     }
 
+    //reference to input field for writing message
     const inputFieldRef = useRef();
 
+    //state to check and set if particular text is a message
     const [isMessage, setIsMessage] = useState(true);
 
+    //sending message function
     const sendMessage = () => {
         const message = inputFieldRef.current.value;
         inputFieldRef.current.value = "";
@@ -63,10 +70,12 @@ const ChatWindow = () => {
 
     };
 
+    //sending emoji
     const onEmojiClick = (event, emojiObject) => {
         inputFieldRef.current.value = `${inputFieldRef.current.value} ${emojiObject.emoji}`;
     };
 
+    //state for emoji window
     const [closeEP, setCloseEP] = useState(true);
 
     return (

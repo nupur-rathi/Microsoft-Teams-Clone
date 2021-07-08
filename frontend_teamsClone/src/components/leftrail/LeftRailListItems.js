@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const LeftRailListItems = ({ users }) => {
 
+    //user to show item
     const {name, imgUrl, id, selected} = users;
     const curr = useSelector(state => state.currSelectedReducer);
     const usersList = useSelector(state => state.usersListReducer);
@@ -16,6 +17,7 @@ const LeftRailListItems = ({ users }) => {
     const me = useSelector(state => state.userReducer);
     const roomsList = useSelector(state => state.roomsReducer);
 
+    //function on selecting any user
     function selecting(){
         if(curr != null)
         {   

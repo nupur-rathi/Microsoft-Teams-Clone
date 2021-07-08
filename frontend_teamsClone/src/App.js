@@ -3,6 +3,7 @@ import Teams from './pages/Teams';
 import Authentication from './pages/Authentication';
 import { BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 
+//log in status
 const log={
   isLoggedIn:false,
   onAuthentication(){
@@ -13,6 +14,7 @@ const log={
   }
 }
 
+// secured route component
 function SecuredRoute({ path, Component }){
   
   return (

@@ -4,10 +4,12 @@ import '../../styles/leftRail.css';
 
 const JoinRoomPopup = ({state, setState}) => {
 
+    //references to input fields for room name and password
     const nameRef = useRef();
     const passwordRef = useRef();
     const user = useSelector(state => state.userReducer);
 
+    //join room function
     function joinRoom()
     {
         if(nameRef.current.value === "")

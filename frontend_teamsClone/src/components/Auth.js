@@ -16,12 +16,14 @@ const Auth = ({ log }) => {
 
     const googleProvider = new firebase.auth.GoogleAuthProvider();
 
+    //initializing user info on authentication
     function initializeUser({name, email, id, imgUrl, socket, isGuest}){
         dispatch(setUser(name, email, id, imgUrl, socket, isGuest));
         log.onAuthentication();
         history.push('/teams');
     }
 
+    //google authentication
     function googleAuth(){
         return firebase
         .auth()

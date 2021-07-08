@@ -11,8 +11,10 @@ import InviteLinkPopup from './popups/invitePopup/InviteLinkPopup';
 
 const Body = () => {
 
+    //show state for invite Link Popup
     const [ show, setShow ] = useState(false);
 
+    //call state from call reducer
     const call = useSelector(state => state.callReducer);
 
     return (

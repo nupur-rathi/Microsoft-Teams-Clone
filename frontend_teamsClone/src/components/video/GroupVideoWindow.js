@@ -119,6 +119,7 @@ const GroupVideoWindow = () => {
 
     }, []);
 
+    //when a user leaves the call
     useEffect(()=>{
 
         user.socket.current.on("userLeft", sid => {
@@ -177,6 +178,7 @@ const GroupVideoWindow = () => {
         dispatch(setVideoRoom(null));
     }
 
+    //creating a peer function on joining a video call
     function createPeer(userToSignal, callerID, stream) {
         const peer = new Peer({
             initiator: true,
@@ -191,6 +193,7 @@ const GroupVideoWindow = () => {
         return peer;
     }
 
+    //adding a new peer when someone joins the call
     function addPeer(incomingSignal, callerID, stream) {
 
         const peer = new Peer({
@@ -213,6 +216,7 @@ const GroupVideoWindow = () => {
         dispatch(setCallJoin(true));
     }
 
+    //sending message during videochat
     function sendMessage() {
 
         const message = inputRef.current.value;
@@ -228,16 +232,19 @@ const GroupVideoWindow = () => {
 
     }
 
+    //function when show everyone button clicked
     function onVideoChat(){
         setVideochat(true);
         setPeoples(false);
     }
 
+    //function when show people clicked
     function onPeoples(){
         setVideochat(false);
         setPeoples(true);
     }
 
+    //function to close chat or people sidebar during videocall
     function closeSideBar(){
         setVideochat(false);
         setPeoples(false);

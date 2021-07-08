@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function BasicButtonGroup({currentWindow}) {
 
+  //videocalling function on videocall button click
   function videoCall()
   {
     if(currSelectedUser.type === 'user')
@@ -73,6 +74,7 @@ export default function BasicButtonGroup({currentWindow}) {
     }
   }
 
+  //chatting window open on clicking chat button
   function chat()
   {
     dispatch(setWindowState(CHAT)); 
