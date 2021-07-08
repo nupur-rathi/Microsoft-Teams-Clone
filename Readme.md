@@ -14,6 +14,8 @@ The Tech stack for this project includes -
 * Socket.io for websockets
 * Simple-peer for peer connections
 * Webrtc for media sharing 
+* CSS for styling
+* Material-UI library for icons
 
 ## Getting Started
 
