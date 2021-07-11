@@ -22,6 +22,7 @@ The Tech stack for this project includes -
 ### Dependencies
 
 * Node version -- 14.15.5 or above
+* Access to both mic and camera of your device to use the feature of video call
 
 ### Installing
 
