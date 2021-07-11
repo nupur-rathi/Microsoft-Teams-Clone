@@ -16,6 +16,7 @@ The Tech stack for this project includes -
 * Webrtc for media sharing 
 * CSS for styling
 * Material-UI library for icons
+* Redux
 
 ## Getting Started
 
